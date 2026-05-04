@@ -5,6 +5,7 @@
     {
       "id": "clock",
       "name": "Clock",
+      "category": "Utility",
       "detail": "Time plus local weather",
       "description": "Shows the current time in large text with a weather icon and temperature pulled from weather.gov.",
       "author": "bptworld",
@@ -12,8 +13,19 @@
       "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/clock.py"
     },
     {
+      "id": "disney",
+      "name": "Disney Countdown",
+      "category": "Utility",
+      "detail": "Days until your trip",
+      "description": "Countdown to your Disney trip. Shows days remaining in large text with a DISNEY header.",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/disney.py"
+    },
+    {
       "id": "mlb",
       "name": "MLB Scores",
+      "category": "Sports",
       "detail": "Live ESPN scoreboard",
       "description": "Live MLB scores with team logos, abbreviations, records, and game status from ESPN.",
       "author": "bptworld",
@@ -23,6 +35,7 @@
     {
       "id": "nba",
       "name": "NBA Scores",
+      "category": "Sports",
       "detail": "Live ESPN scoreboard",
       "description": "Live NBA scores with team logos, abbreviations, records, and game status from ESPN.",
       "author": "bptworld",
@@ -32,6 +45,7 @@
     {
       "id": "nhl",
       "name": "NHL Scores",
+      "category": "Sports",
       "detail": "Live ESPN scoreboard",
       "description": "Live NHL scores with team logos, abbreviations, records, and game status from ESPN.",
       "author": "bptworld",
@@ -41,20 +55,12 @@
     {
       "id": "nfl",
       "name": "NFL Scores",
+      "category": "Sports",
       "detail": "Live ESPN scoreboard",
       "description": "Live NFL scores with team logos, abbreviations, records, and game status from ESPN.",
       "author": "bptworld",
       "version": "1.0",
       "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/nfl.py"
-    },
-    {
-      "id": "disney",
-      "name": "Disney Countdown",
-      "detail": "Days until your trip",
-      "description": "Countdown to your Disney trip. Shows days remaining in large text with a DISNEY header.",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/disney.py"
     }
   ]
 }
