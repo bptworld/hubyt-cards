@@ -13,6 +13,16 @@
       "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/clock.py"
     },
     {
+      "id": "countdown",
+      "name": "Countdown",
+      "category": "Utility",
+      "detail": "Days until any event",
+      "description": "Generic countdown to any event. Set an event name and date — shows days remaining with a large number display.",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/countdown.py"
+    },
+    {
       "id": "disney",
       "name": "Disney Countdown",
       "category": "Utility",
@@ -21,6 +31,26 @@
       "author": "bptworld",
       "version": "1.0",
       "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/disney.py"
+    },
+    {
+      "id": "weather_forecast",
+      "name": "Weather Forecast",
+      "category": "Utility",
+      "detail": "4-day forecast with icons",
+      "description": "4-day weather forecast showing day, weather icon, high and low temperatures. Pulls from weather.gov — no API key required.",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/weather_forecast.py"
+    },
+    {
+      "id": "stocks",
+      "name": "Stock Ticker",
+      "category": "Utility",
+      "detail": "Live price and change",
+      "description": "Live stock or crypto price with dollar and percent change. Supports any Yahoo Finance symbol — AAPL, TSLA, BTC-USD, ^SPX, and more.",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/stocks.py"
     },
     {
       "id": "mlb",
@@ -61,6 +91,26 @@
       "author": "bptworld",
       "version": "1.0",
       "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/nfl.py"
+    },
+    {
+      "id": "flights_overhead",
+      "name": "Flights Overhead",
+      "category": "Travel",
+      "detail": "Live flights above you",
+      "description": "Shows the closest airborne flight overhead using OpenSky Network. Displays flight number, airline, altitude, speed, and distance. Free with optional OpenSky account for higher rate limits.",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/flights_overhead.py"
+    },
+    {
+      "id": "flight_track",
+      "name": "Flight Tracker",
+      "category": "Travel",
+      "detail": "Track a specific flight",
+      "description": "Track any flight by callsign or IATA flight number (e.g. UA2341). Shows airline, altitude, speed, and status via OpenSky Network.",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/flight_track.py"
     }
   ]
 }

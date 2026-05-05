@@ -1,7 +1,10 @@
 from io import BytesIO
+import base64
 import json
+import math
 import re
 import urllib.request
+import urllib.parse
 from datetime import datetime, timedelta, timezone
 
 WEATHER_CACHE = {}
@@ -119,6 +122,108 @@ def get_team_record(competitor):
     return ""
 
 
+_NAMED_COLORS = {
+    "white": (255, 255, 255), "red": (238, 80, 80), "green": (100, 220, 100),
+    "blue": (80, 150, 255), "orange": (255, 160, 60), "yellow": (255, 230, 60),
+    "teal": (24, 182, 163), "purple": (180, 120, 255), "pink": (255, 120, 180),
+}
+
+
+def parse_color(value):
+    v = str(value or "").strip()
+    if v.startswith("#"):
+        h = v.lstrip("#")
+        if len(h) == 6:
+            return tuple(int(h[i:i+2], 16) for i in (0, 2, 4))
+    return _NAMED_COLORS.get(v.lower(), (255, 255, 255))
+
+
+def _msg_font():
+    from PIL import ImageFont
+    try:
+        return ImageFont.truetype("Silkscreen-Regular.ttf", 8)
+    except Exception:
+        return ImageFont.load_default()
+
+
+def message_text_width(text):
+    from PIL import Image, ImageDraw
+    draw = ImageDraw.Draw(Image.new("RGB", (1, 1)))
+    return draw.textbbox((0, 0), text, font=_msg_font())[2]
+
+
+def _wrap_frame(text, color_rgb):
+    from PIL import Image, ImageDraw
+    image = Image.new("RGB", (64, 32), (0, 0, 0))
+    font = _msg_font()
+    draw = ImageDraw.Draw(image)
+    words = text.split()
+    lines, current = [], ""
+    for word in words:
+        test = (current + " " + word).strip() if current else word
+        if draw.textbbox((0, 0), test, font=font)[2] <= 62:
+            current = test
+        else:
+            if current:
+                lines.append(current)
+            current = word
+    if current:
+        lines.append(current)
+    lines = lines[:4]
+    line_h = 8
+    y = (32 - len(lines) * line_h) // 2 - 3
+    for line in lines:
+        w = draw.textbbox((0, 0), line, font=font)[2]
+        draw_sharp_text(image, ((64 - w) // 2, y), line, color_rgb, font)
+        y += line_h
+    return image
+
+
+def render_message_wrap(text, color_rgb):
+    out = BytesIO()
+    _wrap_frame(text, color_rgb).save(out, "WEBP", lossless=True, quality=100)
+    return out.getvalue()
+
+
+def render_message_flash(text, color_rgb):
+    from PIL import Image
+    on_frame = _wrap_frame(text, color_rgb)
+    off_frame = Image.new("RGB", (64, 32), (0, 0, 0))
+    out = BytesIO()
+    on_frame.save(
+        out, "WEBP", save_all=True,
+        append_images=[off_frame],
+        duration=[500, 250],
+        loop=0,
+    )
+    return out.getvalue()
+
+
+def render_message_scroll(text, color_rgb):
+    from PIL import Image, ImageDraw
+    font = _msg_font()
+    draw_dummy = ImageDraw.Draw(Image.new("RGB", (1, 1)))
+    text_w = draw_dummy.textbbox((0, 0), text, font=font)[2]
+    px_per_frame = 2
+    frame_ms = 33
+    total = 64 + text_w + 32
+    frames = []
+    for i in range(0, total, px_per_frame):
+        img = Image.new("RGB", (64, 32), (0, 0, 0))
+        x = 64 - i
+        if x < 64:
+            draw_sharp_text(img, (x, 12), text, color_rgb, font)
+        frames.append(img)
+    out = BytesIO()
+    frames[0].save(
+        out, "WEBP", save_all=True,
+        append_images=frames[1:],
+        duration=frame_ms,
+        loop=0,
+    )
+    return out.getvalue()
+
+
 def render_text_webp(text, color):
     from PIL import Image, ImageDraw, ImageFont
     image = Image.new("RGB", (64, 32), (0, 0, 0))
@@ -139,7 +244,19 @@ def render_text_webp(text, color):
 
 
 def pick_sport_event(events, favorite):
+    from datetime import date
+    today = date.today()
     favorite = (favorite or "").upper()
+    today_events = []
+    for event in events:
+        raw = event.get("date", "")
+        try:
+            dt = datetime.fromisoformat(raw.replace("Z", "+00:00"))
+            if dt.astimezone().date() == today:
+                today_events.append(event)
+        except Exception:
+            today_events.append(event)
+    events = today_events or []
     for state in ("in", "pre", "post"):
         for event in events:
             competition = event.get("competitions", [{}])[0]
@@ -147,7 +264,7 @@ def pick_sport_event(events, favorite):
             teams = json.dumps(event).upper()
             if ev_state == state and (not favorite or f'"{favorite}"' in teams):
                 return event
-    return events[0] if events else None
+    return None
 
 
 def render_sport_card(options, url, cache, status_color, fallback_text):
@@ -157,7 +274,7 @@ def render_sport_card(options, url, cache, status_color, fallback_text):
     event = pick_sport_event(data.get("events", []), favorite)
     if not event:
         cache["expires"] = datetime.now(timezone.utc) + timedelta(seconds=900)
-        return render_text_webp(fallback_text, status_color)
+        return None
 
     competition = event.get("competitions", [{}])[0]
     competitors = competition.get("competitors", [])
@@ -167,8 +284,22 @@ def render_sport_card(options, url, cache, status_color, fallback_text):
     home_team = home.get("team", {})
     state = competition.get("status", {}).get("type", {}).get("state")
 
-    cache["expires"] = datetime.now(timezone.utc) + timedelta(seconds=15 if state == "in" else 900)
+    if state == "in":
+        cache_secs = 15
+    elif state == "pre":
+        try:
+            event_dt = datetime.fromisoformat(event.get("date", "").replace("Z", "+00:00"))
+            secs_until = (event_dt - datetime.now(timezone.utc)).total_seconds()
+            cache_secs = 15 if secs_until < 600 else 900
+        except Exception:
+            cache_secs = 900
+    else:
+        cache_secs = 900
+    cache["expires"] = datetime.now(timezone.utc) + timedelta(seconds=cache_secs)
     status = competition.get("status", {}).get("type", {}).get("shortDetail", "")
+    status = re.sub(r"\s+[A-Z]{2,3}T?$", "", status)   # strip timezone (ET, CT, PT…)
+    status = re.sub(r"\s+-\s+", " ", status)             # "5/4 - 6:40" → "5/4 6:40"
+    status = re.sub(r"\s+(AM|PM)", r"\1", status)        # "6:40 PM" → "6:40PM"
     score = "VS" if state == "pre" else f"{away.get('score', '0')}-{home.get('score', '0')}"
 
     image = Image.new("RGB", (64, 32), (5, 7, 10))
@@ -187,9 +318,9 @@ def render_sport_card(options, url, cache, status_color, fallback_text):
     sw, sh = sb[2] - sb[0], sb[3] - sb[1]
     pad = 3
     bx1, bx2 = 32 - sw // 2 - pad, 32 + (sw + 1) // 2 + pad
-    by1, by2 = 8, 8 + sh + pad * 2
+    by1, by2 = 7, 7 + sh + pad * 2
     draw.rounded_rectangle((bx1, by1, bx2, by2), radius=3, fill=(18, 29, 39), outline=(69, 87, 104))
-    draw_sharp_text(image, (32 - sw // 2, 5 + pad), score, (247, 251, 255), score_font)
+    draw_sharp_text(image, (32 - sw // 2, 4 + pad), score, (247, 251, 255), score_font)
 
     away_abbrev = away_team.get("abbreviation", "AWY")[:3]
     home_abbrev = home_team.get("abbreviation", "HME")[:3]
@@ -211,6 +342,138 @@ def render_sport_card(options, url, cache, status_color, fallback_text):
     if home_logo:
         image.paste(home_logo, (52, 7), home_logo)
 
+    out = BytesIO()
+    image.save(out, "WEBP", lossless=True, quality=100)
+    return out.getvalue()
+
+
+# ── Flight utilities ──────────────────────────────────────────────────────────
+
+_AIRLINES = {
+    "AAL": ("American",    "AA"), "UAL": ("United",      "UA"), "DAL": ("Delta",       "DL"),
+    "SWA": ("Southwest",   "WN"), "ASA": ("Alaska",      "AS"), "JBU": ("JetBlue",     "B6"),
+    "FFT": ("Frontier",    "F9"), "NKS": ("Spirit",      "NK"), "HAL": ("Hawaiian",    "HA"),
+    "SKW": ("SkyWest",     "OO"), "RPA": ("Republic",    "YX"), "FDX": ("FedEx",       "FX"),
+    "UPS": ("UPS Air",     "5X"), "GTI": ("Atlas",       "GT"), "SWQ": ("Sun Country", "SY"),
+    "ENY": ("Envoy",       "MQ"), "PDT": ("Piedmont",    "PT"), "PSA": ("PSA",         "OH"),
+    "WEN": ("Endeavor",    "9E"), "BAW": ("British",     "BA"), "AFR": ("Air France",  "AF"),
+    "DLH": ("Lufthansa",   "LH"), "UAE": ("Emirates",    "EK"), "QFA": ("Qantas",      "QF"),
+    "ANA": ("ANA",         "NH"), "JAL": ("Japan Air",   "JL"), "KAL": ("Korean Air",  "KE"),
+    "CPA": ("Cathay",      "CX"), "SIA": ("Singapore",   "SQ"), "ACA": ("Air Canada",  "AC"),
+    "WJA": ("WestJet",     "WS"), "THY": ("Turkish",     "TK"), "IBE": ("Iberia",      "IB"),
+    "EZY": ("easyJet",     "U2"), "RYR": ("Ryanair",     "FR"), "KLM": ("KLM",         "KL"),
+    "CSN": ("China South", "CZ"), "CCA": ("Air China",   "CA"), "AMX": ("Aeromexico",  "AM"),
+    "VOI": ("Volaris",     "Y4"), "TAM": ("LATAM",       "JJ"), "AVA": ("Avianca",     "AV"),
+    "GLO": ("GOL",         "G3"), "AZU": ("Azul",        "AD"), "SAS": ("SAS",         "SK"),
+    "VLG": ("Vueling",     "VY"), "WZZ": ("Wizz",        "W6"), "EIN": ("Aer Lingus",  "EI"),
+    "SWR": ("Swiss",       "LX"), "AUA": ("Austrian",    "OS"), "ETH": ("Ethiopian",   "ET"),
+    "QTR": ("Qatar",       "QR"), "SVA": ("Saudia",      "SV"), "AIC": ("Air India",   "AI"),
+    "MSR": ("EgyptAir",    "MS"), "TUI": ("TUI",         "BY"), "AEE": ("Aegean",      "A3"),
+}
+
+_IATA_TO_ICAO = {iata: icao for icao, (_, iata) in _AIRLINES.items()}
+_AIRLINE_LOGO_CACHE = {}
+_OPENSKY_TOKEN = {"token": None, "expires": datetime.min.replace(tzinfo=timezone.utc)}
+
+
+def lookup_airline(callsign):
+    prefix = (callsign or "").strip().upper()[:3]
+    return _AIRLINES.get(prefix)
+
+
+def iata_to_icao_prefix(iata):
+    return _IATA_TO_ICAO.get((iata or "").upper())
+
+
+def fetch_airline_logo(iata):
+    if iata in _AIRLINE_LOGO_CACHE:
+        return _AIRLINE_LOGO_CACHE[iata]
+    logo = fetch_logo(f"https://images.kiwi.com/airlines/64/{iata.lower()}.png")
+    _AIRLINE_LOGO_CACHE[iata] = logo
+    return logo
+
+
+def haversine_miles(lat1, lon1, lat2, lon2):
+    R = 3958.8
+    dlat = math.radians(lat2 - lat1)
+    dlon = math.radians(lon2 - lon1)
+    a = math.sin(dlat / 2) ** 2 + math.cos(math.radians(lat1)) * math.cos(math.radians(lat2)) * math.sin(dlon / 2) ** 2
+    return R * 2 * math.asin(math.sqrt(a))
+
+
+def compass_dir(lat1, lon1, lat2, lon2):
+    dlon = math.radians(lon2 - lon1)
+    x = math.sin(dlon) * math.cos(math.radians(lat2))
+    y = (math.cos(math.radians(lat1)) * math.sin(math.radians(lat2)) -
+         math.sin(math.radians(lat1)) * math.cos(math.radians(lat2)) * math.cos(dlon))
+    deg = math.degrees(math.atan2(x, y)) % 360
+    return ["N", "NE", "E", "SE", "S", "SW", "W", "NW"][round(deg / 45) % 8]
+
+
+def _opensky_token(client_id, client_secret):
+    now = datetime.now(timezone.utc)
+    if _OPENSKY_TOKEN["token"] and _OPENSKY_TOKEN["expires"] > now:
+        return _OPENSKY_TOKEN["token"]
+    data = urllib.parse.urlencode({
+        "grant_type": "client_credentials",
+        "client_id": client_id,
+        "client_secret": client_secret,
+    }).encode()
+    req = urllib.request.Request(
+        "https://auth.opensky-network.org/auth/realms/opensky-network/protocol/openid-connect/token",
+        data=data,
+        headers={"Content-Type": "application/x-www-form-urlencoded", "User-Agent": "Hubyt/0.1"},
+    )
+    with urllib.request.urlopen(req, timeout=10) as resp:
+        result = json.loads(resp.read().decode("utf-8"))
+    _OPENSKY_TOKEN["token"] = result["access_token"]
+    _OPENSKY_TOKEN["expires"] = now + timedelta(seconds=result.get("expires_in", 1800) - 60)
+    return _OPENSKY_TOKEN["token"]
+
+
+def fetch_opensky(cache, client_id="", client_secret="", lamin=None, lamax=None, lomin=None, lomax=None):
+    now = datetime.now(timezone.utc)
+    if cache.get("body") and cache.get("expires", now) > now:
+        return cache["body"]
+    url = "https://opensky-network.org/api/states/all"
+    if lamin is not None:
+        url += f"?lamin={lamin:.4f}&lamax={lamax:.4f}&lomin={lomin:.4f}&lomax={lomax:.4f}"
+    req = urllib.request.Request(url, headers={"User-Agent": "Hubyt/0.1"})
+    if client_id and client_secret:
+        try:
+            req.add_header("Authorization", f"Bearer {_opensky_token(client_id, client_secret)}")
+        except Exception:
+            pass
+    with urllib.request.urlopen(req, timeout=20) as resp:
+        data = json.loads(resp.read().decode("utf-8"))
+    cache["body"] = data
+    cache["expires"] = now + timedelta(seconds=30)
+    return data
+
+
+def render_flight_image(flight_num, airline_name, iata, alt_ft, speed_kt, line4):
+    from PIL import Image, ImageDraw, ImageFont
+    image = Image.new("RGB", (64, 32), (0, 5, 18))
+    draw = ImageDraw.Draw(image)
+    try:
+        font = ImageFont.truetype("Silkscreen-Regular.ttf", 8)
+        bold = ImageFont.truetype("Silkscreen-Bold.ttf", 8)
+    except Exception:
+        font = bold = ImageFont.load_default()
+    draw.rectangle((0, 0, 63, 8), fill=(0, 15, 45))
+    logo = fetch_airline_logo(iata) if iata else None
+    tx = 1
+    if logo:
+        image.paste(logo, (1, -1), logo)
+        tx = 14
+    draw_sharp_text(image, (tx, -3), flight_num[:9], (255, 255, 255), bold)
+    draw_sharp_text(image, (1, 5), airline_name[:10], (100, 190, 255), font)
+    alt_str = f"{alt_ft // 1000}K ft" if alt_ft >= 1000 else f"{alt_ft}ft"
+    spd_str = f"{speed_kt}kt"
+    draw_sharp_text(image, (1, 13), alt_str, (200, 230, 255), font)
+    sw = draw.textbbox((0, 0), spd_str, font=font)[2]
+    draw_sharp_text(image, (63 - sw, 13), spd_str, (200, 230, 255), font)
+    draw_sharp_text(image, (1, 21), line4[:14], (150, 200, 255), font)
     out = BytesIO()
     image.save(out, "WEBP", lossless=True, quality=100)
     return out.getvalue()

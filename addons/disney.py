@@ -43,7 +43,7 @@ def render(options=None):
         num_str = str(days)
         nb = draw.textbbox((0, 0), num_str, font=big_font)
         nw, nh = nb[2] - nb[0], nb[3] - nb[1]
-        draw_sharp_text(image, ((64 - nw) // 2, 9 + (13 - nh) // 2 - 5), num_str, (220, 240, 255), big_font)
+        draw_sharp_text(image, ((64 - nw) // 2, 9 + (13 - nh) // 2 - 6), num_str, (220, 240, 255), big_font)
         label = "DAY" if days == 1 else "DAYS"
         lb = draw.textbbox((0, 0), label, font=small_font)
         draw_sharp_text(image, ((64 - (lb[2] - lb[0])) // 2, 20), label, (200, 160, 255), small_font)
