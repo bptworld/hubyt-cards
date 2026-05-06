@@ -7,11 +7,19 @@ Add-on cards for the [Hubyt](https://github.com/bptworld/hubyt) display system.
 | Card | Description |
 |------|-------------|
 | Clock | Time plus local weather |
+| Countdown | Days until any event |
+| Google Calendar | Next upcoming event |
+| Hubitat Device | Live device attribute |
+| Pac-Man Chase | Pac-Man chasing ghosts |
+| Weather Forecast | 4-day forecast with icons |
+| Stock Ticker | Live price and change |
 | MLB Scores | Live ESPN scoreboard |
 | NBA Scores | Live ESPN scoreboard |
 | NHL Scores | Live ESPN scoreboard |
 | NFL Scores | Live ESPN scoreboard |
 | Disney Countdown | Days until your trip |
+| Flights Overhead | Live flights above you |
+| Flight Tracker | Track a specific flight |
 
 ## Installing a Card
 

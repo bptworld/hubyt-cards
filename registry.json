@@ -53,6 +53,36 @@
       "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/stocks.py"
     },
     {
+      "id": "gcal",
+      "name": "Google Calendar",
+      "category": "Utility",
+      "detail": "Next upcoming event",
+      "description": "Shows the next upcoming event from a public or private Google Calendar ICS URL. Includes event title, date or time, and relative countdown.",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/gcal.py"
+    },
+    {
+      "id": "hubitat",
+      "name": "Hubitat Device",
+      "category": "Smart Home",
+      "detail": "Live device attribute",
+      "description": "Shows a live Hubitat Maker API device attribute such as temperature, humidity, switch, motion, contact, presence, lock, power, or battery.",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/hubitat.py"
+    },
+    {
+      "id": "pacman",
+      "name": "Pac-Man Chase",
+      "category": "Fun",
+      "detail": "Pac-Man chasing ghosts",
+      "description": "Animated pixel card showing Pac-Man chasing ghosts across a tiny maze. Includes options for speed and dots.",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/pacman.py"
+    },
+    {
       "id": "mlb",
       "name": "MLB Scores",
       "category": "Sports",
