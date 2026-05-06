@@ -83,6 +83,146 @@
       "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/pacman.py"
     },
     {
+      "id": "matrix_rain",
+      "name": "Matrix Rain",
+      "category": "Fun",
+      "detail": "Falling green code",
+      "description": "Animated falling green code columns for an ambient pixel display.",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/matrix_rain.py"
+    },
+    {
+      "id": "pong_loop",
+      "name": "Pong Loop",
+      "category": "Fun",
+      "detail": "Tiny paddles and ball",
+      "description": "Animated retro paddle-and-ball loop with a tiny scoreboard.",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/pong_loop.py"
+    },
+    {
+      "id": "lava_lamp",
+      "name": "Lava Lamp",
+      "category": "Fun",
+      "detail": "Drifting pixel blobs",
+      "description": "Animated colorful blobs drifting around like a tiny lava lamp.",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/lava_lamp.py"
+    },
+    {
+      "id": "alien_march",
+      "name": "Alien March",
+      "category": "Fun",
+      "detail": "Retro invader parade",
+      "description": "Animated rows of tiny aliens marching across the display.",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/alien_march.py"
+    },
+    {
+      "id": "snake",
+      "name": "Snake",
+      "category": "Fun",
+      "detail": "Snake eats dots",
+      "description": "Animated snake loop with a moving food dot.",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/snake.py"
+    },
+    {
+      "id": "aquarium",
+      "name": "Pixel Aquarium",
+      "category": "Fun",
+      "detail": "Fish and bubbles",
+      "description": "Animated little fish, bubbles, and plants for an ambient aquarium card.",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/aquarium.py"
+    },
+    {
+      "id": "fireplace",
+      "name": "Fireplace",
+      "category": "Fun",
+      "detail": "Pixel flames",
+      "description": "Animated pixel fireplace with flickering flames.",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/fireplace.py"
+    },
+    {
+      "id": "tiny_traffic",
+      "name": "Tiny Traffic",
+      "category": "Fun",
+      "detail": "Cars and signal lights",
+      "description": "Animated tiny cars driving under a changing traffic light.",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/tiny_traffic.py"
+    },
+    {
+      "id": "fortune_cookie",
+      "name": "Fortune Cookie",
+      "category": "Fun",
+      "detail": "Tiny daily fortune",
+      "description": "Shows a tiny daily fortune with a pixel fortune cookie.",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/fortune_cookie.py"
+    },
+    {
+      "id": "heartbeat",
+      "name": "8-Bit Heartbeat",
+      "category": "Fun",
+      "detail": "Pulsing pixel heart",
+      "description": "Animated pulsing pixel heart with a little heartbeat line.",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/heartbeat.py"
+    },
+    {
+      "id": "pixel_globe",
+      "name": "Pixel Globe",
+      "category": "Fun",
+      "detail": "Tiny rotating world",
+      "description": "Animated tiny rotating globe with stars.",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/pixel_globe.py"
+    },
+    {
+      "id": "moon_phase",
+      "name": "Moon Phase",
+      "category": "Utility",
+      "detail": "Current moon phase",
+      "description": "Shows the current moon phase and approximate lunar age.",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/moon_phase.py"
+    },
+    {
+      "id": "weather_mood",
+      "name": "Weather Mood",
+      "category": "Weather",
+      "detail": "Animated weather vibe",
+      "description": "Animated ambient weather scene based on ZIP code: sun, clouds, rain, or snow.",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/weather_mood.py"
+    },
+    {
+      "id": "countdown_confetti",
+      "name": "Countdown Confetti",
+      "category": "Utility",
+      "detail": "Event countdown with confetti",
+      "description": "Countdown card with animated confetti for trips, birthdays, launches, and other events.",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/countdown_confetti.py"
+    },
+    {
       "id": "mlb",
       "name": "MLB Scores",
       "category": "Sports",

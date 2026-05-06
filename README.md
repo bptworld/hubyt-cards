@@ -11,6 +11,20 @@ Add-on cards for the [Hubyt](https://github.com/bptworld/hubyt) display system.
 | Google Calendar | Next upcoming event |
 | Hubitat Device | Live device attribute |
 | Pac-Man Chase | Pac-Man chasing ghosts |
+| Matrix Rain | Falling green code |
+| Pong Loop | Tiny paddles and ball |
+| Lava Lamp | Drifting pixel blobs |
+| Alien March | Retro invader parade |
+| Snake | Snake eats dots |
+| Pixel Aquarium | Fish and bubbles |
+| Fireplace | Pixel flames |
+| Tiny Traffic | Cars and signal lights |
+| Fortune Cookie | Tiny daily fortune |
+| 8-Bit Heartbeat | Pulsing pixel heart |
+| Pixel Globe | Tiny rotating world |
+| Moon Phase | Current moon phase |
+| Weather Mood | Animated weather vibe |
+| Countdown Confetti | Event countdown with confetti |
 | Weather Forecast | 4-day forecast with icons |
 | Stock Ticker | Live price and change |
 | MLB Scores | Live ESPN scoreboard |
