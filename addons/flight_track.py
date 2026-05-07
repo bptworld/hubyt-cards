@@ -164,38 +164,31 @@ def _airline_iata(flight):
 
 
 def _draw_southwest_heart(draw, x, y):
-    # 20x20 pixel version of the Southwest heart icon.
+    # 16x16 pixel version of the Southwest heart icon.
     gray = (190, 194, 198)
     red = (222, 20, 35)
     blue = (25, 78, 170)
     yellow = (255, 184, 32)
     white = (245, 245, 245)
 
-    outline = [
-        (5, 0), (6, 0), (7, 0), (8, 1), (9, 2), (10, 2), (11, 1), (12, 0),
-        (13, 0), (14, 0), (16, 1), (18, 3), (19, 6), (19, 8), (18, 11),
-        (16, 14), (10, 20), (4, 14), (2, 12), (0, 8), (0, 5), (1, 3),
-        (3, 1),
-    ]
+    outline = [(4, 0), (6, 0), (8, 2), (10, 0), (12, 0), (14, 2), (15, 5),
+               (15, 7), (14, 10), (8, 16), (2, 10), (0, 7), (0, 4), (2, 1)]
     draw.polygon([(x + px, y + py) for px, py in outline], fill=gray)
-    inner = [
-        (5, 2), (7, 2), (9, 4), (10, 4), (12, 2), (14, 2), (16, 3),
-        (17, 5), (17, 8), (16, 11), (10, 17), (4, 11), (2, 8), (2, 5),
-        (3, 3),
-    ]
+    inner = [(4, 2), (6, 2), (8, 4), (10, 2), (12, 2), (13, 3), (14, 5),
+             (14, 7), (13, 9), (8, 14), (3, 9), (1, 7), (1, 5), (2, 3)]
     draw.polygon([(x + px, y + py) for px, py in inner], fill=white)
-    draw.polygon([(x + 3, y + 5), (x + 9, y + 10), (x + 15, y + 16),
-                  (x + 10, y + 17), (x + 4, y + 11), (x + 2, y + 8)],
+    draw.polygon([(x + 2, y + 5), (x + 7, y + 9), (x + 12, y + 13),
+                  (x + 8, y + 14), (x + 3, y + 9), (x + 1, y + 7)],
                  fill=blue)
-    draw.polygon([(x + 4, y + 3), (x + 8, y + 3), (x + 10, y + 5),
-                  (x + 16, y + 10), (x + 15, y + 15), (x + 3, y + 5)],
+    draw.polygon([(x + 3, y + 3), (x + 6, y + 3), (x + 8, y + 5),
+                  (x + 13, y + 9), (x + 12, y + 13), (x + 2, y + 5)],
                  fill=red)
-    draw.polygon([(x + 11, y + 4), (x + 13, y + 2), (x + 15, y + 3),
-                  (x + 17, y + 5), (x + 17, y + 8), (x + 16, y + 10)],
+    draw.polygon([(x + 9, y + 4), (x + 10, y + 2), (x + 12, y + 3),
+                  (x + 14, y + 5), (x + 14, y + 7), (x + 13, y + 9)],
                  fill=yellow)
-    draw.line((x + 3, y + 5, x + 15, y + 16), fill=white)
-    draw.line((x + 10, y + 4, x + 16, y + 10), fill=white)
-    draw.line((x + 10, y + 17, x + 15, y + 16), fill=white)
+    draw.line((x + 2, y + 5, x + 12, y + 13), fill=white)
+    draw.line((x + 8, y + 4, x + 13, y + 9), fill=white)
+    draw.line((x + 8, y + 14, x + 12, y + 13), fill=white)
 
 
 def _fit_text(draw, text, font, max_width):
@@ -302,7 +295,7 @@ def render(options=None):
 
     iata = _airline_iata(flight)
     if iata == "WN":
-        _draw_southwest_heart(draw, 44, 6)
+        _draw_southwest_heart(draw, 48, 8)
     else:
         logo = fetch_airline_logo(iata) if iata else None
         if logo:
