@@ -376,8 +376,8 @@
       "id": "flight_track",
       "name": "Flight Tracker",
       "category": "Travel",
-      "detail": "Track a specific flight",
-      "description": "Track a specific flight by airline and flight number, with optional OpenSky credentials for higher rate limits.",
+      "detail": "FlightAware status",
+      "description": "Track a specific flight using FlightAware AeroAPI. Shows route, status, estimated or actual times, gate/terminal when available, and in-flight progress.",
       "author": "bptworld",
       "version": "1.0",
       "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/flight_track.py"
