@@ -198,6 +198,18 @@ def _fit_text(draw, text, font, max_width):
     return text
 
 
+def _draw_tight_text(image, text, x, y, fill, font, spacing=-1):
+    from PIL import Image, ImageDraw
+    cursor = x
+    for ch in str(text or ""):
+        mask = Image.new("1", image.size, 0)
+        draw = ImageDraw.Draw(mask)
+        draw.text((cursor, y), ch, fill=1, font=font)
+        image.paste(Image.new("RGB", image.size, fill), (0, 0), mask)
+        cursor += draw.textbbox((0, 0), ch, font=font)[2] + spacing
+    return cursor
+
+
 def _fetch(ident, api_key):
     now = datetime.now(timezone.utc)
     key = ident
@@ -311,7 +323,11 @@ def render(options=None):
             draw_sharp_text(image, (63 - lw, -3), iata[:2], (100, 190, 255), bold)
 
     draw_sharp_text(image, (text_left, -3), ident, (235, 245, 255), font)
-    draw_sharp_text(image, (text_left, 6), status, status_color, font)
+    if status.startswith("ENRT "):
+        next_x = _draw_tight_text(image, "ENRT", text_left, 6, status_color, font, -1)
+        draw_sharp_text(image, (next_x + 1, 6), status[5:], status_color, font)
+    else:
+        draw_sharp_text(image, (text_left, 6), status, status_color, font)
     draw_sharp_text(image, (text_left, 15), _fit_text(draw, route, font, route_max), (100, 190, 255), font)
     draw_sharp_text(image, (text_left, 23), _fit_text(draw, bottom, font, bottom_max), (255, 220, 90), font)
 
