@@ -277,10 +277,16 @@ def render(options=None):
     ident = _flight_number(flight)
     status, status_color = _status(flight)
     if _airline_iata(flight) == "WN":
-        ident_max = 42
-        route_max = 42
-        bottom_max = 42
+        logo_left = 0
+        logo_top = 0
+        text_left = 18
+        ident_max = 45
+        route_max = 45
+        bottom_max = 45
     else:
+        logo_left = 52
+        logo_top = 1
+        text_left = 1
         ident_max = 39
         route_max = 62
         bottom_max = 62
@@ -295,19 +301,19 @@ def render(options=None):
 
     iata = _airline_iata(flight)
     if iata == "WN":
-        _draw_southwest_heart(draw, 48, 8)
+        _draw_southwest_heart(draw, logo_left, logo_top)
     else:
         logo = fetch_airline_logo(iata) if iata else None
         if logo:
-            image.paste(logo, (52, 1), logo)
+            image.paste(logo, (logo_left, logo_top), logo)
         elif iata:
             lw = draw.textbbox((0, 0), iata[:2], font=bold)[2]
             draw_sharp_text(image, (63 - lw, -3), iata[:2], (100, 190, 255), bold)
 
-    draw_sharp_text(image, (1, -3), ident, (235, 245, 255), font)
-    draw_sharp_text(image, (1, 6), status, status_color, bold)
-    draw_sharp_text(image, (1, 15), _fit_text(draw, route, font, route_max), (100, 190, 255), font)
-    draw_sharp_text(image, (1, 24), _fit_text(draw, bottom, font, bottom_max), (255, 220, 90), font)
+    draw_sharp_text(image, (text_left, -3), ident, (235, 245, 255), font)
+    draw_sharp_text(image, (text_left, 6), status, status_color, font)
+    draw_sharp_text(image, (text_left, 15), _fit_text(draw, route, font, route_max), (100, 190, 255), font)
+    draw_sharp_text(image, (text_left, 24), _fit_text(draw, bottom, font, bottom_max), (255, 220, 90), font)
 
     out = BytesIO()
     image.save(out, "WEBP", lossless=True, quality=100)
