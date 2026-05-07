@@ -5,7 +5,16 @@ CARD_ID = "fortune_cookie"
 CARD_NAME = "Fortune Cookie"
 CARD_DETAIL = "Tiny daily fortune"
 CARD_OPTIONS = [
-    {"key": "mode", "label": "Mode", "type": "text", "default": "fortune", "maxlength": 8},
+    {
+        "key": "mode",
+        "label": "Mode",
+        "type": "select",
+        "default": "fortune",
+        "choices": [
+            {"value": "fortune", "label": "Daily Fortune"},
+            {"value": "random", "label": "Random Fortune"},
+        ],
+    },
 ]
 
 FORTUNES = [
