@@ -333,7 +333,7 @@ def _load_flight(opts):
             if err.code in (401, 403):
                 return None, "BAD API"
             if err.code in (404, 422):
-                last_error = "NOT FOUND"
+                last_error = "NO LIVE"
                 continue
             last_error = "API ERR"
         except Exception:
@@ -356,6 +356,7 @@ def _load_flight(opts):
         flight = _pick_summary(_data_rows(data))
         if flight:
             return flight, None
+        last_error = "NO LIVE"
     except urllib.error.HTTPError as err:
         if err.code in (401, 403):
             return None, "BAD API"
