@@ -40,10 +40,6 @@ CARD_OPTIONS = [
 
 _CACHE = {}
 _API_ROOT = "https://aeroapi.flightaware.com/aeroapi"
-_LOGO_CACHE = {}
-_LOGO_URLS = {
-    "WN": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Southwest_Airlines_logo_2014.svg/330px-Southwest_Airlines_logo_2014.svg.png",
-}
 
 
 def _clean(value):
@@ -167,29 +163,39 @@ def _airline_iata(flight):
     return airline[1] if airline else None
 
 
-def _fetch_real_logo(iata, max_w=11, max_h=11):
-    url = _LOGO_URLS.get(iata)
-    if not url:
-        return None
-    key = f"{iata}:{max_w}x{max_h}"
-    if key in _LOGO_CACHE:
-        return _LOGO_CACHE[key]
-    try:
-        from PIL import Image
-        req = urllib.request.Request(url, headers={"User-Agent": "Hubyt/0.1"})
-        with urllib.request.urlopen(req, timeout=8) as resp:
-            raw = resp.read()
-        img = Image.open(BytesIO(raw)).convert("RGBA")
-        if iata == "WN":
-            # Use only the real Southwest heart mark from the right side of the
-            # official logo, not the "Southwest" wordmark.
-            w, h = img.size
-            img = img.crop((int(w * 0.72), 0, w, h))
-        img.thumbnail((max_w, max_h), Image.LANCZOS)
-        _LOGO_CACHE[key] = img
-        return img
-    except Exception:
-        return None
+def _draw_southwest_heart(draw, x, y):
+    # 20x20 pixel version of the Southwest heart icon.
+    gray = (190, 194, 198)
+    red = (222, 20, 35)
+    blue = (25, 78, 170)
+    yellow = (255, 184, 32)
+    white = (245, 245, 245)
+
+    outline = [
+        (5, 0), (6, 0), (7, 0), (8, 1), (9, 2), (10, 2), (11, 1), (12, 0),
+        (13, 0), (14, 0), (16, 1), (18, 3), (19, 6), (19, 8), (18, 11),
+        (16, 14), (10, 20), (4, 14), (2, 12), (0, 8), (0, 5), (1, 3),
+        (3, 1),
+    ]
+    draw.polygon([(x + px, y + py) for px, py in outline], fill=gray)
+    inner = [
+        (5, 2), (7, 2), (9, 4), (10, 4), (12, 2), (14, 2), (16, 3),
+        (17, 5), (17, 8), (16, 11), (10, 17), (4, 11), (2, 8), (2, 5),
+        (3, 3),
+    ]
+    draw.polygon([(x + px, y + py) for px, py in inner], fill=white)
+    draw.polygon([(x + 3, y + 5), (x + 9, y + 10), (x + 15, y + 16),
+                  (x + 10, y + 17), (x + 4, y + 11), (x + 2, y + 8)],
+                 fill=blue)
+    draw.polygon([(x + 4, y + 3), (x + 8, y + 3), (x + 10, y + 5),
+                  (x + 16, y + 10), (x + 15, y + 15), (x + 3, y + 5)],
+                 fill=red)
+    draw.polygon([(x + 11, y + 4), (x + 13, y + 2), (x + 15, y + 3),
+                  (x + 17, y + 5), (x + 17, y + 8), (x + 16, y + 10)],
+                 fill=yellow)
+    draw.line((x + 3, y + 5, x + 15, y + 16), fill=white)
+    draw.line((x + 10, y + 4, x + 16, y + 10), fill=white)
+    draw.line((x + 10, y + 17, x + 15, y + 16), fill=white)
 
 
 def _fit_text(draw, text, font, max_width):
@@ -277,7 +283,15 @@ def render(options=None):
 
     ident = _flight_number(flight)
     status, status_color = _status(flight)
-    ident = _fit_text(draw, ident, font, 39)
+    if _airline_iata(flight) == "WN":
+        ident_max = 42
+        route_max = 42
+        bottom_max = 42
+    else:
+        ident_max = 39
+        route_max = 62
+        bottom_max = 62
+    ident = _fit_text(draw, ident, font, ident_max)
     status = _fit_text(draw, status, bold, 62)
     route = f"{_airport_code(flight.get('origin'))}>{_airport_code(flight.get('destination'))}"
     time_line = _event_time(flight)
@@ -287,9 +301,8 @@ def render(options=None):
         bottom = (time_line + " " + gate).strip()
 
     iata = _airline_iata(flight)
-    real_logo = _fetch_real_logo(iata) if iata else None
-    if real_logo:
-        image.paste(real_logo, (64 - real_logo.width, 0), real_logo)
+    if iata == "WN":
+        _draw_southwest_heart(draw, 44, 6)
     else:
         logo = fetch_airline_logo(iata) if iata else None
         if logo:
@@ -300,8 +313,8 @@ def render(options=None):
 
     draw_sharp_text(image, (1, -3), ident, (235, 245, 255), font)
     draw_sharp_text(image, (1, 6), status, status_color, bold)
-    draw_sharp_text(image, (1, 15), _fit_text(draw, route, font, 62), (100, 190, 255), font)
-    draw_sharp_text(image, (1, 24), _fit_text(draw, bottom, font, 62), (255, 220, 90), font)
+    draw_sharp_text(image, (1, 15), _fit_text(draw, route, font, route_max), (100, 190, 255), font)
+    draw_sharp_text(image, (1, 24), _fit_text(draw, bottom, font, bottom_max), (255, 220, 90), font)
 
     out = BytesIO()
     image.save(out, "WEBP", lossless=True, quality=100)
