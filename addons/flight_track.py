@@ -40,6 +40,10 @@ CARD_OPTIONS = [
 
 _CACHE = {}
 _API_ROOT = "https://aeroapi.flightaware.com/aeroapi"
+_LOGO_CACHE = {}
+_LOGO_URLS = {
+    "WN": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Southwest_Airlines_logo_2014.svg/330px-Southwest_Airlines_logo_2014.svg.png",
+}
 
 
 def _clean(value):
@@ -163,21 +167,24 @@ def _airline_iata(flight):
     return airline[1] if airline else None
 
 
-def _draw_airline_mark(image, draw, iata):
-    if iata == "WN":
-        # Tiny Southwest-style heart mark. External logo feeds often return a
-        # generic plane icon for WN, which is less useful on a 64x32 matrix.
-        x, y = 52, 1
-        blue = (45, 80, 210)
-        red = (230, 45, 65)
-        yellow = (255, 200, 40)
-        draw.polygon([(x + 5, y + 10), (x + 1, y + 5), (x + 1, y + 2),
-                      (x + 3, y), (x + 5, y + 2), (x + 7, y),
-                      (x + 9, y + 2), (x + 9, y + 5)], fill=blue)
-        draw.polygon([(x + 5, y + 10), (x + 1, y + 5), (x + 9, y + 5)], fill=red)
-        draw.polygon([(x + 5, y + 10), (x + 3, y + 7), (x + 7, y + 7)], fill=yellow)
-        return True
-    return False
+def _fetch_real_logo(iata, max_w=23, max_h=7):
+    url = _LOGO_URLS.get(iata)
+    if not url:
+        return None
+    key = f"{iata}:{max_w}x{max_h}"
+    if key in _LOGO_CACHE:
+        return _LOGO_CACHE[key]
+    try:
+        from PIL import Image
+        req = urllib.request.Request(url, headers={"User-Agent": "Hubyt/0.1"})
+        with urllib.request.urlopen(req, timeout=8) as resp:
+            raw = resp.read()
+        img = Image.open(BytesIO(raw)).convert("RGBA")
+        img.thumbnail((max_w, max_h), Image.LANCZOS)
+        _LOGO_CACHE[key] = img
+        return img
+    except Exception:
+        return None
 
 
 def _fit_text(draw, text, font, max_width):
@@ -265,9 +272,8 @@ def render(options=None):
 
     ident = _flight_number(flight)
     status, status_color = _status(flight)
-    text_width = 49
-    ident = _fit_text(draw, ident, bold, text_width)
-    status = _fit_text(draw, status, bold, text_width)
+    ident = _fit_text(draw, ident, font, 39)
+    status = _fit_text(draw, status, bold, 62)
     route = f"{_airport_code(flight.get('origin'))}>{_airport_code(flight.get('destination'))}"
     time_line = _event_time(flight)
     gate = _gate_line(flight)
@@ -276,18 +282,21 @@ def render(options=None):
         bottom = (time_line + " " + gate).strip()
 
     iata = _airline_iata(flight)
-    logo_drawn = _draw_airline_mark(image, draw, iata) if iata else False
-    logo = fetch_airline_logo(iata) if iata and not logo_drawn else None
-    if logo and not logo_drawn:
-        image.paste(logo, (52, 1), logo)
-    elif iata and not logo_drawn:
-        lw = draw.textbbox((0, 0), iata[:2], font=bold)[2]
-        draw_sharp_text(image, (63 - lw, -3), iata[:2], (100, 190, 255), bold)
+    real_logo = _fetch_real_logo(iata) if iata else None
+    if real_logo:
+        image.paste(real_logo, (64 - real_logo.width, 0), real_logo)
+    else:
+        logo = fetch_airline_logo(iata) if iata else None
+        if logo:
+            image.paste(logo, (52, 1), logo)
+        elif iata:
+            lw = draw.textbbox((0, 0), iata[:2], font=bold)[2]
+            draw_sharp_text(image, (63 - lw, -3), iata[:2], (100, 190, 255), bold)
 
-    draw_sharp_text(image, (1, -3), ident, (235, 245, 255), bold)
+    draw_sharp_text(image, (1, -3), ident, (235, 245, 255), font)
     draw_sharp_text(image, (1, 6), status, status_color, bold)
-    draw_sharp_text(image, (1, 15), _fit_text(draw, route, font, text_width), (100, 190, 255), font)
-    draw_sharp_text(image, (1, 24), _fit_text(draw, bottom, font, text_width), (255, 220, 90), font)
+    draw_sharp_text(image, (1, 15), _fit_text(draw, route, font, 62), (100, 190, 255), font)
+    draw_sharp_text(image, (1, 24), _fit_text(draw, bottom, font, 62), (255, 220, 90), font)
 
     out = BytesIO()
     image.save(out, "WEBP", lossless=True, quality=100)
