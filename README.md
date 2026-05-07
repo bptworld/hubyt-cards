@@ -10,6 +10,9 @@ Add-on cards for the [Hubyt](https://github.com/bptworld/hubyt) display system.
 | Countdown | Days until any event |
 | Google Calendar | Next upcoming event |
 | Hubitat Device | Live device attribute |
+| Hubitat Multi | Several Hubitat devices |
+| Hubitat Safety | All secure or open list |
+| Water Leak Alert | Skips when all dry |
 | Pac-Man Chase | Pac-Man chasing ghosts |
 | Matrix Rain | Falling green code |
 | Pong Loop | Tiny paddles and ball |

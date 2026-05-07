@@ -113,6 +113,36 @@
       "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/hubitat.py"
     },
     {
+      "id": "hubitat_multi",
+      "name": "Hubitat Multi",
+      "category": "Smart Home",
+      "detail": "Several Hubitat devices",
+      "description": "Shows one attribute from several Hubitat Maker API devices in a compact list.",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/hubitat_multi.py"
+    },
+    {
+      "id": "hubitat_safety",
+      "name": "Hubitat Safety",
+      "category": "Smart Home",
+      "detail": "All secure or open list",
+      "description": "Checks several Hubitat devices and shows All Secure when every device has the expected safe value. Lists devices that need attention.",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/hubitat_safety.py"
+    },
+    {
+      "id": "water_leak_alert",
+      "name": "Water Leak Alert",
+      "category": "Smart Home",
+      "detail": "Skips when all dry",
+      "description": "Checks several Hubitat water sensors. If every sensor is dry, the card skips itself; if any are wet, it shows an alert.",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/water_leak_alert.py"
+    },
+    {
       "id": "pacman",
       "name": "Pac-Man Chase",
       "category": "Fun",
