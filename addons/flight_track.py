@@ -156,7 +156,7 @@ def _fetch(ident, api_key):
     if cached and cached["expires"] > now:
         return cached["data"]
     encoded = urllib.parse.quote(ident, safe="")
-    url = f"{_API_ROOT}/flights/{encoded}?max_pages=1"
+    url = f"{_API_ROOT}/flights/{encoded}"
     req = urllib.request.Request(url, headers={"User-Agent": "Hubyt/0.1", "x-apikey": api_key, "Accept": "application/json"})
     with urllib.request.urlopen(req, timeout=15) as resp:
         data = json.loads(resp.read().decode("utf-8"))
@@ -188,6 +188,7 @@ def _load_flight(opts):
     ident = _ident_from_options(opts, use_icao=False)
     if not ident:
         return None, "SET FLT"
+    last_error = None
     for candidate in [ident, _ident_from_options(opts, use_icao=True)]:
         if not candidate:
             continue
@@ -196,9 +197,16 @@ def _load_flight(opts):
             flight = _pick_flight(data.get("flights") or [])
             if flight:
                 return flight, None
+        except urllib.error.HTTPError as err:
+            if err.code in (401, 403):
+                return None, "BAD API"
+            if err.code == 404:
+                last_error = "NOT FOUND"
+                continue
+            last_error = "API ERR"
         except Exception:
-            continue
-    return None, "NOT FOUND"
+            last_error = "API ERR"
+    return None, last_error or "NOT FOUND"
 
 
 def render(options=None):
