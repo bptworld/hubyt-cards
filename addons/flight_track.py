@@ -163,6 +163,23 @@ def _airline_iata(flight):
     return airline[1] if airline else None
 
 
+def _draw_airline_mark(image, draw, iata):
+    if iata == "WN":
+        # Tiny Southwest-style heart mark. External logo feeds often return a
+        # generic plane icon for WN, which is less useful on a 64x32 matrix.
+        x, y = 52, 1
+        blue = (45, 80, 210)
+        red = (230, 45, 65)
+        yellow = (255, 200, 40)
+        draw.polygon([(x + 5, y + 10), (x + 1, y + 5), (x + 1, y + 2),
+                      (x + 3, y), (x + 5, y + 2), (x + 7, y),
+                      (x + 9, y + 2), (x + 9, y + 5)], fill=blue)
+        draw.polygon([(x + 5, y + 10), (x + 1, y + 5), (x + 9, y + 5)], fill=red)
+        draw.polygon([(x + 5, y + 10), (x + 3, y + 7), (x + 7, y + 7)], fill=yellow)
+        return True
+    return False
+
+
 def _fit_text(draw, text, font, max_width):
     text = str(text or "")
     while text and draw.textbbox((0, 0), text, font=font)[2] > max_width:
@@ -259,10 +276,11 @@ def render(options=None):
         bottom = (time_line + " " + gate).strip()
 
     iata = _airline_iata(flight)
-    logo = fetch_airline_logo(iata) if iata else None
-    if logo:
+    logo_drawn = _draw_airline_mark(image, draw, iata) if iata else False
+    logo = fetch_airline_logo(iata) if iata and not logo_drawn else None
+    if logo and not logo_drawn:
         image.paste(logo, (52, 1), logo)
-    elif iata:
+    elif iata and not logo_drawn:
         lw = draw.textbbox((0, 0), iata[:2], font=bold)[2]
         draw_sharp_text(image, (63 - lw, -3), iata[:2], (100, 190, 255), bold)
 
