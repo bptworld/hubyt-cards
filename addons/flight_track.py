@@ -112,7 +112,7 @@ def _status(flight):
         return "LANDED", (95, 230, 135)
     if flight.get("actual_off"):
         pct = flight.get("progress_percent")
-        return (f"AIR {pct}%" if pct not in (None, "") else "IN AIR"), (100, 190, 255)
+        return (f"ENRT {pct}%" if pct not in (None, "") else "EN ROUTE"), (100, 190, 255)
     if flight.get("actual_out"):
         return "TAXI", (255, 220, 90)
     if "BOARD" in raw:
@@ -313,7 +313,7 @@ def render(options=None):
     draw_sharp_text(image, (text_left, -3), ident, (235, 245, 255), font)
     draw_sharp_text(image, (text_left, 6), status, status_color, font)
     draw_sharp_text(image, (text_left, 15), _fit_text(draw, route, font, route_max), (100, 190, 255), font)
-    draw_sharp_text(image, (text_left, 24), _fit_text(draw, bottom, font, bottom_max), (255, 220, 90), font)
+    draw_sharp_text(image, (text_left, 23), _fit_text(draw, bottom, font, bottom_max), (255, 220, 90), font)
 
     out = BytesIO()
     image.save(out, "WEBP", lossless=True, quality=100)
