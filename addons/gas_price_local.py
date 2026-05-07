@@ -176,19 +176,18 @@ def render(options=None):
     try:
         font = ImageFont.truetype("Silkscreen-Regular.ttf", 8)
         bold = ImageFont.truetype("Silkscreen-Bold.ttf", 8)
-        big = ImageFont.truetype("Silkscreen-Bold.ttf", 16)
     except Exception:
-        font = bold = big = ImageFont.load_default()
+        font = bold = ImageFont.load_default()
 
-    draw.rectangle((2, 6, 14, 26), outline=(90, 170, 255), fill=(8, 18, 30))
-    draw.rectangle((5, 9, 11, 13), fill=(90, 170, 255))
-    draw.line((14, 10, 19, 14, 19, 22), fill=(90, 170, 255))
-    header = data["location"][:10].upper() if data.get("local") else f"GAS {data['state']}"
-    draw_sharp_text(image, (22, -3), header, (255, 220, 80), bold)
+    draw.rectangle((2, 9, 12, 25), outline=(90, 170, 255), fill=(8, 18, 30))
+    draw.rectangle((5, 12, 9, 15), fill=(90, 170, 255))
+    draw.line((12, 12, 17, 16, 17, 23), fill=(90, 170, 255))
+    header = data["location"][:9].upper() if data.get("local") else f"GAS {data['state']}"
+    draw_sharp_text(image, (20, -3), header, (255, 220, 80), bold)
     price = f"${data['price']:.2f}"
-    draw_sharp_text(image, (22, 7), price, (235, 245, 255), big)
+    draw_sharp_text(image, (20, 8), price, (235, 245, 255), bold)
     tag = f"{diff:+.2f} vs US"
-    draw_sharp_text(image, (22, 22), tag[:10], color, font)
+    draw_sharp_text(image, (20, 20), tag[:10], color, font)
 
     out = BytesIO()
     image.save(out, "WEBP", lossless=True, quality=100)
