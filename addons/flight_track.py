@@ -41,6 +41,7 @@ CARD_OPTIONS = [
 ]
 
 _CACHE = {}
+_CACHE_SECONDS = 300
 _API_ROOT = "https://fr24api.flightradar24.com/api"
 
 
@@ -250,7 +251,7 @@ def _fetch(endpoint, params, api_key):
     })
     with urllib.request.urlopen(req, timeout=15) as resp:
         data = json.loads(resp.read().decode("utf-8"))
-    _CACHE[key] = {"data": data, "expires": now + timedelta(seconds=90)}
+    _CACHE[key] = {"data": data, "expires": now + timedelta(seconds=_CACHE_SECONDS)}
     return data
 
 
