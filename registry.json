@@ -9,7 +9,7 @@
       "detail": "Time plus local weather",
       "description": "Shows the current time in large text with a weather icon and temperature pulled from weather.gov.",
       "author": "bptworld",
-      "version": "1.0",
+      "version": "1.1",
       "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/clock.py"
     },
     {
@@ -376,8 +376,8 @@
       "id": "flight_track",
       "name": "Flight Tracker",
       "category": "Travel",
-      "detail": "FlightAware status",
-      "description": "Track a specific flight using FlightAware AeroAPI. Shows route, status, estimated or actual times, gate/terminal when available, and in-flight progress.",
+      "detail": "Flightradar24 live tracking",
+      "description": "Track a specific flight using the Flightradar24 API. Shows route, live status, ETA, speed, altitude, and airline graphics when available.",
       "author": "bptworld",
       "version": "1.0",
       "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/flight_track.py"

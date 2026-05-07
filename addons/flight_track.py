@@ -10,7 +10,7 @@ from card_utils import (
 
 CARD_ID = "flight_track"
 CARD_NAME = "Flight Tracker"
-CARD_DETAIL = "FlightAware status"
+CARD_DETAIL = "Flightradar24 live tracking"
 CARD_OPTIONS = [
     {
         "key": "airline",
@@ -35,11 +35,11 @@ CARD_OPTIONS = [
         ],
     },
     {"key": "flightNumber", "label": "Flight Number", "type": "text", "default": "3416", "maxlength": 6, "inputmode": "numeric"},
-    {"key": "apiKey", "label": "FlightAware API Key", "type": "text", "default": ""},
+    {"key": "apiKey", "label": "Flightradar24 API Token", "type": "text", "default": ""},
 ]
 
 _CACHE = {}
-_API_ROOT = "https://aeroapi.flightaware.com/aeroapi"
+_API_ROOT = "https://fr24api.flightradar24.com/api"
 
 
 def _clean(value):
@@ -75,13 +75,15 @@ def _fmt_time(value):
 
 
 def _airport_code(value):
+    if isinstance(value, str) and value:
+        return value[:3].upper()
     if not isinstance(value, dict):
         return "---"
     return value.get("code_iata") or value.get("code_lid") or value.get("code") or "---"
 
 
 def _flight_number(flight):
-    ident = flight.get("ident_iata") or flight.get("ident") or ""
+    ident = flight.get("flight") or flight.get("ident_iata") or flight.get("ident") or flight.get("callsign") or ""
     if ident:
         return ident.replace(" ", "")[:8]
     op = flight.get("operator_iata") or flight.get("operator") or ""
@@ -90,77 +92,60 @@ def _flight_number(flight):
 
 
 def _delay_minutes(flight):
-    dep = flight.get("departure_delay")
-    arr = flight.get("arrival_delay")
-    seconds = dep if dep not in (None, "") else arr
-    try:
-        return int(round(float(seconds) / 60.0))
-    except Exception:
-        return 0
+    return 0
 
 
 def _status(flight):
-    raw = str(flight.get("status") or "").upper()
-    delay = _delay_minutes(flight)
-    if flight.get("cancelled"):
-        return "CANCEL", (255, 80, 80)
-    if flight.get("diverted"):
-        return "DIVERT", (255, 160, 80)
-    if flight.get("actual_in"):
-        return "AT GATE", (95, 230, 135)
-    if flight.get("actual_on"):
-        return "LANDED", (95, 230, 135)
-    if flight.get("actual_off"):
-        pct = flight.get("progress_percent")
-        return (f"ENRT {pct}%" if pct not in (None, "") else "EN ROUTE"), (100, 190, 255)
-    if flight.get("actual_out"):
+    try:
+        alt = int(float(flight.get("alt") or 0))
+    except Exception:
+        alt = 0
+    try:
+        speed = int(float(flight.get("gspeed") or 0))
+    except Exception:
+        speed = 0
+    source = str(flight.get("source") or "").upper()
+    if alt > 1000:
+        return "ENRT", (100, 190, 255)
+    if speed > 40:
         return "TAXI", (255, 220, 90)
-    if "BOARD" in raw:
-        return "BOARD", (95, 230, 135)
-    if delay >= 15:
-        return f"DLY {delay}m", (255, 120, 80)
-    if raw:
-        first = raw.split("/")[0].strip()
-        if first:
-            return first[:8], (95, 230, 135)
-    return "ON TIME", (95, 230, 135)
+    if source == "ESTIMATED":
+        return "EST", (255, 220, 90)
+    return "LIVE", (95, 230, 135)
 
 
 def _event_time(flight):
-    if flight.get("actual_in"):
-        return "GATE " + _fmt_time(flight.get("actual_in"))
-    if flight.get("actual_on"):
-        return "LAND " + _fmt_time(flight.get("actual_on"))
-    if flight.get("actual_off"):
-        return "ETA " + _fmt_time(flight.get("estimated_in") or flight.get("scheduled_in"))
-    if flight.get("actual_out"):
-        return "OFF " + _fmt_time(flight.get("estimated_off") or flight.get("scheduled_off"))
-    return "DEP " + _fmt_time(flight.get("estimated_out") or flight.get("scheduled_out"))
+    if flight.get("eta"):
+        return "ETA " + _fmt_time(flight.get("eta"))
+    try:
+        speed = int(float(flight.get("gspeed") or 0))
+    except Exception:
+        speed = 0
+    return f"{speed}KT" if speed else "LIVE"
 
 
 def _gate_line(flight):
-    gate = flight.get("gate_origin")
-    terminal = flight.get("terminal_origin")
-    if flight.get("actual_off") or flight.get("actual_on") or flight.get("actual_in"):
-        gate = flight.get("gate_destination") or gate
-        terminal = flight.get("terminal_destination") or terminal
-    parts = []
-    if terminal:
-        parts.append("T" + str(terminal))
-    if gate:
-        parts.append("G" + str(gate))
-    return " ".join(parts)[:10]
+    try:
+        alt = int(float(flight.get("alt") or 0))
+    except Exception:
+        alt = 0
+    return f"{alt // 100}FL" if alt >= 10000 else ""
 
 
 def _airline_iata(flight):
-    iata = flight.get("operator_iata")
-    if iata:
-        return str(iata).upper()
-    ident = str(flight.get("ident_iata") or "").strip().upper()
+    ident = str(flight.get("flight") or "").strip().upper()
     if len(ident) >= 2:
         return ident[:2]
-    airline = lookup_airline(flight.get("ident") or "")
-    return airline[1] if airline else None
+    airline = lookup_airline(flight.get("operating_as") or flight.get("callsign") or "")
+    if airline:
+        return airline[1]
+    painted = str(flight.get("painted_as") or flight.get("operating_as") or "").upper()
+    reverse = {
+        "AAL": "AA", "UAL": "UA", "DAL": "DL", "SWA": "WN", "ASA": "AS",
+        "JBU": "B6", "FFT": "F9", "NKS": "NK", "HAL": "HA", "BAW": "BA",
+        "AFR": "AF", "DLH": "LH", "UAE": "EK", "ACA": "AC",
+    }
+    return reverse.get(painted)
 
 
 def _draw_southwest_heart(draw, x, y):
@@ -210,15 +195,19 @@ def _draw_tight_text(image, text, x, y, fill, font, spacing=-1):
     return cursor
 
 
-def _fetch(ident, api_key):
+def _fetch(params, api_key):
     now = datetime.now(timezone.utc)
-    key = ident
+    key = urllib.parse.urlencode(sorted(params.items()))
     cached = _CACHE.get(key)
     if cached and cached["expires"] > now:
         return cached["data"]
-    encoded = urllib.parse.quote(ident, safe="")
-    url = f"{_API_ROOT}/flights/{encoded}"
-    req = urllib.request.Request(url, headers={"User-Agent": "Hubyt/0.1", "x-apikey": api_key, "Accept": "application/json"})
+    url = f"{_API_ROOT}/live/flight-positions/full?{urllib.parse.urlencode(params)}"
+    req = urllib.request.Request(url, headers={
+        "User-Agent": "Hubyt/0.1",
+        "Authorization": "Bearer " + api_key,
+        "Accept": "application/json",
+        "Accept-Version": "v1",
+    })
     with urllib.request.urlopen(req, timeout=15) as resp:
         data = json.loads(resp.read().decode("utf-8"))
     _CACHE[key] = {"data": data, "expires": now + timedelta(seconds=90)}
@@ -231,11 +220,15 @@ def _pick_flight(flights):
     now = datetime.now(timezone.utc)
 
     def score(f):
-        if f.get("actual_off") and not f.get("actual_in"):
+        try:
+            alt = int(float(f.get("alt") or 0))
+        except Exception:
+            alt = 0
+        if alt > 0:
             return 0
-        out = _parse_time(f.get("estimated_out") or f.get("scheduled_out"))
-        if out:
-            delta = abs((out - now).total_seconds())
+        eta = _parse_time(f.get("eta"))
+        if eta:
+            delta = abs((eta - now).total_seconds())
             return 1 + delta / 86400
         return 999
 
@@ -250,18 +243,24 @@ def _load_flight(opts):
     if not ident:
         return None, "SET FLT"
     last_error = None
-    for candidate in [ident, _ident_from_options(opts, use_icao=True)]:
-        if not candidate:
+    iata_ident = ident
+    icao_ident = _ident_from_options(opts, use_icao=True)
+    candidates = [
+        {"flights": iata_ident, "limit": "5"},
+        {"callsigns": icao_ident, "limit": "5"} if icao_ident else None,
+    ]
+    for params in candidates:
+        if not params:
             continue
         try:
-            data = _fetch(candidate, api_key)
-            flight = _pick_flight(data.get("flights") or [])
+            data = _fetch(params, api_key)
+            flight = _pick_flight(data.get("data") if isinstance(data, dict) else data)
             if flight:
                 return flight, None
         except urllib.error.HTTPError as err:
             if err.code in (401, 403):
                 return None, "BAD API"
-            if err.code == 404:
+            if err.code in (404, 422):
                 last_error = "NOT FOUND"
                 continue
             last_error = "API ERR"
@@ -304,7 +303,7 @@ def render(options=None):
         bottom_max = 62
     ident = _fit_text(draw, ident, font, ident_max)
     status = _fit_text(draw, status, bold, 62)
-    route = f"{_airport_code(flight.get('origin'))}>{_airport_code(flight.get('destination'))}"
+    route = f"{_airport_code(flight.get('orig_iata') or flight.get('orig_icao'))}>{_airport_code(flight.get('dest_iata') or flight.get('dest_icao'))}"
     time_line = _event_time(flight)
     gate = _gate_line(flight)
     bottom = time_line
