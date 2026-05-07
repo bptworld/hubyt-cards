@@ -323,11 +323,12 @@ def render(options=None):
             draw_sharp_text(image, (63 - lw, -3), iata[:2], (100, 190, 255), bold)
 
     draw_sharp_text(image, (text_left, -3), ident, (235, 245, 255), font)
+    status_y = 3 if status.startswith("ENRT ") else 6
     if status.startswith("ENRT "):
-        next_x = _draw_tight_text(image, "ENRT", text_left, 6, status_color, font, -1)
-        draw_sharp_text(image, (next_x + 1, 6), status[5:], status_color, font)
+        next_x = _draw_tight_text(image, "ENRT", text_left, status_y, status_color, font, -1)
+        draw_sharp_text(image, (next_x + 1, status_y), status[5:], status_color, font)
     else:
-        draw_sharp_text(image, (text_left, 6), status, status_color, font)
+        draw_sharp_text(image, (text_left, status_y), status, status_color, font)
     draw_sharp_text(image, (text_left, 15), _fit_text(draw, route, font, route_max), (100, 190, 255), font)
     draw_sharp_text(image, (text_left, 23), _fit_text(draw, bottom, font, bottom_max), (255, 220, 90), font)
 
