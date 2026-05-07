@@ -68,6 +68,16 @@ def _callsign_variants(callsign):
     return variants
 
 
+def _matches_callsign(callsign, targets):
+    cs = _normalize(callsign)
+    if cs in targets:
+        return True
+    for target in targets:
+        if cs.startswith(target) and cs[len(target):].isalpha():
+            return True
+    return False
+
+
 def render(options=None):
     opts = options or {}
     target = _target_from_options(opts)
@@ -84,8 +94,7 @@ def render(options=None):
 
     match = None
     for s in states:
-        cs = _normalize(s[1] or "")
-        if cs in targets:
+        if _matches_callsign(s[1] or "", targets):
             match = s
             break
 
