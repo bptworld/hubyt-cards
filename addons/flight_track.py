@@ -167,7 +167,7 @@ def _airline_iata(flight):
     return airline[1] if airline else None
 
 
-def _fetch_real_logo(iata, max_w=23, max_h=7):
+def _fetch_real_logo(iata, max_w=11, max_h=11):
     url = _LOGO_URLS.get(iata)
     if not url:
         return None
@@ -180,6 +180,11 @@ def _fetch_real_logo(iata, max_w=23, max_h=7):
         with urllib.request.urlopen(req, timeout=8) as resp:
             raw = resp.read()
         img = Image.open(BytesIO(raw)).convert("RGBA")
+        if iata == "WN":
+            # Use only the real Southwest heart mark from the right side of the
+            # official logo, not the "Southwest" wordmark.
+            w, h = img.size
+            img = img.crop((int(w * 0.72), 0, w, h))
         img.thumbnail((max_w, max_h), Image.LANCZOS)
         _LOGO_CACHE[key] = img
         return img
