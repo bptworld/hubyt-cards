@@ -21,6 +21,7 @@ Add-on cards for the [Hubyt](https://github.com/bptworld/hubyt) display system.
 |------|-------------|
 | Weather Forecast | 4-day forecast with icons |
 | Weather Mood | Animated weather vibe |
+| Weather Alert | Skips when clear |
 
 ### Smart Home
 
@@ -54,6 +55,8 @@ Add-on cards for the [Hubyt](https://github.com/bptworld/hubyt) display system.
 
 | Card | Description |
 |------|-------------|
+| Airport Delays | FAA delay status |
+| Commute Time | Drive time estimate |
 | Flights Overhead | Live flights above you |
 | Flight Tracker | Track a specific flight |
 

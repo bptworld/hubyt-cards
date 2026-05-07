@@ -283,6 +283,16 @@
       "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/weather_mood.py"
     },
     {
+      "id": "weather_alert",
+      "name": "Weather Alert",
+      "category": "Weather",
+      "detail": "Skips when clear",
+      "description": "Shows active National Weather Service alerts for a ZIP code with a small radar-style icon. Skips itself when there are no active alerts.",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/weather_alert.py"
+    },
+    {
       "id": "countdown_confetti",
       "name": "Countdown Confetti",
       "category": "Utility",
@@ -331,6 +341,26 @@
       "author": "bptworld",
       "version": "1.0",
       "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/nfl.py"
+    },
+    {
+      "id": "airport_delays",
+      "name": "Airport Delays",
+      "category": "Travel",
+      "detail": "FAA delay status",
+      "description": "Shows FAA airport delay status for one or more airport codes using the FAA NAS status feed.",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/airport_delays.py"
+    },
+    {
+      "id": "commute_time",
+      "name": "Commute Time",
+      "category": "Travel",
+      "detail": "Drive time estimate",
+      "description": "Shows an estimated drive time and distance between two addresses or latitude/longitude points using OpenStreetMap geocoding and OSRM routing.",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/commute_time.py"
     },
     {
       "id": "flights_overhead",
