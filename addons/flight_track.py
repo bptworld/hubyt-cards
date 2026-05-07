@@ -420,14 +420,14 @@ def render(options=None):
             draw_sharp_text(image, (63 - lw, -3), iata[:2], (100, 190, 255), bold)
 
     draw_sharp_text(image, (text_left, -3), ident, (235, 245, 255), font)
-    status_y = 4 if status.startswith("ENRT ") else 6
+    draw_sharp_text(image, (text_left, 5), _fit_text(draw, route, font, route_max), (100, 190, 255), font)
+    status_y = 12
     if status.startswith("ENRT "):
         next_x = _draw_tight_text(image, "ENRT", text_left, status_y, status_color, font, -1)
         draw_sharp_text(image, (next_x + 3, status_y), status[5:], status_color, font)
     else:
         draw_sharp_text(image, (text_left, status_y), status, status_color, font)
-    draw_sharp_text(image, (text_left, 11), _fit_text(draw, route, font, route_max), (100, 190, 255), font)
-    draw_sharp_text(image, (text_left, 18), _fit_text(draw, bottom, font, bottom_max), (255, 220, 90), font)
+    draw_sharp_text(image, (text_left, 19), _fit_text(draw, bottom, font, bottom_max), (255, 220, 90), font)
 
     out = BytesIO()
     image.save(out, "WEBP", lossless=True, quality=100)
