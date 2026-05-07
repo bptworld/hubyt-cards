@@ -42,6 +42,8 @@ CARD_OPTIONS = [
 
 _CACHE = {}
 _CACHE_SECONDS = 300
+_TERMINAL_CACHE = {}
+_TERMINAL_CACHE_SECONDS = 18 * 60 * 60
 _API_ROOT = "https://fr24api.flightradar24.com/api"
 
 
@@ -76,6 +78,32 @@ def _route_from_options(opts):
     if origin and destination:
         return f"{origin}-{destination}"
     return ""
+
+
+def _terminal_key(iata_ident, icao_ident, route):
+    return "|".join([iata_ident or "", icao_ident or "", route or ""])
+
+
+def _is_landed(flight):
+    return bool(flight and (flight.get("datetime_landed") or flight.get("flight_ended") is True))
+
+
+def _terminal_cached(key):
+    cached = _TERMINAL_CACHE.get(key)
+    if not cached:
+        return None
+    if cached["expires"] <= datetime.now(timezone.utc):
+        _TERMINAL_CACHE.pop(key, None)
+        return None
+    return cached["flight"]
+
+
+def _cache_terminal(key, flight):
+    if _is_landed(flight):
+        _TERMINAL_CACHE[key] = {
+            "flight": flight,
+            "expires": datetime.now(timezone.utc) + timedelta(seconds=_TERMINAL_CACHE_SECONDS),
+        }
 
 
 def _parse_time(value):
@@ -315,6 +343,10 @@ def _load_flight(opts):
     route = _route_from_options(opts)
     iata_ident = ident
     icao_ident = _ident_from_options(opts, use_icao=True)
+    terminal_key = _terminal_key(iata_ident, icao_ident, route)
+    terminal_flight = _terminal_cached(terminal_key)
+    if terminal_flight:
+        return terminal_flight, None
     candidates = [
         {"flights": iata_ident, "limit": "5"},
         {"callsigns": icao_ident, "limit": "5"} if icao_ident else None,
@@ -329,6 +361,7 @@ def _load_flight(opts):
             data = _fetch("/live/flight-positions/full", params, api_key)
             flight = _pick_flight(_data_rows(data))
             if flight:
+                _cache_terminal(terminal_key, flight)
                 return flight, None
         except urllib.error.HTTPError as err:
             if err.code in (401, 403):
@@ -356,6 +389,7 @@ def _load_flight(opts):
         data = _fetch("/flight-summary/full", summary_params, api_key)
         flight = _pick_summary(_data_rows(data))
         if flight:
+            _cache_terminal(terminal_key, flight)
             return flight, None
         last_error = "NO LIVE"
     except urllib.error.HTTPError as err:
