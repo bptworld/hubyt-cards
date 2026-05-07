@@ -8,7 +8,29 @@ CARD_ID = "flight_track"
 CARD_NAME = "Flight Tracker"
 CARD_DETAIL = "Track a specific flight"
 CARD_OPTIONS = [
-    {"key": "callsign",     "label": "Flight # or Callsign", "type": "text", "default": "UA1", "maxlength": 8},
+    {
+        "key": "airline",
+        "label": "Airline",
+        "type": "select",
+        "default": "UA",
+        "choices": [
+            {"value": "AA", "label": "American"},
+            {"value": "UA", "label": "United"},
+            {"value": "DL", "label": "Delta"},
+            {"value": "WN", "label": "Southwest"},
+            {"value": "AS", "label": "Alaska"},
+            {"value": "B6", "label": "JetBlue"},
+            {"value": "F9", "label": "Frontier"},
+            {"value": "NK", "label": "Spirit"},
+            {"value": "HA", "label": "Hawaiian"},
+            {"value": "BA", "label": "British Airways"},
+            {"value": "AF", "label": "Air France"},
+            {"value": "LH", "label": "Lufthansa"},
+            {"value": "EK", "label": "Emirates"},
+            {"value": "AC", "label": "Air Canada"},
+        ],
+    },
+    {"key": "flightNumber", "label": "Flight Number", "type": "text", "default": "1", "maxlength": 6, "inputmode": "numeric"},
     {"key": "clientId",     "label": "OpenSky Client ID",     "type": "text", "default": ""},
     {"key": "clientSecret", "label": "OpenSky Client Secret", "type": "text", "default": ""},
 ]
@@ -17,7 +39,7 @@ _CACHE = {"expires": datetime.min.replace(tzinfo=timezone.utc), "body": None, "t
 
 
 def _normalize(cs):
-    cs = cs.strip().upper()
+    cs = "".join(ch for ch in cs.strip().upper() if ch.isalnum())
     if len(cs) > 2 and cs[2].isdigit():
         icao = iata_to_icao_prefix(cs[:2])
         if icao:
@@ -25,15 +47,36 @@ def _normalize(cs):
     return cs
 
 
+def _target_from_options(opts):
+    flight_number = "".join(ch for ch in str(opts.get("flightNumber") or "") if ch.isdigit())
+    airline = "".join(ch for ch in str(opts.get("airline") or "") if ch.isalnum()).upper()
+    if airline and flight_number:
+        if len(airline) == 2:
+            airline = iata_to_icao_prefix(airline) or airline
+        return _normalize(airline + flight_number)
+    return _normalize(opts.get("callsign") or "")
+
+
+def _callsign_variants(callsign):
+    callsign = _normalize(callsign)
+    variants = {callsign}
+    prefix = callsign[:3]
+    number = callsign[3:]
+    if number.isdigit():
+        variants.add(prefix + str(int(number)))
+        variants.add(prefix + number.zfill(4))
+    return variants
+
+
 def render(options=None):
     opts = options or {}
-    raw = (opts.get("callsign") or "").strip()
-    if not raw:
+    target = _target_from_options(opts)
+    if not target:
         return render_text_webp("SET FLIGHT", (100, 190, 255))
 
     cid  = opts.get("clientId", "")
     csec = opts.get("clientSecret", "")
-    target = _normalize(raw)
+    targets = _callsign_variants(target)
 
     _CACHE.setdefault("expires", datetime.min.replace(tzinfo=timezone.utc))
     data   = fetch_opensky(_CACHE, cid, csec)
@@ -41,8 +84,8 @@ def render(options=None):
 
     match = None
     for s in states:
-        cs = (s[1] or "").strip().upper()
-        if cs == target or cs.startswith(target):
+        cs = _normalize(s[1] or "")
+        if cs in targets:
             match = s
             break
 
