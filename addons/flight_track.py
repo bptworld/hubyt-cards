@@ -3,7 +3,10 @@ from io import BytesIO
 import json
 import urllib.parse
 import urllib.request
-from card_utils import draw_sharp_text, iata_to_icao_prefix, lookup_airline, render_text_webp
+from card_utils import (
+    draw_sharp_text, fetch_airline_logo, iata_to_icao_prefix, lookup_airline,
+    render_text_webp,
+)
 
 CARD_ID = "flight_track"
 CARD_NAME = "Flight Tracker"
@@ -149,6 +152,17 @@ def _gate_line(flight):
     return " ".join(parts)[:10]
 
 
+def _airline_iata(flight):
+    iata = flight.get("operator_iata")
+    if iata:
+        return str(iata).upper()
+    ident = str(flight.get("ident_iata") or "").strip().upper()
+    if len(ident) >= 2:
+        return ident[:2]
+    airline = lookup_airline(flight.get("ident") or "")
+    return airline[1] if airline else None
+
+
 def _fit_text(draw, text, font, max_width):
     text = str(text or "")
     while text and draw.textbbox((0, 0), text, font=font)[2] > max_width:
@@ -234,8 +248,9 @@ def render(options=None):
 
     ident = _flight_number(flight)
     status, status_color = _status(flight)
-    ident = _fit_text(draw, ident, bold, 62)
-    status = _fit_text(draw, status, bold, 62)
+    text_width = 49
+    ident = _fit_text(draw, ident, bold, text_width)
+    status = _fit_text(draw, status, bold, text_width)
     route = f"{_airport_code(flight.get('origin'))}>{_airport_code(flight.get('destination'))}"
     time_line = _event_time(flight)
     gate = _gate_line(flight)
@@ -243,10 +258,18 @@ def render(options=None):
     if gate:
         bottom = (time_line + " " + gate).strip()
 
+    iata = _airline_iata(flight)
+    logo = fetch_airline_logo(iata) if iata else None
+    if logo:
+        image.paste(logo, (52, 1), logo)
+    elif iata:
+        lw = draw.textbbox((0, 0), iata[:2], font=bold)[2]
+        draw_sharp_text(image, (63 - lw, -3), iata[:2], (100, 190, 255), bold)
+
     draw_sharp_text(image, (1, -3), ident, (235, 245, 255), bold)
     draw_sharp_text(image, (1, 6), status, status_color, bold)
-    draw_sharp_text(image, (1, 15), _fit_text(draw, route, font, 62), (100, 190, 255), font)
-    draw_sharp_text(image, (1, 24), _fit_text(draw, bottom, font, 62), (255, 220, 90), font)
+    draw_sharp_text(image, (1, 15), _fit_text(draw, route, font, text_width), (100, 190, 255), font)
+    draw_sharp_text(image, (1, 24), _fit_text(draw, bottom, font, text_width), (255, 220, 90), font)
 
     out = BytesIO()
     image.save(out, "WEBP", lossless=True, quality=100)
