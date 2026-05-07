@@ -10,8 +10,7 @@
       "description": "Shows the current time in large text with a weather icon and temperature pulled from weather.gov.",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/clock.py",
-      "preview": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/clock.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/clock.py"
     },
     {
       "id": "countdown",
@@ -21,8 +20,7 @@
       "description": "Generic countdown to any event. Set an event name and date \u2014 shows days remaining with a large number display.",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/countdown.py",
-      "preview": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/countdown.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/countdown.py"
     },
     {
       "id": "disney",
@@ -32,8 +30,7 @@
       "description": "Countdown to your Disney trip. Shows days remaining in large text with a DISNEY header.",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/disney.py",
-      "preview": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/disney.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/disney.py"
     },
     {
       "id": "weather_forecast",
@@ -43,8 +40,7 @@
       "description": "4-day weather forecast showing day, weather icon, high and low temperatures. Pulls from weather.gov \u2014 no API key required.",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/weather_forecast.py",
-      "preview": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/weather_forecast.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/weather_forecast.py"
     },
     {
       "id": "stocks",
@@ -54,8 +50,7 @@
       "description": "Live stock or crypto price with dollar and percent change. Supports any Yahoo Finance symbol \u2014 AAPL, TSLA, BTC-USD, ^SPX, and more.",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/stocks.py",
-      "preview": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/stocks.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/stocks.py"
     },
     {
       "id": "market_indexes",
@@ -65,8 +60,7 @@
       "description": "Shows up to three market indexes with current value and daily percent change.",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/market_indexes.py",
-      "preview": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/market_indexes.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/market_indexes.py"
     },
     {
       "id": "crypto_watch",
@@ -76,8 +70,7 @@
       "description": "Shows up to three crypto symbols with current price and daily percent change.",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/crypto_watch.py",
-      "preview": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/crypto_watch.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/crypto_watch.py"
     },
     {
       "id": "gas_price_local",
@@ -87,8 +80,7 @@
       "description": "Uses a ZIP code to find the closest AAA metro gas average, with a state average fallback when no local metro match is available.",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/gas_price_local.py",
-      "preview": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/gas_price_local.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/gas_price_local.py"
     },
     {
       "id": "portfolio_pulse",
@@ -98,8 +90,7 @@
       "description": "Shows estimated portfolio value and daily gain or loss from configured ticker quantities.",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/portfolio_pulse.py",
-      "preview": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/portfolio_pulse.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/portfolio_pulse.py"
     },
     {
       "id": "gcal",
@@ -109,8 +100,7 @@
       "description": "Shows the next upcoming event from a public or private Google Calendar ICS URL. Includes event title, date or time, and relative countdown.",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/gcal.py",
-      "preview": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/gcal.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/gcal.py"
     },
     {
       "id": "hubitat",
@@ -120,8 +110,7 @@
       "description": "Shows a live Hubitat Maker API device attribute such as temperature, humidity, switch, motion, contact, presence, lock, power, or battery.",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/hubitat.py",
-      "preview": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/hubitat.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/hubitat.py"
     },
     {
       "id": "hubitat_multi",
@@ -131,8 +120,7 @@
       "description": "Shows one attribute from several Hubitat Maker API devices in a compact list.",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/hubitat_multi.py",
-      "preview": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/hubitat_multi.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/hubitat_multi.py"
     },
     {
       "id": "hubitat_safety",
@@ -142,8 +130,7 @@
       "description": "Checks several Hubitat devices and shows All Secure when every device has the expected safe value. Lists devices that need attention.",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/hubitat_safety.py",
-      "preview": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/hubitat_safety.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/hubitat_safety.py"
     },
     {
       "id": "water_leak_alert",
@@ -153,8 +140,7 @@
       "description": "Checks several Hubitat water sensors. If every sensor is dry, the card skips itself; if any are wet, it shows an alert.",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/water_leak_alert.py",
-      "preview": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/water_leak_alert.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/water_leak_alert.py"
     },
     {
       "id": "pacman",
@@ -164,8 +150,7 @@
       "description": "Animated pixel card showing Pac-Man chasing ghosts across a tiny maze. Includes options for speed and dots.",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/pacman.py",
-      "preview": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/pacman.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/pacman.py"
     },
     {
       "id": "matrix_rain",
@@ -175,8 +160,7 @@
       "description": "Animated falling green code columns for an ambient pixel display.",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/matrix_rain.py",
-      "preview": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/matrix_rain.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/matrix_rain.py"
     },
     {
       "id": "pong_loop",
@@ -186,8 +170,7 @@
       "description": "Animated retro paddle-and-ball loop with a tiny scoreboard.",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/pong_loop.py",
-      "preview": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/pong_loop.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/pong_loop.py"
     },
     {
       "id": "lava_lamp",
@@ -197,8 +180,7 @@
       "description": "Animated colorful blobs drifting around like a tiny lava lamp.",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/lava_lamp.py",
-      "preview": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/lava_lamp.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/lava_lamp.py"
     },
     {
       "id": "alien_march",
@@ -208,8 +190,7 @@
       "description": "Animated rows of tiny aliens marching across the display.",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/alien_march.py",
-      "preview": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/alien_march.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/alien_march.py"
     },
     {
       "id": "snake",
@@ -219,8 +200,7 @@
       "description": "Animated snake loop with a moving food dot.",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/snake.py",
-      "preview": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/snake.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/snake.py"
     },
     {
       "id": "aquarium",
@@ -230,8 +210,7 @@
       "description": "Animated little fish, bubbles, and plants for an ambient aquarium card.",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/aquarium.py",
-      "preview": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/aquarium.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/aquarium.py"
     },
     {
       "id": "fireplace",
@@ -241,8 +220,7 @@
       "description": "Animated pixel fireplace with flickering flames.",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/fireplace.py",
-      "preview": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/fireplace.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/fireplace.py"
     },
     {
       "id": "tiny_traffic",
@@ -252,8 +230,7 @@
       "description": "Animated tiny cars driving under a changing traffic light.",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/tiny_traffic.py",
-      "preview": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/tiny_traffic.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/tiny_traffic.py"
     },
     {
       "id": "fortune_cookie",
@@ -263,8 +240,7 @@
       "description": "Shows a tiny daily fortune with a pixel fortune cookie.",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/fortune_cookie.py",
-      "preview": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/fortune_cookie.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/fortune_cookie.py"
     },
     {
       "id": "heartbeat",
@@ -274,8 +250,7 @@
       "description": "Animated pulsing pixel heart with a little heartbeat line.",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/heartbeat.py",
-      "preview": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/heartbeat.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/heartbeat.py"
     },
     {
       "id": "pixel_globe",
@@ -285,8 +260,7 @@
       "description": "Animated tiny rotating globe with stars.",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/pixel_globe.py",
-      "preview": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/pixel_globe.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/pixel_globe.py"
     },
     {
       "id": "moon_phase",
@@ -296,8 +270,7 @@
       "description": "Shows the current moon phase and approximate lunar age.",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/moon_phase.py",
-      "preview": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/moon_phase.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/moon_phase.py"
     },
     {
       "id": "weather_mood",
@@ -307,8 +280,7 @@
       "description": "Animated ambient weather scene based on ZIP code: sun, clouds, rain, or snow.",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/weather_mood.py",
-      "preview": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/weather_mood.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/weather_mood.py"
     },
     {
       "id": "weather_alert",
@@ -318,8 +290,7 @@
       "description": "Shows active National Weather Service alerts for a ZIP code with a small radar-style icon. Skips itself when there are no active alerts.",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/weather_alert.py",
-      "preview": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/weather_alert.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/weather_alert.py"
     },
     {
       "id": "countdown_confetti",
@@ -329,8 +300,7 @@
       "description": "Countdown card with animated confetti for trips, birthdays, launches, and other events.",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/countdown_confetti.py",
-      "preview": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/countdown_confetti.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/countdown_confetti.py"
     },
     {
       "id": "mlb",
@@ -340,8 +310,7 @@
       "description": "Live MLB scores with team logos, abbreviations, records, and game status from ESPN.",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/mlb.py",
-      "preview": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/mlb.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/mlb.py"
     },
     {
       "id": "nba",
@@ -351,8 +320,7 @@
       "description": "Live NBA scores with team logos, abbreviations, records, and game status from ESPN.",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/nba.py",
-      "preview": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/nba.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/nba.py"
     },
     {
       "id": "nhl",
@@ -362,8 +330,7 @@
       "description": "Live NHL scores with team logos, abbreviations, records, and game status from ESPN.",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/nhl.py",
-      "preview": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/nhl.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/nhl.py"
     },
     {
       "id": "nfl",
@@ -373,8 +340,7 @@
       "description": "Live NFL scores with team logos, abbreviations, records, and game status from ESPN.",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/nfl.py",
-      "preview": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/nfl.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/nfl.py"
     },
     {
       "id": "airport_delays",
@@ -384,8 +350,7 @@
       "description": "Shows FAA airport delay status for one or more airport codes using the FAA NAS status feed.",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/airport_delays.py",
-      "preview": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/airport_delays.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/airport_delays.py"
     },
     {
       "id": "commute_time",
@@ -395,8 +360,7 @@
       "description": "Shows an estimated drive time and distance between two addresses or latitude/longitude points using OpenStreetMap geocoding and OSRM routing.",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/commute_time.py",
-      "preview": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/commute_time.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/commute_time.py"
     },
     {
       "id": "flights_overhead",
@@ -406,8 +370,7 @@
       "description": "Shows the closest airborne flight overhead using OpenSky Network. Displays flight number, airline, altitude, speed, and distance. Free with optional OpenSky account for higher rate limits.",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/flights_overhead.py",
-      "preview": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/flights_overhead.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/flights_overhead.py"
     },
     {
       "id": "flight_track",
@@ -417,8 +380,7 @@
       "description": "Track any flight by callsign or IATA flight number (e.g. UA2341). Shows airline, altitude, speed, and status via OpenSky Network.",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/flight_track.py",
-      "preview": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/flight_track.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/flight_track.py"
     }
   ]
 }
