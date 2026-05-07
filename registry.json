@@ -45,7 +45,7 @@
     {
       "id": "stocks",
       "name": "Stock Ticker",
-      "category": "Utility",
+      "category": "Finance",
       "detail": "Live price and change",
       "description": "Live stock or crypto price with dollar and percent change. Supports any Yahoo Finance symbol — AAPL, TSLA, BTC-USD, ^SPX, and more.",
       "author": "bptworld",

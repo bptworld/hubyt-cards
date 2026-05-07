@@ -4,15 +4,63 @@ Add-on cards for the [Hubyt](https://github.com/bptworld/hubyt) display system.
 
 ## Available Cards
 
+### Utility
+
 | Card | Description |
 |------|-------------|
 | Clock | Time plus local weather |
 | Countdown | Days until any event |
+| Countdown Confetti | Event countdown with confetti |
+| Disney Countdown | Days until your trip |
 | Google Calendar | Next upcoming event |
+| Moon Phase | Current moon phase |
+
+### Weather
+
+| Card | Description |
+|------|-------------|
+| Weather Forecast | 4-day forecast with icons |
+| Weather Mood | Animated weather vibe |
+
+### Smart Home
+
+| Card | Description |
+|------|-------------|
 | Hubitat Device | Live device attribute |
 | Hubitat Multi | Several Hubitat devices |
 | Hubitat Safety | All secure or open list |
 | Water Leak Alert | Skips when all dry |
+
+### Finance
+
+| Card | Description |
+|------|-------------|
+| Stock Ticker | Live price and change |
+| Market Indexes | Dow, S&P, Nasdaq |
+| Crypto Watch | BTC, ETH, and more |
+| Gas Price Local | AAA state gas average |
+| Portfolio Pulse | Value and daily gain |
+
+### Sports
+
+| Card | Description |
+|------|-------------|
+| MLB Scores | Live ESPN scoreboard |
+| NBA Scores | Live ESPN scoreboard |
+| NHL Scores | Live ESPN scoreboard |
+| NFL Scores | Live ESPN scoreboard |
+
+### Travel
+
+| Card | Description |
+|------|-------------|
+| Flights Overhead | Live flights above you |
+| Flight Tracker | Track a specific flight |
+
+### Fun
+
+| Card | Description |
+|------|-------------|
 | Pac-Man Chase | Pac-Man chasing ghosts |
 | Matrix Rain | Falling green code |
 | Pong Loop | Tiny paddles and ball |
@@ -25,22 +73,6 @@ Add-on cards for the [Hubyt](https://github.com/bptworld/hubyt) display system.
 | Fortune Cookie | Tiny daily fortune |
 | 8-Bit Heartbeat | Pulsing pixel heart |
 | Pixel Globe | Tiny rotating world |
-| Moon Phase | Current moon phase |
-| Weather Mood | Animated weather vibe |
-| Countdown Confetti | Event countdown with confetti |
-| Weather Forecast | 4-day forecast with icons |
-| Stock Ticker | Live price and change |
-| Market Indexes | Dow, S&P, Nasdaq |
-| Crypto Watch | BTC, ETH, and more |
-| Gas Price Local | AAA state gas average |
-| Portfolio Pulse | Value and daily gain |
-| MLB Scores | Live ESPN scoreboard |
-| NBA Scores | Live ESPN scoreboard |
-| NHL Scores | Live ESPN scoreboard |
-| NFL Scores | Live ESPN scoreboard |
-| Disney Countdown | Days until your trip |
-| Flights Overhead | Live flights above you |
-| Flight Tracker | Track a specific flight |
 
 ## Installing a Card
 
