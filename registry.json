@@ -53,6 +53,46 @@
       "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/stocks.py"
     },
     {
+      "id": "market_indexes",
+      "name": "Market Indexes",
+      "category": "Finance",
+      "detail": "Dow, S&P, Nasdaq",
+      "description": "Shows up to three market indexes with current value and daily percent change.",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/market_indexes.py"
+    },
+    {
+      "id": "crypto_watch",
+      "name": "Crypto Watch",
+      "category": "Finance",
+      "detail": "BTC, ETH, and more",
+      "description": "Shows up to three crypto symbols with current price and daily percent change.",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/crypto_watch.py"
+    },
+    {
+      "id": "gas_price_local",
+      "name": "Gas Price Local",
+      "category": "Finance",
+      "detail": "AAA state gas average",
+      "description": "Shows the current AAA regular gas average for a configured US state and compares it with the national average.",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/gas_price_local.py"
+    },
+    {
+      "id": "portfolio_pulse",
+      "name": "Portfolio Pulse",
+      "category": "Finance",
+      "detail": "Value and daily gain",
+      "description": "Shows estimated portfolio value and daily gain or loss from configured ticker quantities.",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/portfolio_pulse.py"
+    },
+    {
       "id": "gcal",
       "name": "Google Calendar",
       "category": "Utility",

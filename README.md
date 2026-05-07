@@ -27,6 +27,10 @@ Add-on cards for the [Hubyt](https://github.com/bptworld/hubyt) display system.
 | Countdown Confetti | Event countdown with confetti |
 | Weather Forecast | 4-day forecast with icons |
 | Stock Ticker | Live price and change |
+| Market Indexes | Dow, S&P, Nasdaq |
+| Crypto Watch | BTC, ETH, and more |
+| Gas Price Local | AAA state gas average |
+| Portfolio Pulse | Value and daily gain |
 | MLB Scores | Live ESPN scoreboard |
 | NBA Scores | Live ESPN scoreboard |
 | NHL Scores | Live ESPN scoreboard |
