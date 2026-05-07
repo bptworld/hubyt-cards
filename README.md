@@ -75,7 +75,7 @@ Add-on cards for the [Hubyt](https://github.com/bptworld/hubyt) display system.
 | Airport Delays | FAA delay status |
 | Commute Time | Drive time estimate |
 | Flights Overhead | Live flights above you |
-| Flight Tracker | Flightradar24 live tracking |
+| Flight Tracker | Flightradar24 live and summary tracking |
 
 ## Installing a Card
 

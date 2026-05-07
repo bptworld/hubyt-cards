@@ -10,7 +10,7 @@ from card_utils import (
 
 CARD_ID = "flight_track"
 CARD_NAME = "Flight Tracker"
-CARD_DETAIL = "Flightradar24 live tracking"
+CARD_DETAIL = "Flightradar24 live and summary tracking"
 CARD_OPTIONS = [
     {
         "key": "airline",
@@ -35,6 +35,8 @@ CARD_OPTIONS = [
         ],
     },
     {"key": "flightNumber", "label": "Flight Number", "type": "text", "default": "3416", "maxlength": 6, "inputmode": "numeric"},
+    {"key": "origin", "label": "Origin", "type": "text", "default": "", "maxlength": 3},
+    {"key": "destination", "label": "Destination", "type": "text", "default": "", "maxlength": 3},
     {"key": "apiKey", "label": "Flightradar24 API Token", "type": "text", "default": ""},
 ]
 
@@ -54,6 +56,25 @@ def _ident_from_options(opts, use_icao=False):
             airline = iata_to_icao_prefix(airline) or airline
         return airline + number
     return _clean(opts.get("callsign") or "")
+
+
+def _flight_number_from_options(opts):
+    return "".join(ch for ch in str(opts.get("flightNumber") or "") if ch.isdigit())
+
+
+def _airline_icao_from_options(opts):
+    airline = _clean(opts.get("airline") or "")
+    if len(airline) == 2:
+        return iata_to_icao_prefix(airline) or airline
+    return airline
+
+
+def _route_from_options(opts):
+    origin = _clean(opts.get("origin") or "")[:3]
+    destination = _clean(opts.get("destination") or "")[:3]
+    if origin and destination:
+        return f"{origin}-{destination}"
+    return ""
 
 
 def _parse_time(value):
@@ -96,6 +117,12 @@ def _delay_minutes(flight):
 
 
 def _status(flight):
+    if flight.get("_summary"):
+        if flight.get("datetime_landed"):
+            return "LAND", (95, 230, 135)
+        if flight.get("datetime_takeoff"):
+            return "ENRT", (100, 190, 255)
+        return "SCHED", (255, 220, 90)
     try:
         alt = int(float(flight.get("alt") or 0))
     except Exception:
@@ -115,6 +142,12 @@ def _status(flight):
 
 
 def _event_time(flight):
+    if flight.get("_summary"):
+        if flight.get("datetime_landed"):
+            return "LAND " + _fmt_time(flight.get("datetime_landed"))
+        if flight.get("datetime_takeoff"):
+            return "OFF " + _fmt_time(flight.get("datetime_takeoff"))
+        return "SEEN " + _fmt_time(flight.get("first_seen"))
     if flight.get("eta"):
         return "ETA " + _fmt_time(flight.get("eta"))
     try:
@@ -125,6 +158,13 @@ def _event_time(flight):
 
 
 def _gate_line(flight):
+    if flight.get("_summary"):
+        seconds = flight.get("flight_time")
+        try:
+            mins = int(seconds or 0) // 60
+        except Exception:
+            mins = 0
+        return f"{mins // 60}H{mins % 60:02d}" if mins else ""
     try:
         alt = int(float(flight.get("alt") or 0))
     except Exception:
@@ -195,13 +235,13 @@ def _draw_tight_text(image, text, x, y, fill, font, spacing=-1):
     return cursor
 
 
-def _fetch(params, api_key):
+def _fetch(endpoint, params, api_key):
     now = datetime.now(timezone.utc)
-    key = urllib.parse.urlencode(sorted(params.items()))
+    key = endpoint + "?" + urllib.parse.urlencode(sorted(params.items()))
     cached = _CACHE.get(key)
     if cached and cached["expires"] > now:
         return cached["data"]
-    url = f"{_API_ROOT}/live/flight-positions/full?{urllib.parse.urlencode(params)}"
+    url = f"{_API_ROOT}{endpoint}?{urllib.parse.urlencode(params)}"
     req = urllib.request.Request(url, headers={
         "User-Agent": "Hubyt/0.1",
         "Authorization": "Bearer " + api_key,
@@ -212,6 +252,13 @@ def _fetch(params, api_key):
         data = json.loads(resp.read().decode("utf-8"))
     _CACHE[key] = {"data": data, "expires": now + timedelta(seconds=90)}
     return data
+
+
+def _data_rows(data):
+    if isinstance(data, dict):
+        rows = data.get("data")
+        return rows if isinstance(rows, list) else []
+    return data if isinstance(data, list) else []
 
 
 def _pick_flight(flights):
@@ -235,6 +282,25 @@ def _pick_flight(flights):
     return sorted(flights, key=score)[0]
 
 
+def _pick_summary(rows):
+    if not rows:
+        return None
+    now = datetime.now(timezone.utc)
+
+    def score(row):
+        if row.get("datetime_takeoff") and not row.get("datetime_landed"):
+            return 0
+        for key in ("first_seen", "datetime_takeoff", "datetime_landed"):
+            dt = _parse_time(row.get(key))
+            if dt:
+                return 1 + abs((dt - now).total_seconds()) / 86400
+        return 999
+
+    picked = sorted(rows, key=score)[0]
+    picked["_summary"] = True
+    return picked
+
+
 def _load_flight(opts):
     api_key = str(opts.get("apiKey") or "").strip()
     if not api_key:
@@ -243,18 +309,24 @@ def _load_flight(opts):
     if not ident:
         return None, "SET FLT"
     last_error = None
+    flight_no = _flight_number_from_options(opts)
+    airline_icao = _airline_icao_from_options(opts)
+    route = _route_from_options(opts)
     iata_ident = ident
     icao_ident = _ident_from_options(opts, use_icao=True)
     candidates = [
         {"flights": iata_ident, "limit": "5"},
         {"callsigns": icao_ident, "limit": "5"} if icao_ident else None,
+        {"flights": iata_ident, "operating_as": airline_icao, "limit": "5"} if iata_ident and airline_icao else None,
+        {"flights": iata_ident, "painted_as": airline_icao, "limit": "5"} if iata_ident and airline_icao else None,
+        {"routes": route, "operating_as": airline_icao, "limit": "10"} if route and airline_icao else None,
     ]
     for params in candidates:
         if not params:
             continue
         try:
-            data = _fetch(params, api_key)
-            flight = _pick_flight(data.get("data") if isinstance(data, dict) else data)
+            data = _fetch("/live/flight-positions/full", params, api_key)
+            flight = _pick_flight(_data_rows(data))
             if flight:
                 return flight, None
         except urllib.error.HTTPError as err:
@@ -266,7 +338,31 @@ def _load_flight(opts):
             last_error = "API ERR"
         except Exception:
             last_error = "API ERR"
-    return None, last_error or "NOT FOUND"
+
+    now = datetime.now(timezone.utc)
+    summary_params = {
+        "flight_datetime_from": (now - timedelta(hours=18)).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "flight_datetime_to": (now + timedelta(hours=36)).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "limit": "10",
+    }
+    if iata_ident:
+        summary_params["flights"] = iata_ident
+    if icao_ident:
+        summary_params["callsigns"] = icao_ident
+    if route:
+        summary_params["routes"] = route
+    try:
+        data = _fetch("/flight-summary/full", summary_params, api_key)
+        flight = _pick_summary(_data_rows(data))
+        if flight:
+            return flight, None
+    except urllib.error.HTTPError as err:
+        if err.code in (401, 403):
+            return None, "BAD API"
+        last_error = "NO LIVE"
+    except Exception:
+        last_error = "API ERR"
+    return None, last_error or "NO LIVE"
 
 
 def render(options=None):
