@@ -330,7 +330,7 @@ def render(options=None):
     else:
         draw_sharp_text(image, (text_left, status_y), status, status_color, font)
     draw_sharp_text(image, (text_left, 11), _fit_text(draw, route, font, route_max), (100, 190, 255), font)
-    draw_sharp_text(image, (text_left, 19), _fit_text(draw, bottom, font, bottom_max), (255, 220, 90), font)
+    draw_sharp_text(image, (text_left, 18), _fit_text(draw, bottom, font, bottom_max), (255, 220, 90), font)
 
     out = BytesIO()
     image.save(out, "WEBP", lossless=True, quality=100)
