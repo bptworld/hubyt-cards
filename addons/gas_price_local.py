@@ -1,14 +1,18 @@
 from datetime import datetime, timedelta, timezone
 from io import BytesIO
+import html as html_lib
+import json
 import re
+import urllib.parse
 import urllib.request
 from card_utils import draw_sharp_text, render_text_webp
 
 CARD_ID = "gas_price_local"
 CARD_NAME = "Gas Price Local"
-CARD_DETAIL = "AAA state gas average"
+CARD_DETAIL = "AAA local gas average"
 CARD_OPTIONS = [
-    {"key": "state", "label": "State", "type": "text", "default": "MA", "maxlength": 2},
+    {"key": "zipCode", "label": "ZIP Code", "type": "text", "default": "02134", "maxlength": 5, "inputmode": "numeric"},
+    {"key": "state", "label": "State Fallback", "type": "text", "default": "MA", "maxlength": 2},
 ]
 
 _CACHE = {}
@@ -29,10 +33,99 @@ _STATE_NAMES = {
 }
 
 
-def _fetch(state):
-    state = re.sub(r"[^A-Za-z]", "", state or "MA").upper()[:2] or "MA"
+def _zip_location(zip_code):
+    zip_code = re.sub(r"\D", "", zip_code or "")[:5]
+    if len(zip_code) != 5:
+        return None
     now = datetime.now(timezone.utc)
-    cached = _CACHE.get(state)
+    key = f"zip:{zip_code}"
+    cached = _CACHE.get(key)
+    if cached and cached["expires"] > now:
+        return cached["data"]
+    req = urllib.request.Request(
+        f"https://api.zippopotam.us/us/{zip_code}",
+        headers={"User-Agent": "Hubyt/0.1", "Accept": "application/json"},
+    )
+    with urllib.request.urlopen(req, timeout=10) as resp:
+        data = json.loads(resp.read().decode("utf-8"))
+    place = data["places"][0]
+    lat = place.get("latitude", "")
+    lon = place.get("longitude", "")
+    loc = {
+        "zip": zip_code,
+        "city": place.get("place name", ""),
+        "state": place.get("state abbreviation", ""),
+        "cities": [place.get("place name", "")],
+    }
+    try:
+        query = urllib.parse.urlencode({"lat": lat, "lon": lon, "format": "jsonv2", "zoom": "10"})
+        rev_req = urllib.request.Request(
+            f"https://nominatim.openstreetmap.org/reverse?{query}",
+            headers={"User-Agent": "Hubyt/0.1", "Accept": "application/json"},
+        )
+        with urllib.request.urlopen(rev_req, timeout=10) as resp:
+            address = json.loads(resp.read().decode("utf-8")).get("address", {})
+        for key in ("city", "town", "village", "municipality", "county"):
+            val = address.get(key, "")
+            if val and val not in loc["cities"]:
+                loc["cities"].append(val)
+    except Exception:
+        pass
+    _CACHE[key] = {"data": loc, "expires": now + timedelta(days=7)}
+    return loc
+
+
+def _normalize_name(value):
+    value = html_lib.unescape(re.sub(r"<[^>]+>", "", value or ""))
+    value = re.sub(r"\([^)]*\)", "", value)
+    value = value.replace(",", " ").replace("-", " ")
+    return re.sub(r"[^a-z0-9]+", " ", value.lower()).strip()
+
+
+def _metro_prices(html):
+    prices = []
+    for match in re.finditer(r'<h3[^>]*data-cost="([0-9.]+)"[^>]*>(.*?)</h3>', html, re.I | re.S):
+        name = html_lib.unescape(re.sub(r"<[^>]+>", "", match.group(2))).strip()
+        prices.append({"name": name, "price": float(match.group(1))})
+    return prices
+
+
+def _best_local_match(location, metros):
+    cities = [_normalize_name(c) for c in location.get("cities", []) if c]
+    if not cities:
+        cities = [_normalize_name(location.get("city", ""))]
+    cities = [c for c in cities if c]
+    if not cities:
+        return None
+    best = None
+    best_score = 0
+    for metro in metros:
+        metro_norm = _normalize_name(metro["name"])
+        score = 0
+        for city in cities:
+            city_words = [w for w in city.split() if len(w) > 2]
+            if city and city in metro_norm:
+                score += 10
+            score += sum(1 for word in city_words if word in metro_norm)
+        if score > best_score:
+            best = metro
+            best_score = score
+    return best if best_score else None
+
+
+def _fetch(state, zip_code=""):
+    state = re.sub(r"[^A-Za-z]", "", state or "MA").upper()[:2] or "MA"
+    location = None
+    try:
+        location = _zip_location(zip_code)
+        if location and location.get("state"):
+            state = location["state"].upper()
+    except Exception:
+        location = None
+
+    now = datetime.now(timezone.utc)
+    cache_key = f"gas:{state}:{(location or {}).get('zip', '')}"
+    cached = _CACHE.get(cache_key)
     if cached and cached["expires"] > now:
         return cached["data"]
     url = f"https://gasprices.aaa.com/?state={state}"
@@ -50,14 +143,18 @@ def _fetch(state):
     state_match = re.search(rf"Today's AAA\s+{re.escape(state_name)} Avg\.\s+\$([0-9.]+)", html)
     national_match = re.search(r"Today.s AAA National Average\s+\$([0-9.]+)", html)
     date_match = re.search(r"Price as of\s+([0-9/]+)", html)
+    metros = _metro_prices(html)
+    local = _best_local_match(location or {}, metros)
     data = {
         "state": state,
         "state_name": state_name,
-        "price": float(state_match.group(1)) if state_match else None,
+        "location": local["name"] if local else state,
+        "local": bool(local),
+        "price": local["price"] if local else (float(state_match.group(1)) if state_match else None),
         "national": float(national_match.group(1)) if national_match else None,
         "date": date_match.group(1) if date_match else "",
     }
-    _CACHE[state] = {"data": data, "expires": now + timedelta(hours=6)}
+    _CACHE[cache_key] = {"data": data, "expires": now + timedelta(hours=6)}
     return data
 
 
@@ -66,7 +163,7 @@ def render(options=None):
 
     opts = options or {}
     try:
-        data = _fetch(opts.get("state") or "MA")
+        data = _fetch(opts.get("state") or "MA", opts.get("zipCode") or "")
     except Exception:
         return render_text_webp("GAS ERR", (238, 80, 80))
     if data["price"] is None:
@@ -86,7 +183,8 @@ def render(options=None):
     draw.rectangle((2, 6, 14, 26), outline=(90, 170, 255), fill=(8, 18, 30))
     draw.rectangle((5, 9, 11, 13), fill=(90, 170, 255))
     draw.line((14, 10, 19, 14, 19, 22), fill=(90, 170, 255))
-    draw_sharp_text(image, (22, -3), f"GAS {data['state']}", (255, 220, 80), bold)
+    header = data["location"][:10].upper() if data.get("local") else f"GAS {data['state']}"
+    draw_sharp_text(image, (22, -3), header, (255, 220, 80), bold)
     price = f"${data['price']:.2f}"
     draw_sharp_text(image, (22, 7), price, (235, 245, 255), big)
     tag = f"{diff:+.2f} vs US"

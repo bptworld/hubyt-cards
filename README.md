@@ -23,7 +23,7 @@ Add-on cards for the [Hubyt](https://github.com/bptworld/hubyt) display system.
 | <img src="assets/previews/stocks.webp" width="96" alt="Stock Ticker preview"> | Stock Ticker | Live price and change |
 | <img src="assets/previews/market_indexes.webp" width="96" alt="Market Indexes preview"> | Market Indexes | Dow, S&P, Nasdaq |
 | <img src="assets/previews/crypto_watch.webp" width="96" alt="Crypto Watch preview"> | Crypto Watch | BTC, ETH, and more |
-| <img src="assets/previews/gas_price_local.webp" width="96" alt="Gas Price Local preview"> | Gas Price Local | AAA state gas average |
+| <img src="assets/previews/gas_price_local.webp" width="96" alt="Gas Price Local preview"> | Gas Price Local | AAA ZIP/metro gas average |
 | <img src="assets/previews/portfolio_pulse.webp" width="96" alt="Portfolio Pulse preview"> | Portfolio Pulse | Value and daily gain |
 
 ### Smart Home
