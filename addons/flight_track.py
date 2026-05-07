@@ -149,6 +149,13 @@ def _gate_line(flight):
     return " ".join(parts)[:10]
 
 
+def _fit_text(draw, text, font, max_width):
+    text = str(text or "")
+    while text and draw.textbbox((0, 0), text, font=font)[2] > max_width:
+        text = text[:-1]
+    return text
+
+
 def _fetch(ident, api_key):
     now = datetime.now(timezone.utc)
     key = ident
@@ -227,23 +234,19 @@ def render(options=None):
 
     ident = _flight_number(flight)
     status, status_color = _status(flight)
-    status_w = draw.textbbox((0, 0), status, font=font)[2]
-    draw_sharp_text(image, (1, -3), ident, (235, 245, 255), bold)
-    draw_sharp_text(image, (63 - status_w, -3), status, status_color, font)
-
+    ident = _fit_text(draw, ident, bold, 62)
+    status = _fit_text(draw, status, bold, 62)
     route = f"{_airport_code(flight.get('origin'))}>{_airport_code(flight.get('destination'))}"
-    draw_sharp_text(image, (1, 8), route[:13], (100, 190, 255), font)
-    draw_sharp_text(image, (1, 17), _event_time(flight)[:13], (255, 220, 90), font)
+    time_line = _event_time(flight)
     gate = _gate_line(flight)
+    bottom = time_line
     if gate:
-        draw_sharp_text(image, (1, 25), gate, (170, 190, 205), font)
+        bottom = (time_line + " " + gate).strip()
 
-    pct = flight.get("progress_percent")
-    if pct not in (None, "") and flight.get("actual_off") and not flight.get("actual_in"):
-        x0, y0 = 45, 25
-        draw.rectangle((x0, y0, 62, y0 + 3), outline=(40, 65, 85))
-        fill = int(16 * max(0, min(100, int(pct))) / 100)
-        draw.rectangle((x0 + 1, y0 + 1, x0 + fill, y0 + 2), fill=(100, 190, 255))
+    draw_sharp_text(image, (1, -3), ident, (235, 245, 255), bold)
+    draw_sharp_text(image, (1, 6), status, status_color, bold)
+    draw_sharp_text(image, (1, 15), _fit_text(draw, route, font, 62), (100, 190, 255), font)
+    draw_sharp_text(image, (1, 24), _fit_text(draw, bottom, font, 62), (255, 220, 90), font)
 
     out = BytesIO()
     image.save(out, "WEBP", lossless=True, quality=100)
