@@ -412,11 +412,9 @@ def render(options=None):
     image = Image.new("RGB", (64, 32), (0, 5, 18))
     draw = ImageDraw.Draw(image)
     try:
-        font = ImageFont.truetype("Silkscreen-Regular.ttf", 8)
-        bold = ImageFont.truetype("Silkscreen-Bold.ttf", 8)
-        small = ImageFont.truetype("Silkscreen-Regular.ttf", 7)
+        font = ImageFont.truetype("Silkscreen-Regular.ttf", 7)
     except Exception:
-        font = bold = small = ImageFont.load_default()
+        font = ImageFont.load_default()
 
     ident = _flight_number(flight)
     status, status_color = _status(flight)
@@ -435,7 +433,7 @@ def render(options=None):
         route_max = 62
         bottom_max = 62
     ident = _fit_text(draw, ident, font, ident_max)
-    status = _fit_text(draw, status, small, 63)
+    status = _fit_text(draw, status, font, 63)
     route = f"{_airport_code(flight.get('orig_iata') or flight.get('orig_icao'))}>{_airport_code(flight.get('dest_iata') or flight.get('dest_icao'))}"
     time_line = _event_time(flight)
     gate = _gate_line(flight)
@@ -451,8 +449,8 @@ def render(options=None):
         if logo:
             image.paste(logo, (logo_left, logo_top), logo)
         elif iata:
-            lw = draw.textbbox((0, 0), iata[:2], font=bold)[2]
-            draw_sharp_text(image, (63 - lw, -3), iata[:2], (100, 190, 255), bold)
+            lw = draw.textbbox((0, 0), iata[:2], font=font)[2]
+            draw_sharp_text(image, (63 - lw, -3), iata[:2], (100, 190, 255), font)
 
     draw_sharp_text(image, (text_left, -3), ident, (235, 245, 255), font)
     draw_sharp_text(image, (text_left, 5), _fit_text(draw, route, font, route_max), (100, 190, 255), font)
@@ -460,10 +458,10 @@ def render(options=None):
     status_left = 0
     status_y = 21
     if status.startswith("ENRT "):
-        next_x = _draw_tight_text(image, "ENRT", status_left, status_y, status_color, small, -1)
-        draw_sharp_text(image, (next_x + 3, status_y), status[5:], status_color, small)
+        next_x = _draw_tight_text(image, "ENRT", status_left, status_y, status_color, font, -1)
+        draw_sharp_text(image, (next_x + 3, status_y), status[5:], status_color, font)
     else:
-        draw_sharp_text(image, (status_left, status_y), status, status_color, small)
+        draw_sharp_text(image, (status_left, status_y), status, status_color, font)
 
     out = BytesIO()
     image.save(out, "WEBP", lossless=True, quality=100)
