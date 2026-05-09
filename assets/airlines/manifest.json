@@ -1,0 +1,107 @@
+{
+  "updated": "2026-05-09T00:04:29.907Z",
+  "airlines": [
+    {
+      "iata": "AA",
+      "name": "American Airlines",
+      "file": "assets/airlines/AA.png",
+      "source": "https://simpleicons.org/?q=American%20Airlines",
+      "license": "Simple Icons data is CC0; brand trademarks remain owned by their holders."
+    },
+    {
+      "iata": "UA",
+      "name": "United Airlines",
+      "file": "assets/airlines/UA.png",
+      "source": "https://simpleicons.org/?q=United%20Airlines",
+      "license": "Simple Icons data is CC0; brand trademarks remain owned by their holders."
+    },
+    {
+      "iata": "DL",
+      "name": "Delta Air Lines",
+      "file": "assets/airlines/DL.png",
+      "source": "https://simpleicons.org/?q=Delta%20Air%20Lines",
+      "license": "Simple Icons data is CC0; brand trademarks remain owned by their holders."
+    },
+    {
+      "iata": "WN",
+      "name": "Southwest Airlines",
+      "file": "assets/airlines/WN.png",
+      "source": "https://simpleicons.org/?q=Southwest%20Airlines",
+      "license": "Simple Icons data is CC0; brand trademarks remain owned by their holders."
+    },
+    {
+      "iata": "B6",
+      "name": "JetBlue",
+      "file": "assets/airlines/B6.png",
+      "source": "https://simpleicons.org/?q=JetBlue",
+      "license": "Simple Icons data is CC0; brand trademarks remain owned by their holders."
+    },
+    {
+      "iata": "BA",
+      "name": "British Airways",
+      "file": "assets/airlines/BA.png",
+      "source": "https://simpleicons.org/?q=British%20Airways",
+      "license": "Simple Icons data is CC0; brand trademarks remain owned by their holders."
+    },
+    {
+      "iata": "AF",
+      "name": "Air France",
+      "file": "assets/airlines/AF.png",
+      "source": "https://simpleicons.org/?q=Air%20France",
+      "license": "Simple Icons data is CC0; brand trademarks remain owned by their holders."
+    },
+    {
+      "iata": "LH",
+      "name": "Lufthansa",
+      "file": "assets/airlines/LH.png",
+      "source": "https://simpleicons.org/?q=Lufthansa",
+      "license": "Simple Icons data is CC0; brand trademarks remain owned by their holders."
+    },
+    {
+      "iata": "EK",
+      "name": "Emirates",
+      "file": "assets/airlines/EK.png",
+      "source": "https://simpleicons.org/?q=Emirates",
+      "license": "Simple Icons data is CC0; brand trademarks remain owned by their holders."
+    },
+    {
+      "iata": "AC",
+      "name": "Air Canada",
+      "file": "assets/airlines/AC.png",
+      "source": "https://simpleicons.org/?q=Air%20Canada",
+      "license": "Simple Icons data is CC0; brand trademarks remain owned by their holders."
+    },
+    {
+      "iata": "AS",
+      "name": "Alaska Airlines",
+      "file": "assets/airlines/AS.png",
+      "source": "https://upload.wikimedia.org/wikipedia/commons/2/2a/Alaska_Airlines_logo.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "commonsTitle": "File:Alaska Airlines logo.svg",
+      "note": "Wikimedia Commons source; trademark remains owned by its holder."
+    },
+    {
+      "iata": "F9",
+      "name": "Frontier Airlines",
+      "file": "assets/airlines/F9.png",
+      "source": "https://upload.wikimedia.org/wikipedia/commons/c/cc/Frontier_Airlines_Logo.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "commonsTitle": "File:Frontier Airlines Logo.svg",
+      "note": "Wikimedia Commons source; trademark remains owned by its holder."
+    },
+    {
+      "iata": "NK",
+      "name": "Spirit Airlines",
+      "file": "assets/airlines/NK.png",
+      "source": "https://upload.wikimedia.org/wikipedia/commons/0/05/Spirit_Airlines_logo_2014.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "commonsTitle": "File:Spirit Airlines logo 2014.svg",
+      "note": "Wikimedia Commons source; trademark remains owned by its holder."
+    },
+    {
+      "iata": "HA",
+      "name": "Hawaiian Airlines",
+      "file": "assets/airlines/HA.png",
+      "source": "https://upload.wikimedia.org/wikipedia/commons/3/3b/Hawaiian_Airlines_2017_wordmark.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "commonsTitle": "File:Hawaiian Airlines 2017 wordmark.svg",
+      "note": "Wikimedia Commons source; trademark remains owned by its holder."
+    }
+  ]
+}

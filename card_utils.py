@@ -373,6 +373,7 @@ _AIRLINES = {
 
 _IATA_TO_ICAO = {iata: icao for icao, (_, iata) in _AIRLINES.items()}
 _AIRLINE_LOGO_CACHE = {}
+_AIRLINE_LOGO_BASE = "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/airlines"
 _OPENSKY_TOKEN = {"token": None, "expires": datetime.min.replace(tzinfo=timezone.utc)}
 
 
@@ -386,9 +387,12 @@ def iata_to_icao_prefix(iata):
 
 
 def fetch_airline_logo(iata):
+    iata = (iata or "").strip().upper()
     if iata in _AIRLINE_LOGO_CACHE:
         return _AIRLINE_LOGO_CACHE[iata]
-    logo = fetch_logo(f"https://images.kiwi.com/airlines/64/{iata.lower()}.png")
+    logo = fetch_logo(f"{_AIRLINE_LOGO_BASE}/{iata}.png")
+    if logo is None:
+        logo = fetch_logo(f"https://images.kiwi.com/airlines/64/{iata.lower()}.png")
     _AIRLINE_LOGO_CACHE[iata] = logo
     return logo
 
