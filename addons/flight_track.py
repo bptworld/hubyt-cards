@@ -37,14 +37,55 @@ CARD_OPTIONS = [
     {"key": "flightNumber", "label": "Flight Number", "type": "text", "default": "3416", "maxlength": 6, "inputmode": "numeric"},
     {"key": "origin", "label": "Origin", "type": "text", "default": "", "maxlength": 3},
     {"key": "destination", "label": "Destination", "type": "text", "default": "", "maxlength": 3},
+    {"key": "repeatDaily", "label": "Repeat this flight every day", "type": "checkbox", "default": False},
     {"key": "apiKey", "label": "Flightradar24 API Token", "type": "text", "default": ""},
 ]
 
 _CACHE = {}
 _CACHE_SECONDS = 300
+_GEO_CACHE = {}
+_GEO_CACHE_SECONDS = 30 * 60
 _TERMINAL_CACHE = {}
 _TERMINAL_CACHE_SECONDS = 18 * 60 * 60
+_FLIGHT_POLL_STATE = {}
+_DISABLE_POLLING_FOR_TEST = False
 _API_ROOT = "https://fr24api.flightradar24.com/api"
+_AIRPORT_CITY = {
+    "MCO": "ORLANDO FL",
+    "MHT": "MANCHESTER NH",
+    "SFB": "ORLANDO FL",
+    "TPA": "TAMPA FL",
+    "BOS": "BOSTON MA",
+    "JFK": "NEW YORK NY",
+    "LGA": "NEW YORK NY",
+    "EWR": "NEWARK NJ",
+    "DCA": "WASHINGTON DC",
+    "IAD": "WASHINGTON DC",
+    "BWI": "BALTIMORE MD",
+    "ATL": "ATLANTA GA",
+    "ORD": "CHICAGO IL",
+    "MDW": "CHICAGO IL",
+    "DEN": "DENVER CO",
+    "DFW": "DALLAS TX",
+    "DAL": "DALLAS TX",
+    "LAX": "LOS ANGELES CA",
+    "LAS": "LAS VEGAS NV",
+    "PHX": "PHOENIX AZ",
+    "SEA": "SEATTLE WA",
+    "SFO": "SAN FRANCISCO CA",
+}
+
+
+def _version_tuple(value):
+    parts = []
+    for part in str(value or "").split("."):
+        try:
+            parts.append(int("".join(ch for ch in part if ch.isdigit()) or "0"))
+        except Exception:
+            parts.append(0)
+    while len(parts) < 3:
+        parts.append(0)
+    return tuple(parts[:3])
 
 
 def _clean(value):
@@ -80,12 +121,52 @@ def _route_from_options(opts):
     return ""
 
 
-def _terminal_key(iata_ident, icao_ident, route):
-    return "|".join([iata_ident or "", icao_ident or "", route or ""])
+def _truthy(value):
+    return str(value).strip().lower() in ("1", "true", "yes", "on")
+
+
+def _terminal_key(iata_ident, icao_ident, route, repeat_daily=False):
+    service_day = datetime.now().astimezone().strftime("%Y-%m-%d") if repeat_daily else ""
+    return "|".join([iata_ident or "", icao_ident or "", route or "", service_day])
+
+
+def _today_6am_local():
+    now = datetime.now().astimezone()
+    return now.replace(hour=6, minute=0, second=0, microsecond=0)
+
+
+def _next_6am_local():
+    now = datetime.now().astimezone()
+    six = _today_6am_local()
+    if now >= six:
+        six = six + timedelta(days=1)
+    return six
+
+
+def _utc(dt):
+    return dt.astimezone(timezone.utc) if dt else None
 
 
 def _is_landed(flight):
     return bool(flight and (flight.get("datetime_landed") or flight.get("flight_ended") is True))
+
+
+def _is_cancelled(flight):
+    if not flight:
+        return False
+    text_parts = []
+    for key in (
+        "status", "flight_status", "flight_state", "state", "status_text",
+        "status_detail", "status_message", "remarks", "message",
+        "cancelled", "canceled",
+    ):
+        value = flight.get(key)
+        if isinstance(value, dict):
+            value = " ".join(str(v) for v in value.values())
+        if value is not None:
+            text_parts.append(str(value))
+    text = " ".join(text_parts).lower()
+    return any(word in text for word in ("cancelled", "canceled", "cncl"))
 
 
 def _terminal_cached(key):
@@ -99,7 +180,7 @@ def _terminal_cached(key):
 
 
 def _cache_terminal(key, flight):
-    if _is_landed(flight):
+    if _is_landed(flight) or _is_cancelled(flight):
         _TERMINAL_CACHE[key] = {
             "flight": flight,
             "expires": datetime.now(timezone.utc) + timedelta(seconds=_TERMINAL_CACHE_SECONDS),
@@ -141,11 +222,30 @@ def _flight_number(flight):
     return (op + num)[:8]
 
 
+def _aircraft_type(flight):
+    for key in ("type", "aircraft_type", "aircraft_code", "model_code", "model"):
+        value = flight.get(key)
+        if isinstance(value, dict):
+            value = value.get("code") or value.get("icao") or value.get("iata") or value.get("text")
+        text = str(value or "").strip().upper()
+        if text:
+            return text[:12]
+    aircraft = flight.get("aircraft")
+    if isinstance(aircraft, dict):
+        for key in ("type", "code", "model", "icao"):
+            text = str(aircraft.get(key) or "").strip().upper()
+            if text:
+                return text[:12]
+    return "AIRCRAFT"
+
+
 def _delay_minutes(flight):
     return 0
 
 
 def _status(flight):
+    if _is_cancelled(flight):
+        return "CNCL", (238, 80, 80)
     if flight.get("_summary"):
         if flight.get("datetime_landed"):
             return "LAND", (95, 230, 135)
@@ -170,15 +270,47 @@ def _status(flight):
     return "LIVE", (95, 230, 135)
 
 
+def _airborne(flight):
+    takeoff = _parse_time(flight.get("datetime_takeoff"))
+    if takeoff and takeoff <= datetime.now(timezone.utc):
+        return True
+    try:
+        alt = int(float(flight.get("alt") or 0))
+    except Exception:
+        alt = 0
+    try:
+        speed = int(float(flight.get("gspeed") or 0))
+    except Exception:
+        speed = 0
+    return alt > 1000 or speed > 120
+
+
+def _departure_time(flight):
+    for key in (
+        "datetime_scheduled_departure", "scheduled_departure", "departure_scheduled",
+        "datetime_real_departure", "real_departure", "departure_time",
+        "datetime_takeoff", "first_seen",
+    ):
+        if flight.get(key):
+            return flight.get(key)
+    return None
+
+
 def _event_time(flight):
+    if _is_cancelled(flight):
+        return "CANCELLED"
+    if _is_landed(flight):
+        return "LANDED " + _fmt_time(flight.get("datetime_landed"))
     if flight.get("_summary"):
-        if flight.get("datetime_landed"):
-            return "LAND " + _fmt_time(flight.get("datetime_landed"))
-        if flight.get("datetime_takeoff"):
-            return "OFF " + _fmt_time(flight.get("datetime_takeoff"))
-        return "SEEN " + _fmt_time(flight.get("first_seen"))
-    if flight.get("eta"):
+        if _airborne(flight):
+            return "ETA " + _fmt_time(flight.get("eta")) if flight.get("eta") else "OFF " + _fmt_time(flight.get("datetime_takeoff"))
+        departure = _departure_time(flight)
+        return "DEP " + _fmt_time(departure) if departure else "DEP --:--"
+    if flight.get("eta") and _airborne(flight):
         return "ETA " + _fmt_time(flight.get("eta"))
+    departure = _departure_time(flight)
+    if departure:
+        return "DEP " + _fmt_time(departure)
     try:
         speed = int(float(flight.get("gspeed") or 0))
     except Exception:
@@ -199,6 +331,121 @@ def _gate_line(flight):
     except Exception:
         alt = 0
     return f"{alt // 100}FL" if alt >= 10000 else ""
+
+
+def _alt_speed_line(flight):
+    try:
+        alt = int(float(flight.get("alt") or 0))
+    except Exception:
+        alt = 0
+    try:
+        speed = int(float(flight.get("gspeed") or 0))
+    except Exception:
+        speed = 0
+    parts = []
+    if alt >= 10000:
+        parts.append(f"{alt // 100}FL")
+    elif alt > 0:
+        parts.append(f"{alt}FT")
+    if speed > 0:
+        parts.append(f"{speed}KT")
+    return " ".join(parts)
+
+
+def _alt_line(flight):
+    try:
+        alt = int(float(flight.get("alt") or 0))
+    except Exception:
+        alt = 0
+    if alt >= 10000:
+        return f"ALT {alt // 100}FL"
+    if alt > 0:
+        return f"ALT {alt}FT"
+    return "ALT ---"
+
+
+def _speed_line(flight):
+    try:
+        speed = int(float(flight.get("gspeed") or 0))
+    except Exception:
+        speed = 0
+    return f"SPD {speed}KT" if speed > 0 else "SPD ---"
+
+
+def _flight_lat_lon(flight):
+    lat = flight.get("lat") or flight.get("latitude")
+    lon = flight.get("lon") or flight.get("lng") or flight.get("longitude")
+    try:
+        lat = float(lat)
+        lon = float(lon)
+    except Exception:
+        return None, None
+    if not (-90 <= lat <= 90 and -180 <= lon <= 180):
+        return None, None
+    return lat, lon
+
+
+def _reverse_geocode(lat, lon):
+    now = datetime.now(timezone.utc)
+    key = f"{lat:.2f},{lon:.2f}"
+    cached = _GEO_CACHE.get(key)
+    if cached and cached["expires"] > now:
+        return cached["label"]
+    url = (
+        "https://nominatim.openstreetmap.org/reverse?"
+        + urllib.parse.urlencode({
+            "format": "jsonv2",
+            "lat": f"{lat:.5f}",
+            "lon": f"{lon:.5f}",
+            "zoom": "10",
+            "addressdetails": "1",
+        })
+    )
+    label = ""
+    try:
+        request = urllib.request.Request(url, headers={"User-Agent": "Hubyt/0.1"})
+        with urllib.request.urlopen(request, timeout=5) as response:
+            data = json.loads(response.read().decode("utf-8"))
+        address = data.get("address") or {}
+        place = (
+            address.get("city") or address.get("town") or address.get("village")
+            or address.get("hamlet") or address.get("county") or address.get("state")
+            or address.get("country")
+        )
+        region = address.get("state_code") or address.get("state")
+        if place and region and place.upper() != region.upper():
+            label = f"{place} {region}"
+        elif place:
+            label = place
+    except Exception:
+        label = ""
+    _GEO_CACHE[key] = {
+        "expires": now + timedelta(seconds=_GEO_CACHE_SECONDS),
+        "label": label,
+    }
+    return label
+
+
+def _over_line(flight):
+    if _is_cancelled(flight):
+        return "NO FLIGHT"
+    if _is_landed(flight):
+        dest = _airport_code(flight.get("dest_iata") or flight.get("dest_icao"))
+        return _AIRPORT_CITY.get(dest, dest)
+    preset = str(flight.get("_over") or "").strip()
+    if preset:
+        return preset.upper()
+    lat, lon = _flight_lat_lon(flight)
+    if lat is None:
+        return "IN FLIGHT"
+    label = _reverse_geocode(lat, lon)
+    return (label or f"{lat:.1f},{lon:.1f}").upper()
+
+
+def _position_heading(flight):
+    if _is_cancelled(flight):
+        return "CANCELLED"
+    return "LANDED AT" if _is_landed(flight) else "FLYING OVER"
 
 
 def _airline_iata(flight):
@@ -245,11 +492,171 @@ def _draw_southwest_heart(draw, x, y):
     draw.line((x + 8, y + 14, x + 12, y + 13), fill=white)
 
 
+def _draw_delta_widget(draw, x, y):
+    # Compact 12x12 Delta widget mark for the 64x32 matrix.
+    red = (224, 25, 45)
+    dark_red = (142, 18, 34)
+    shadow = (86, 10, 22)
+
+    draw.polygon(
+        [(x + 6, y), (x + 12, y + 12), (x, y + 12)],
+        fill=red,
+    )
+    draw.polygon(
+        [(x + 6, y + 5), (x + 12, y + 12), (x + 8, y + 12)],
+        fill=dark_red,
+    )
+    draw.polygon(
+        [(x + 6, y + 5), (x + 4, y + 12), (x, y + 12)],
+        fill=shadow,
+    )
+    draw.polygon(
+        [(x + 6, y + 5), (x + 8, y + 12), (x + 4, y + 12)],
+        fill=(190, 20, 40),
+    )
+
+
 def _fit_text(draw, text, font, max_width):
     text = str(text or "")
     while text and draw.textbbox((0, 0), text, font=font)[2] > max_width:
         text = text[:-1]
     return text
+
+
+_PIXEL_FONT_5X7 = {
+    " ": ("00000", "00000", "00000", "00000", "00000", "00000", "00000"),
+    "-": ("00000", "00000", "00000", "11110", "00000", "00000", "00000"),
+    ">": ("10000", "01000", "00100", "00010", "00100", "01000", "10000"),
+    ":": ("00000", "00100", "00100", "00000", "00100", "00100", "00000"),
+    ".": ("00000", "00000", "00000", "00000", "00000", "00100", "00100"),
+    "0": ("01110", "10001", "10011", "10101", "11001", "10001", "01110"),
+    "1": ("00100", "01100", "00100", "00100", "00100", "00100", "01110"),
+    "2": ("01110", "10001", "00001", "00010", "00100", "01000", "11111"),
+    "3": ("11110", "00001", "00001", "01110", "00001", "00001", "11110"),
+    "4": ("00010", "00110", "01010", "10010", "11111", "00010", "00010"),
+    "5": ("11111", "10000", "10000", "11110", "00001", "00001", "11110"),
+    "6": ("00110", "01000", "10000", "11110", "10001", "10001", "01110"),
+    "7": ("11111", "00001", "00010", "00100", "01000", "01000", "01000"),
+    "8": ("01110", "10001", "10001", "01110", "10001", "10001", "01110"),
+    "9": ("01110", "10001", "10001", "01111", "00001", "00010", "11100"),
+    "A": ("01110", "10001", "10001", "11111", "10001", "10001", "10001"),
+    "B": ("11110", "10001", "10001", "11110", "10001", "10001", "11110"),
+    "C": ("01111", "10000", "10000", "10000", "10000", "10000", "01111"),
+    "D": ("11110", "10001", "10001", "10001", "10001", "10001", "11110"),
+    "E": ("11111", "10000", "10000", "11110", "10000", "10000", "11111"),
+    "F": ("11111", "10000", "10000", "11110", "10000", "10000", "10000"),
+    "G": ("01111", "10000", "10000", "10011", "10001", "10001", "01111"),
+    "H": ("10001", "10001", "10001", "11111", "10001", "10001", "10001"),
+    "I": ("01110", "00100", "00100", "00100", "00100", "00100", "01110"),
+    "J": ("00111", "00010", "00010", "00010", "00010", "10010", "01100"),
+    "K": ("10001", "10010", "10100", "11000", "10100", "10010", "10001"),
+    "L": ("10000", "10000", "10000", "10000", "10000", "10000", "11111"),
+    "M": ("10001", "11011", "10101", "10101", "10001", "10001", "10001"),
+    "N": ("10001", "11001", "10101", "10011", "10001", "10001", "10001"),
+    "O": ("01110", "10001", "10001", "10001", "10001", "10001", "01110"),
+    "P": ("11110", "10001", "10001", "11110", "10000", "10000", "10000"),
+    "Q": ("01110", "10001", "10001", "10001", "10101", "10010", "01101"),
+    "R": ("11110", "10001", "10001", "11110", "10100", "10010", "10001"),
+    "S": ("01111", "10000", "10000", "01110", "00001", "00001", "11110"),
+    "T": ("11111", "00100", "00100", "00100", "00100", "00100", "00100"),
+    "U": ("10001", "10001", "10001", "10001", "10001", "10001", "01110"),
+    "V": ("10001", "10001", "10001", "10001", "10001", "01010", "00100"),
+    "W": ("10001", "10001", "10001", "10101", "10101", "10101", "01010"),
+    "X": ("10001", "10001", "01010", "00100", "01010", "10001", "10001"),
+    "Y": ("10001", "10001", "01010", "00100", "00100", "00100", "00100"),
+    "Z": ("11111", "00001", "00010", "00100", "01000", "10000", "11111"),
+}
+
+
+def _pixel_text_width(text, spacing=1):
+    text = str(text or "").upper()
+    return 0 if not text else len(text) * 5 + (len(text) - 1) * spacing
+
+
+def _fit_pixel_text(text, max_width, spacing=1):
+    text = str(text or "").upper()
+    while text and _pixel_text_width(text, spacing) > max_width:
+        text = text[:-1]
+    return text
+
+
+def _draw_pixel_text(draw, x, y, text, fill, spacing=1):
+    cursor = x
+    for ch in str(text or "").upper():
+        glyph = _PIXEL_FONT_5X7.get(ch, _PIXEL_FONT_5X7[" "])
+        for row, bits in enumerate(glyph):
+            for col, bit in enumerate(bits):
+                if bit == "1":
+                    draw.point((cursor + col, y + row), fill=fill)
+        cursor += 5 + spacing
+
+
+_MATRIX_FONT_4X6 = {
+    " ": ("0000", "0000", "0000", "0000", "0000", "0000"),
+    "-": ("0000", "0000", "1110", "0000", "0000", "0000"),
+    ">": ("1000", "0100", "0010", "0100", "1000", "0000"),
+    ":": ("0000", "0100", "0000", "0100", "0000", "0000"),
+    ".": ("0000", "0000", "0000", "0000", "0000", "0100"),
+    "0": ("1110", "1010", "1010", "1010", "1010", "1110"),
+    "1": ("0100", "1100", "0100", "0100", "0100", "1110"),
+    "2": ("1110", "0010", "0010", "1110", "1000", "1110"),
+    "3": ("1110", "0010", "0110", "0010", "0010", "1110"),
+    "4": ("1010", "1010", "1110", "0010", "0010", "0010"),
+    "5": ("1110", "1000", "1110", "0010", "0010", "1110"),
+    "6": ("1110", "1000", "1110", "1010", "1010", "1110"),
+    "7": ("1110", "0010", "0010", "0100", "0100", "0100"),
+    "8": ("1110", "1010", "1110", "1010", "1010", "1110"),
+    "9": ("1110", "1010", "1010", "1110", "0010", "1110"),
+    "A": ("1110", "1010", "1010", "1110", "1010", "1010"),
+    "B": ("1100", "1010", "1100", "1010", "1010", "1100"),
+    "C": ("1110", "1000", "1000", "1000", "1000", "1110"),
+    "D": ("1100", "1010", "1010", "1010", "1010", "1100"),
+    "E": ("1110", "1000", "1110", "1000", "1000", "1110"),
+    "F": ("1110", "1000", "1110", "1000", "1000", "1000"),
+    "G": ("1110", "1000", "1010", "1010", "1010", "1110"),
+    "H": ("1010", "1010", "1110", "1010", "1010", "1010"),
+    "I": ("1110", "0100", "0100", "0100", "0100", "1110"),
+    "J": ("0110", "0010", "0010", "0010", "1010", "1110"),
+    "K": ("1010", "1010", "1100", "1010", "1010", "1010"),
+    "L": ("1000", "1000", "1000", "1000", "1000", "1110"),
+    "M": ("1010", "1110", "1110", "1010", "1010", "1010"),
+    "N": ("1010", "1110", "1110", "1110", "1010", "1010"),
+    "O": ("1110", "1010", "1010", "1010", "1010", "1110"),
+    "P": ("1110", "1010", "1010", "1110", "1000", "1000"),
+    "Q": ("1110", "1010", "1010", "1010", "1110", "0010"),
+    "R": ("1110", "1010", "1010", "1100", "1010", "1010"),
+    "S": ("1110", "1000", "1110", "0010", "0010", "1110"),
+    "T": ("1110", "0100", "0100", "0100", "0100", "0100"),
+    "U": ("1010", "1010", "1010", "1010", "1010", "1110"),
+    "V": ("1010", "1010", "1010", "1010", "1010", "0100"),
+    "W": ("1010", "1010", "1010", "1110", "1110", "1010"),
+    "X": ("1010", "1010", "0100", "0100", "1010", "1010"),
+    "Y": ("1010", "1010", "1110", "0100", "0100", "0100"),
+    "Z": ("1110", "0010", "0100", "0100", "1000", "1110"),
+}
+
+
+def _matrix_text_width(text, spacing=1):
+    text = str(text or "").upper()
+    return 0 if not text else len(text) * 4 + (len(text) - 1) * spacing
+
+
+def _fit_matrix_text(text, max_width, spacing=1):
+    text = str(text or "").upper()
+    while text and _matrix_text_width(text, spacing) > max_width:
+        text = text[:-1]
+    return text
+
+
+def _draw_matrix_text(draw, x, y, text, fill, spacing=1):
+    cursor = x
+    for ch in str(text or "").upper():
+        glyph = _MATRIX_FONT_4X6.get(ch, _MATRIX_FONT_4X6[" "])
+        for row, bits in enumerate(glyph):
+            for col, bit in enumerate(bits):
+                if bit == "1":
+                    draw.point((cursor + col, y + row), fill=fill)
+        cursor += 4 + spacing
 
 
 def _draw_tight_text(image, text, x, y, fill, font, spacing=-1):
@@ -281,6 +688,18 @@ def _fetch(endpoint, params, api_key):
         data = json.loads(resp.read().decode("utf-8"))
     _CACHE[key] = {"data": data, "expires": now + timedelta(seconds=_CACHE_SECONDS)}
     return data
+
+
+def _fetch_uncached(endpoint, params, api_key):
+    url = f"{_API_ROOT}{endpoint}?{urllib.parse.urlencode(params)}"
+    req = urllib.request.Request(url, headers={
+        "User-Agent": "Hubyt/0.1",
+        "Authorization": "Bearer " + api_key,
+        "Accept": "application/json",
+        "Accept-Version": "v1",
+    })
+    with urllib.request.urlopen(req, timeout=15) as resp:
+        return json.loads(resp.read().decode("utf-8"))
 
 
 def _data_rows(data):
@@ -330,7 +749,120 @@ def _pick_summary(rows):
     return picked
 
 
+def _flight_departure_dt(flight):
+    return _parse_time(_departure_time(flight or {}))
+
+
+def _summary_params(now, iata_ident, icao_ident, route):
+    params = {
+        "flight_datetime_from": (now - timedelta(hours=18)).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "flight_datetime_to": (now + timedelta(hours=36)).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "limit": "10",
+    }
+    if iata_ident:
+        params["flights"] = iata_ident
+    if icao_ident:
+        params["callsigns"] = icao_ident
+    if route:
+        params["routes"] = route
+    return params
+
+
+def _live_params(iata_ident, icao_ident, airline_icao, route):
+    if iata_ident:
+        return {"flights": iata_ident, "limit": "5"}
+    if icao_ident:
+        return {"callsigns": icao_ident, "limit": "5"}
+    if route and airline_icao:
+        return {"routes": route, "operating_as": airline_icao, "limit": "10"}
+    return None
+
+
+def _poll_state_key(terminal_key):
+    local_day = datetime.now().astimezone().strftime("%Y-%m-%d")
+    return f"{terminal_key}|{local_day}"
+
+
+def _get_poll_state(key):
+    state = _FLIGHT_POLL_STATE.get(key)
+    if state:
+        return state
+    now_local = datetime.now().astimezone()
+    six = _today_6am_local()
+    state = {
+        "flight": None,
+        "next_poll": _utc(six if now_local < six else now_local),
+        "landed_seen": False,
+        "landed_confirmed": False,
+        "cancelled": False,
+    }
+    _FLIGHT_POLL_STATE[key] = state
+    return state
+
+
+def _schedule_next_poll(state, flight, now):
+    next_day = _utc(_next_6am_local())
+    if not flight:
+        state["next_poll"] = now + timedelta(hours=1)
+        return
+
+    if _is_cancelled(flight):
+        state["cancelled"] = True
+        state["next_poll"] = next_day
+        return
+
+    if _is_landed(flight):
+        if state.get("landed_seen"):
+            state["landed_confirmed"] = True
+            state["next_poll"] = next_day
+        else:
+            state["landed_seen"] = True
+            state["next_poll"] = now + timedelta(minutes=15)
+        return
+
+    state["landed_seen"] = False
+    state["landed_confirmed"] = False
+    departure = _flight_departure_dt(flight)
+    if departure and now < departure - timedelta(minutes=10):
+        state["next_poll"] = departure - timedelta(minutes=10)
+    elif not _airborne(flight):
+        state["next_poll"] = now + timedelta(minutes=10)
+    else:
+        state["next_poll"] = now + timedelta(minutes=15)
+
+
+def _load_summary(now, iata_ident, icao_ident, route, api_key):
+    data = _fetch_uncached("/flight-summary/full", _summary_params(now, iata_ident, icao_ident, route), api_key)
+    return _pick_summary(_data_rows(data))
+
+
+def _load_live(iata_ident, icao_ident, airline_icao, route, api_key):
+    params = _live_params(iata_ident, icao_ident, airline_icao, route)
+    if not params:
+        return None
+    data = _fetch_uncached("/live/flight-positions/full", params, api_key)
+    return _pick_flight(_data_rows(data))
+
+
 def _load_flight(opts):
+    if _DISABLE_POLLING_FOR_TEST:
+        return {
+            "flight": "WN3416",
+            "callsign": "SWA3416",
+            "operating_as": "SWA",
+            "painted_as": "SWA",
+            "orig_iata": "MHT",
+            "dest_iata": "MCO",
+            "scheduled_departure": "2026-05-08T20:55:00Z",
+            "eta": "2026-05-08T22:25:00Z",
+            "alt": 30000,
+            "gspeed": 430,
+            "type": "B38M",
+            "lat": 38.9072,
+            "lon": -77.0369,
+            "_over": "Washington DC",
+            "_hubyt_test": True,
+        }, None
     api_key = str(opts.get("apiKey") or "").strip()
     if not api_key:
         return None, "SET API"
@@ -343,126 +875,203 @@ def _load_flight(opts):
     route = _route_from_options(opts)
     iata_ident = ident
     icao_ident = _ident_from_options(opts, use_icao=True)
-    terminal_key = _terminal_key(iata_ident, icao_ident, route)
+    terminal_key = _terminal_key(iata_ident, icao_ident, route, _truthy(opts.get("repeatDaily")))
     terminal_flight = _terminal_cached(terminal_key)
     if terminal_flight:
         return terminal_flight, None
-    candidates = [
-        {"flights": iata_ident, "limit": "5"},
-        {"callsigns": icao_ident, "limit": "5"} if icao_ident else None,
-        {"flights": iata_ident, "operating_as": airline_icao, "limit": "5"} if iata_ident and airline_icao else None,
-        {"flights": iata_ident, "painted_as": airline_icao, "limit": "5"} if iata_ident and airline_icao else None,
-        {"routes": route, "operating_as": airline_icao, "limit": "10"} if route and airline_icao else None,
-    ]
-    for params in candidates:
-        if not params:
-            continue
-        try:
-            data = _fetch("/live/flight-positions/full", params, api_key)
-            flight = _pick_flight(_data_rows(data))
-            if flight:
-                _cache_terminal(terminal_key, flight)
-                return flight, None
-        except urllib.error.HTTPError as err:
-            if err.code in (401, 403):
-                return None, "BAD API"
-            if err.code in (404, 422):
-                last_error = "NO LIVE"
-                continue
-            last_error = "API ERR"
-        except Exception:
-            last_error = "API ERR"
-
     now = datetime.now(timezone.utc)
-    summary_params = {
-        "flight_datetime_from": (now - timedelta(hours=18)).strftime("%Y-%m-%dT%H:%M:%SZ"),
-        "flight_datetime_to": (now + timedelta(hours=36)).strftime("%Y-%m-%dT%H:%M:%SZ"),
-        "limit": "10",
-    }
-    if iata_ident:
-        summary_params["flights"] = iata_ident
-    if icao_ident:
-        summary_params["callsigns"] = icao_ident
-    if route:
-        summary_params["routes"] = route
+    poll_key = _poll_state_key(terminal_key)
+    poll_state = _get_poll_state(poll_key)
+    cached_flight = poll_state.get("flight")
+    next_poll = poll_state.get("next_poll")
+    if poll_state.get("cancelled") and cached_flight:
+        return cached_flight, None
+    if next_poll and now < next_poll:
+        if cached_flight:
+            return cached_flight, None
+        return None, "WAIT 6A"
+
     try:
-        data = _fetch("/flight-summary/full", summary_params, api_key)
-        flight = _pick_summary(_data_rows(data))
+        if cached_flight and _airborne(cached_flight) and not _is_landed(cached_flight):
+            flight = _load_live(iata_ident, icao_ident, airline_icao, route, api_key)
+        else:
+            flight = _load_summary(now, iata_ident, icao_ident, route, api_key)
         if flight:
+            poll_state["flight"] = flight
+            _schedule_next_poll(poll_state, flight, now)
             _cache_terminal(terminal_key, flight)
             return flight, None
         last_error = "NO LIVE"
+        _schedule_next_poll(poll_state, cached_flight, now)
+        if cached_flight:
+            return cached_flight, None
     except urllib.error.HTTPError as err:
         if err.code in (401, 403):
             return None, "BAD API"
+        _schedule_next_poll(poll_state, cached_flight, now)
+        if cached_flight:
+            return cached_flight, None
         last_error = "NO LIVE"
     except Exception:
+        _schedule_next_poll(poll_state, cached_flight, now)
+        if cached_flight:
+            return cached_flight, None
         last_error = "API ERR"
     return None, last_error or "NO LIVE"
 
 
-def render(options=None):
-    from PIL import Image, ImageDraw, ImageFont
+def _draw_airline_mark(image, draw, flight, logo_left, logo_top, fallback_y=0):
+    iata = _airline_iata(flight)
+    if iata == "WN":
+        _draw_southwest_heart(draw, logo_left, logo_top)
+        return
+    if iata == "DL":
+        _draw_delta_widget(draw, logo_left, logo_top + 1)
+        return
+    logo = fetch_airline_logo(iata) if iata else None
+    if logo:
+        image.paste(logo, (logo_left, logo_top), logo)
+    elif iata:
+        airline = _fit_pixel_text(iata[:2], 12)
+        _draw_pixel_text(draw, 63 - _pixel_text_width(airline), fallback_y, airline, (100, 190, 255))
 
+
+def _layout_for_flight(flight):
+    if _airline_iata(flight) == "WN":
+        return {
+            "logo_left": 0,
+            "logo_top": 0,
+            "text_left": 18,
+            "ident_max": 45,
+            "route_max": 45,
+        }
+    return {
+        "logo_left": 48,
+        "logo_top": 1,
+        "text_left": 1,
+        "ident_max": 39,
+        "route_max": 62,
+    }
+
+
+def _render_flight_panel(flight):
+    from PIL import Image, ImageDraw
+
+    image = Image.new("RGB", (64, 32), (0, 5, 18))
+    draw = ImageDraw.Draw(image)
+    layout = _layout_for_flight(flight)
+    ident = _fit_pixel_text(_flight_number(flight), layout["ident_max"])
+    aircraft = _fit_pixel_text(_aircraft_type(flight), layout["ident_max"])
+    route = f"{_airport_code(flight.get('orig_iata') or flight.get('orig_icao'))}>{_airport_code(flight.get('dest_iata') or flight.get('dest_icao'))}"
+    bottom = _event_time(flight)
+
+    _draw_airline_mark(image, draw, flight, layout["logo_left"], layout["logo_top"])
+    _draw_pixel_text(draw, layout["text_left"], 0, ident, (235, 245, 255))
+    _draw_matrix_text(draw, layout["text_left"], 9, _fit_matrix_text(aircraft, layout["ident_max"], spacing=0), (100, 190, 255), spacing=0)
+    _draw_matrix_text(draw, layout["text_left"], 17, _fit_matrix_text(route, layout["route_max"], spacing=0), (100, 190, 255), spacing=0)
+    _draw_matrix_text(draw, 0, 25, _fit_matrix_text(bottom, 63, spacing=0), (255, 220, 90), spacing=0)
+    return image
+
+
+def _render_status_panel(flight):
+    from PIL import Image, ImageDraw
+
+    image = Image.new("RGB", (64, 32), (0, 5, 18))
+    draw = ImageDraw.Draw(image)
+    status, status_color = _status(flight)
+    ident = _fit_pixel_text(_flight_number(flight), 63)
+    heading = _fit_matrix_text(_position_heading(flight), 63, spacing=0)
+    over = _fit_matrix_text(_over_line(flight), 63, spacing=0)
+    details = _fit_matrix_text(_alt_speed_line(flight) or status, 63, spacing=0)
+    _draw_pixel_text(draw, 0, 0, ident, (235, 245, 255))
+    _draw_matrix_text(draw, 0, 9, heading, status_color, spacing=0)
+    _draw_matrix_text(draw, 0, 17, over, (255, 220, 90), spacing=0)
+    _draw_matrix_text(draw, 0, 25, details, (100, 190, 255), spacing=0)
+    return image
+
+
+def _compose_slide(left, right, offset):
+    from PIL import Image
+
+    frame = Image.new("RGB", (64, 32), (0, 5, 18))
+    frame.paste(left, (-offset, 0))
+    frame.paste(right, (64 - offset, 0))
+    return frame
+
+
+def _save_static_webp(image):
+    out = BytesIO()
+    image.save(out, "WEBP", lossless=True, quality=100)
+    return out.getvalue()
+
+
+def _save_slide_animation(first, second):
+    slide_offsets = [8, 16, 24, 32, 40, 48, 56, 64]
+    frames = [_compose_slide(first, second, offset) for offset in slide_offsets] + [second]
+    frame_ms = 120
+    out = BytesIO()
+    frames[0].save(
+        out, "WEBP", save_all=True,
+        append_images=frames[1:],
+        duration=frame_ms, loop=1,
+        lossless=True, quality=100,
+    )
+    return out.getvalue()
+
+
+def _save_locked_two_page_animation(first, second, first_dwell, second_dwell):
+    slide_offsets = [8, 16, 24, 32, 40, 48, 56, 64]
+    frames = [first] + [_compose_slide(first, second, offset) for offset in slide_offsets] + [second]
+    durations = [max(1, int(first_dwell * 1000))]
+    durations += [90 for _ in slide_offsets[:-1]]
+    durations += [max(1, int(second_dwell * 1000))]
+    durations += [1]
+    out = BytesIO()
+    frames[0].save(
+        out, "WEBP", save_all=True,
+        append_images=frames[1:],
+        duration=durations, loop=1,
+        lossless=True, quality=100,
+    )
+    return out.getvalue()
+
+
+def _two_page_response(opts, flight, first, second, locked=True):
+    dwell = max(4, int(opts.get("_dwell", 30) or 30))
+    half_dwell = max(2, dwell // 2)
+    second_dwell = max(2, dwell - half_dwell)
+    if locked:
+        return {
+            "body": _save_locked_two_page_animation(first, second, half_dwell, second_dwell),
+            "dwell_secs": 1,
+            "_stay": False,
+        }
+    return {
+        "body": _save_static_webp(first),
+        "dwell_secs": half_dwell,
+        "_stay": False,
+        "_frames": [
+            {
+                "body": _save_static_webp(second),
+                "dwell_secs": second_dwell,
+                "no_replay": False,
+                "replay_body": None,
+            }
+        ],
+    }
+
+
+def render(options=None):
     flight, error = _load_flight(options or {})
     if error:
         color = (100, 190, 255) if error.startswith("SET") else (238, 80, 80)
         return render_text_webp(error, color)
 
-    image = Image.new("RGB", (64, 32), (0, 5, 18))
-    draw = ImageDraw.Draw(image)
-    try:
-        font = ImageFont.truetype("Silkscreen-Regular.ttf", 7)
-    except Exception:
-        font = ImageFont.load_default()
-
-    ident = _flight_number(flight)
-    status, status_color = _status(flight)
-    if _airline_iata(flight) == "WN":
-        logo_left = 0
-        logo_top = 0
-        text_left = 18
-        ident_max = 45
-        route_max = 45
-        bottom_max = 45
-    else:
-        logo_left = 52
-        logo_top = 1
-        text_left = 1
-        ident_max = 39
-        route_max = 62
-        bottom_max = 62
-    ident = _fit_text(draw, ident, font, ident_max)
-    status = _fit_text(draw, status, font, 63)
-    route = f"{_airport_code(flight.get('orig_iata') or flight.get('orig_icao'))}>{_airport_code(flight.get('dest_iata') or flight.get('dest_icao'))}"
-    time_line = _event_time(flight)
-    gate = _gate_line(flight)
-    bottom = time_line
-    if gate:
-        bottom = (time_line + " " + gate).strip()
-
-    iata = _airline_iata(flight)
-    if iata == "WN":
-        _draw_southwest_heart(draw, logo_left, logo_top)
-    else:
-        logo = fetch_airline_logo(iata) if iata else None
-        if logo:
-            image.paste(logo, (logo_left, logo_top), logo)
-        elif iata:
-            lw = draw.textbbox((0, 0), iata[:2], font=font)[2]
-            draw_sharp_text(image, (63 - lw, -3), iata[:2], (100, 190, 255), font)
-
-    draw_sharp_text(image, (text_left, -3), ident, (235, 245, 255), font)
-    draw_sharp_text(image, (text_left, 5), _fit_text(draw, route, font, route_max), (100, 190, 255), font)
-    draw_sharp_text(image, (text_left, 12), _fit_text(draw, bottom, font, bottom_max), (255, 220, 90), font)
-    status_left = 0
-    status_y = 21
-    if status.startswith("ENRT "):
-        next_x = _draw_tight_text(image, "ENRT", status_left, status_y, status_color, font, -1)
-        draw_sharp_text(image, (next_x + 3, status_y), status[5:], status_color, font)
-    else:
-        draw_sharp_text(image, (status_left, status_y), status, status_color, font)
-
-    out = BytesIO()
-    image.save(out, "WEBP", lossless=True, quality=100)
-    return out.getvalue()
+    opts = options or {}
+    first = _render_flight_panel(flight)
+    second = _render_status_panel(flight)
+    target = str(opts.get("_target") or "").lower()
+    firmware_version = _version_tuple(opts.get("_firmware_version"))
+    if ("matrixportal-s3" in target and firmware_version < (1, 3, 13)) or firmware_version < (1, 3, 9):
+        return _two_page_response(opts, flight, first, second, locked=False)
+    return _two_page_response(opts, flight, first, second, locked=True)
