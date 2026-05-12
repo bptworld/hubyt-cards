@@ -109,7 +109,7 @@ def render(options=None):
         lw = draw.textbbox((0, 0), label, font=font)[2]
         draw_sharp_text(image, (cx - lw // 2, -3), label, label_color, font)
 
-        _draw_icon(draw, icon, cx, 5)
+        _draw_icon(draw, icon, cx, 7)
 
         hw = draw.textbbox((0, 0), high, font=bold)[2]
         draw_sharp_text(image, (cx - hw // 2, 14), high, (255, 175, 70), bold)

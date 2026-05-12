@@ -7,9 +7,9 @@
       "name": "Clock",
       "category": "Utility",
       "detail": "Time plus local weather",
-      "description": "Shows the current time in large text with a weather icon and temperature pulled from weather.gov.",
+      "description": "Time plus local weather",
       "author": "bptworld",
-      "version": "1.1",
+      "version": "1.0",
       "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/clock.py"
     },
     {
@@ -17,97 +17,417 @@
       "name": "Countdown",
       "category": "Utility",
       "detail": "Days until any event",
-      "description": "Generic countdown to any event. Set an event name and date \u2014 shows days remaining with a large number display.",
+      "description": "Days until any event",
       "author": "bptworld",
       "version": "1.0",
       "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/countdown.py"
+    },
+    {
+      "id": "countdown_confetti",
+      "name": "Countdown Confetti",
+      "category": "Utility",
+      "detail": "Event countdown with confetti",
+      "description": "Event countdown with confetti",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/countdown_confetti.py"
     },
     {
       "id": "disney",
       "name": "Disney Countdown",
       "category": "Utility",
       "detail": "Days until your trip",
-      "description": "Countdown to your Disney trip. Shows days remaining in large text with a DISNEY header.",
+      "description": "Days until your trip",
       "author": "bptworld",
       "version": "1.0",
       "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/disney.py"
-    },
-    {
-      "id": "weather_forecast",
-      "name": "Weather Forecast",
-      "category": "Utility",
-      "detail": "4-day forecast with icons",
-      "description": "4-day weather forecast showing day, weather icon, high and low temperatures. Pulls from weather.gov \u2014 no API key required.",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/weather_forecast.py"
-    },
-    {
-      "id": "stocks",
-      "name": "Stock Ticker",
-      "category": "Finance",
-      "detail": "Live price and change",
-      "description": "Live stock or crypto price with dollar and percent change. Supports any Yahoo Finance symbol \u2014 AAPL, TSLA, BTC-USD, ^SPX, and more.",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/stocks.py"
-    },
-    {
-      "id": "market_indexes",
-      "name": "Market Indexes",
-      "category": "Finance",
-      "detail": "Dow, S&P, Nasdaq",
-      "description": "Shows up to three market indexes with current value and daily percent change.",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/market_indexes.py"
-    },
-    {
-      "id": "crypto_watch",
-      "name": "Crypto Watch",
-      "category": "Finance",
-      "detail": "BTC, ETH, and more",
-      "description": "Shows up to three crypto symbols with current price and daily percent change.",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/crypto_watch.py"
-    },
-    {
-      "id": "gas_price_local",
-      "name": "Gas Price Local",
-      "category": "Finance",
-      "detail": "AAA ZIP/metro gas average",
-      "description": "Uses a ZIP code to find the closest AAA metro gas average, with a state average fallback when no local metro match is available.",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/gas_price_local.py"
-    },
-    {
-      "id": "portfolio_pulse",
-      "name": "Portfolio Pulse",
-      "category": "Finance",
-      "detail": "Value and daily gain",
-      "description": "Shows estimated portfolio value and daily gain or loss from configured ticker quantities.",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/portfolio_pulse.py"
     },
     {
       "id": "gcal",
       "name": "Google Calendar",
       "category": "Utility",
       "detail": "Next upcoming event",
-      "description": "Shows the next upcoming event from a public or private Google Calendar ICS URL. Includes event title, date or time, and relative countdown.",
+      "description": "Next upcoming event",
       "author": "bptworld",
       "version": "1.0",
       "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/gcal.py"
+    },
+    {
+      "id": "moon_phase",
+      "name": "Moon Phase",
+      "category": "Utility",
+      "detail": "Current moon phase",
+      "description": "Current moon phase",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/moon_phase.py"
+    },
+    {
+      "id": "trash_recycling",
+      "name": "Trash + Recycling",
+      "category": "Utility",
+      "detail": "Weekly and bi-weekly pickup reminder",
+      "description": "Weekly and bi-weekly pickup reminder",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/trash_recycling.py"
+    },
+    {
+      "id": "air_quality",
+      "name": "Air Quality",
+      "category": "Weather",
+      "detail": "AQI, pollen, and UV by ZIP",
+      "description": "AQI, pollen, and UV by ZIP",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/air_quality.py"
+    },
+    {
+      "id": "weather_alert",
+      "name": "Weather Alert",
+      "category": "Weather",
+      "detail": "Skips when clear",
+      "description": "Skips when clear",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/weather_alert.py"
+    },
+    {
+      "id": "weather_forecast",
+      "name": "Weather Forecast",
+      "category": "Weather",
+      "detail": "5-day forecast with icons",
+      "description": "5-day forecast with icons",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/weather_forecast.py"
+    },
+    {
+      "id": "weather_mood",
+      "name": "Weather Mood",
+      "category": "Weather",
+      "detail": "Animated weather vibe",
+      "description": "Animated weather vibe",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/weather_mood.py"
+    },
+    {
+      "id": "cfl",
+      "name": "CFL Scores",
+      "category": "Sports",
+      "detail": "Live ESPN CFL scoreboard",
+      "description": "Live ESPN CFL scoreboard",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/cfl.py"
+    },
+    {
+      "id": "college_baseball",
+      "name": "College Baseball",
+      "category": "Sports",
+      "detail": "Live ESPN college baseball scoreboard",
+      "description": "Live ESPN college baseball scoreboard",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/college_baseball.py"
+    },
+    {
+      "id": "college_football",
+      "name": "College Football",
+      "category": "Sports",
+      "detail": "Live ESPN scoreboard",
+      "description": "Live ESPN scoreboard",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/college_football.py"
+    },
+    {
+      "id": "college_softball",
+      "name": "College Softball",
+      "category": "Sports",
+      "detail": "Live ESPN college softball scoreboard",
+      "description": "Live ESPN college softball scoreboard",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/college_softball.py"
+    },
+    {
+      "id": "f1",
+      "name": "F1 Racing",
+      "category": "Sports",
+      "detail": "ESPN Formula 1 status",
+      "description": "ESPN Formula 1 status",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/f1.py"
+    },
+    {
+      "id": "lpga",
+      "name": "LPGA Golf",
+      "category": "Sports",
+      "detail": "ESPN LPGA leaderboard",
+      "description": "ESPN LPGA leaderboard",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/lpga.py"
+    },
+    {
+      "id": "mens_college_basketball",
+      "name": "Men's College Basketball",
+      "category": "Sports",
+      "detail": "Live ESPN scoreboard",
+      "description": "Live ESPN scoreboard",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/mens_college_basketball.py"
+    },
+    {
+      "id": "mens_college_lacrosse",
+      "name": "Men's College Lacrosse",
+      "category": "Sports",
+      "detail": "Live ESPN men's college lacrosse scoreboard",
+      "description": "Live ESPN men's college lacrosse scoreboard",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/mens_college_lacrosse.py"
+    },
+    {
+      "id": "mlb",
+      "name": "MLB Scores",
+      "category": "Sports",
+      "detail": "Live ESPN scoreboard",
+      "description": "Live ESPN scoreboard",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/mlb.py"
+    },
+    {
+      "id": "nascar",
+      "name": "NASCAR",
+      "category": "Sports",
+      "detail": "ESPN NASCAR Cup status",
+      "description": "ESPN NASCAR Cup status",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/nascar.py"
+    },
+    {
+      "id": "nba_g_league",
+      "name": "NBA G League",
+      "category": "Sports",
+      "detail": "Live ESPN NBA G League scoreboard",
+      "description": "Live ESPN NBA G League scoreboard",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/nba_g_league.py"
+    },
+    {
+      "id": "nba",
+      "name": "NBA Scores",
+      "category": "Sports",
+      "detail": "Live ESPN scoreboard",
+      "description": "Live ESPN scoreboard",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/nba.py"
+    },
+    {
+      "id": "mens_college_hockey",
+      "name": "NCAA Hockey",
+      "category": "Sports",
+      "detail": "Live ESPN men's college hockey scoreboard",
+      "description": "Live ESPN men's college hockey scoreboard",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/mens_college_hockey.py"
+    },
+    {
+      "id": "nfl",
+      "name": "NFL Scores",
+      "category": "Sports",
+      "detail": "Live ESPN scoreboard",
+      "description": "Live ESPN scoreboard",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/nfl.py"
+    },
+    {
+      "id": "nhl",
+      "name": "NHL Scores",
+      "category": "Sports",
+      "detail": "Live ESPN scoreboard",
+      "description": "Live ESPN scoreboard",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/nhl.py"
+    },
+    {
+      "id": "nll_lacrosse",
+      "name": "NLL Lacrosse",
+      "category": "Sports",
+      "detail": "Live ESPN NLL scoreboard",
+      "description": "Live ESPN NLL scoreboard",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/nll_lacrosse.py"
+    },
+    {
+      "id": "pga",
+      "name": "PGA Golf",
+      "category": "Sports",
+      "detail": "ESPN PGA leaderboard",
+      "description": "ESPN PGA leaderboard",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/pga.py"
+    },
+    {
+      "id": "pll_lacrosse",
+      "name": "PLL Lacrosse",
+      "category": "Sports",
+      "detail": "Live ESPN PLL scoreboard",
+      "description": "Live ESPN PLL scoreboard",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/pll_lacrosse.py"
+    },
+    {
+      "id": "soccer",
+      "name": "Soccer Scores",
+      "category": "Sports",
+      "detail": "Live ESPN soccer scoreboard",
+      "description": "Live ESPN soccer scoreboard",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/soccer.py"
+    },
+    {
+      "id": "tennis_atp",
+      "name": "Tennis ATP",
+      "category": "Sports",
+      "detail": "ESPN ATP tournament status",
+      "description": "ESPN ATP tournament status",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/tennis_atp.py"
+    },
+    {
+      "id": "tennis_wta",
+      "name": "Tennis WTA",
+      "category": "Sports",
+      "detail": "ESPN WTA tournament status",
+      "description": "ESPN WTA tournament status",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/tennis_wta.py"
+    },
+    {
+      "id": "ufc",
+      "name": "UFC",
+      "category": "Sports",
+      "detail": "ESPN UFC event status",
+      "description": "ESPN UFC event status",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/ufc.py"
+    },
+    {
+      "id": "ufl",
+      "name": "UFL Scores",
+      "category": "Sports",
+      "detail": "Live ESPN UFL scoreboard",
+      "description": "Live ESPN UFL scoreboard",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/ufl.py"
+    },
+    {
+      "id": "wnba",
+      "name": "WNBA Scores",
+      "category": "Sports",
+      "detail": "Live ESPN scoreboard",
+      "description": "Live ESPN scoreboard",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/wnba.py"
+    },
+    {
+      "id": "womens_college_basketball",
+      "name": "Women's College Basketball",
+      "category": "Sports",
+      "detail": "Live ESPN scoreboard",
+      "description": "Live ESPN scoreboard",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/womens_college_basketball.py"
+    },
+    {
+      "id": "womens_college_lacrosse",
+      "name": "Women's College Lacrosse",
+      "category": "Sports",
+      "detail": "Live ESPN women's college lacrosse scoreboard",
+      "description": "Live ESPN women's college lacrosse scoreboard",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/womens_college_lacrosse.py"
+    },
+    {
+      "id": "womens_college_volleyball",
+      "name": "Women's College Volleyball",
+      "category": "Sports",
+      "detail": "Live ESPN women's college volleyball scoreboard",
+      "description": "Live ESPN women's college volleyball scoreboard",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/womens_college_volleyball.py"
+    },
+    {
+      "id": "crypto_watch",
+      "name": "Crypto Watch",
+      "category": "Finance",
+      "detail": "BTC, ETH, and more",
+      "description": "BTC, ETH, and more",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/crypto_watch.py"
+    },
+    {
+      "id": "market_indexes",
+      "name": "Market Indexes",
+      "category": "Finance",
+      "detail": "Dow, S&P, Nasdaq",
+      "description": "Dow, S&P, Nasdaq",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/market_indexes.py"
+    },
+    {
+      "id": "portfolio_pulse",
+      "name": "Portfolio Pulse",
+      "category": "Finance",
+      "detail": "Value and daily gain",
+      "description": "Value and daily gain",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/portfolio_pulse.py"
+    },
+    {
+      "id": "stocks",
+      "name": "Stock Ticker",
+      "category": "Finance",
+      "detail": "Scrolling stocks and crypto",
+      "description": "Scrolling stocks and crypto",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/stocks.py"
     },
     {
       "id": "hubitat",
       "name": "Hubitat Device",
       "category": "Smart Home",
       "detail": "Live device attribute",
-      "description": "Shows a live Hubitat Maker API device attribute such as temperature, humidity, switch, motion, contact, presence, lock, power, or battery.",
+      "description": "Live device attribute",
       "author": "bptworld",
       "version": "1.0",
       "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/hubitat.py"
@@ -117,7 +437,7 @@
       "name": "Hubitat Multi",
       "category": "Smart Home",
       "detail": "Several Hubitat devices",
-      "description": "Shows one attribute from several Hubitat Maker API devices in a compact list.",
+      "description": "Several Hubitat devices",
       "author": "bptworld",
       "version": "1.0",
       "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/hubitat_multi.py"
@@ -127,7 +447,7 @@
       "name": "Hubitat Safety",
       "category": "Smart Home",
       "detail": "All secure or open list",
-      "description": "Checks several Hubitat devices and shows All Secure when every device has the expected safe value. Lists devices that need attention.",
+      "description": "All secure or open list",
       "author": "bptworld",
       "version": "1.0",
       "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/hubitat_safety.py"
@@ -137,217 +457,17 @@
       "name": "Water Leak Alert",
       "category": "Smart Home",
       "detail": "Skips when all dry",
-      "description": "Checks several Hubitat water sensors. If every sensor is dry, the card skips itself; if any are wet, it shows an alert.",
+      "description": "Skips when all dry",
       "author": "bptworld",
       "version": "1.0",
       "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/water_leak_alert.py"
-    },
-    {
-      "id": "pacman",
-      "name": "Pac-Man Chase",
-      "category": "Fun",
-      "detail": "Pac-Man chasing ghosts",
-      "description": "Animated pixel card showing Pac-Man chasing ghosts across a tiny maze. Includes options for speed and dots.",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/pacman.py"
-    },
-    {
-      "id": "matrix_rain",
-      "name": "Matrix Rain",
-      "category": "Fun",
-      "detail": "Falling green code",
-      "description": "Animated falling green code columns for an ambient pixel display.",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/matrix_rain.py"
-    },
-    {
-      "id": "pong_loop",
-      "name": "Pong Loop",
-      "category": "Fun",
-      "detail": "Tiny paddles and ball",
-      "description": "Animated retro paddle-and-ball loop with a tiny scoreboard.",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/pong_loop.py"
-    },
-    {
-      "id": "lava_lamp",
-      "name": "Lava Lamp",
-      "category": "Fun",
-      "detail": "Drifting pixel blobs",
-      "description": "Animated colorful blobs drifting around like a tiny lava lamp.",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/lava_lamp.py"
-    },
-    {
-      "id": "alien_march",
-      "name": "Alien March",
-      "category": "Fun",
-      "detail": "Retro invader parade",
-      "description": "Animated rows of tiny aliens marching across the display.",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/alien_march.py"
-    },
-    {
-      "id": "snake",
-      "name": "Snake",
-      "category": "Fun",
-      "detail": "Snake eats dots",
-      "description": "Animated snake loop with a moving food dot.",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/snake.py"
-    },
-    {
-      "id": "aquarium",
-      "name": "Pixel Aquarium",
-      "category": "Fun",
-      "detail": "Fish and bubbles",
-      "description": "Animated little fish, bubbles, and plants for an ambient aquarium card.",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/aquarium.py"
-    },
-    {
-      "id": "fireplace",
-      "name": "Fireplace",
-      "category": "Fun",
-      "detail": "Pixel flames",
-      "description": "Animated pixel fireplace with flickering flames.",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/fireplace.py"
-    },
-    {
-      "id": "tiny_traffic",
-      "name": "Tiny Traffic",
-      "category": "Fun",
-      "detail": "Cars and signal lights",
-      "description": "Animated tiny cars driving under a changing traffic light.",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/tiny_traffic.py"
-    },
-    {
-      "id": "fortune_cookie",
-      "name": "Fortune Cookie",
-      "category": "Fun",
-      "detail": "Tiny daily fortune",
-      "description": "Shows a tiny daily fortune with a pixel fortune cookie.",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/fortune_cookie.py"
-    },
-    {
-      "id": "heartbeat",
-      "name": "8-Bit Heartbeat",
-      "category": "Fun",
-      "detail": "Pulsing pixel heart",
-      "description": "Animated pulsing pixel heart with a little heartbeat line.",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/heartbeat.py"
-    },
-    {
-      "id": "pixel_globe",
-      "name": "Pixel Globe",
-      "category": "Fun",
-      "detail": "Tiny rotating world",
-      "description": "Animated tiny rotating globe with stars.",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/pixel_globe.py"
-    },
-    {
-      "id": "moon_phase",
-      "name": "Moon Phase",
-      "category": "Utility",
-      "detail": "Current moon phase",
-      "description": "Shows the current moon phase and approximate lunar age.",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/moon_phase.py"
-    },
-    {
-      "id": "weather_mood",
-      "name": "Weather Mood",
-      "category": "Weather",
-      "detail": "Animated weather vibe",
-      "description": "Animated ambient weather scene based on ZIP code: sun, clouds, rain, or snow.",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/weather_mood.py"
-    },
-    {
-      "id": "weather_alert",
-      "name": "Weather Alert",
-      "category": "Weather",
-      "detail": "Skips when clear",
-      "description": "Shows active National Weather Service alerts for a ZIP code with a small radar-style icon. Skips itself when there are no active alerts.",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/weather_alert.py"
-    },
-    {
-      "id": "countdown_confetti",
-      "name": "Countdown Confetti",
-      "category": "Utility",
-      "detail": "Event countdown with confetti",
-      "description": "Countdown card with animated confetti for trips, birthdays, launches, and other events.",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/countdown_confetti.py"
-    },
-    {
-      "id": "mlb",
-      "name": "MLB Scores",
-      "category": "Sports",
-      "detail": "Live ESPN scoreboard",
-      "description": "Live MLB scores with team logos, abbreviations, records, and game status from ESPN.",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/mlb.py"
-    },
-    {
-      "id": "nba",
-      "name": "NBA Scores",
-      "category": "Sports",
-      "detail": "Live ESPN scoreboard",
-      "description": "Live NBA scores with team logos, abbreviations, records, and game status from ESPN.",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/nba.py"
-    },
-    {
-      "id": "nhl",
-      "name": "NHL Scores",
-      "category": "Sports",
-      "detail": "Live ESPN scoreboard",
-      "description": "Live NHL scores with team logos, abbreviations, records, and game status from ESPN.",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/nhl.py"
-    },
-    {
-      "id": "nfl",
-      "name": "NFL Scores",
-      "category": "Sports",
-      "detail": "Live ESPN scoreboard",
-      "description": "Live NFL scores with team logos, abbreviations, records, and game status from ESPN.",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/nfl.py"
     },
     {
       "id": "airport_delays",
       "name": "Airport Delays",
       "category": "Travel",
       "detail": "FAA delay status",
-      "description": "Shows FAA airport delay status for one or more airport codes using the FAA NAS status feed.",
+      "description": "FAA delay status",
       "author": "bptworld",
       "version": "1.0",
       "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/airport_delays.py"
@@ -357,30 +477,160 @@
       "name": "Commute Time",
       "category": "Travel",
       "detail": "Drive time estimate",
-      "description": "Shows an estimated drive time and distance between two addresses or latitude/longitude points using OpenStreetMap geocoding and OSRM routing.",
+      "description": "Drive time estimate",
       "author": "bptworld",
       "version": "1.0",
       "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/commute_time.py"
-    },
-    {
-      "id": "flights_overhead",
-      "name": "Flights Overhead",
-      "category": "Travel",
-      "detail": "Live flights above you",
-      "description": "Shows the closest airborne flight overhead using OpenSky Network. Displays flight number, airline, altitude, speed, and distance. Free with optional OpenSky account for higher rate limits.",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/flights_overhead.py"
     },
     {
       "id": "flight_track",
       "name": "Flight Tracker",
       "category": "Travel",
       "detail": "Flightradar24 live and summary tracking",
-      "description": "Track a specific flight using the Flightradar24 API. Shows route, live status, ETA, speed, altitude, and airline graphics when available. Optional origin and destination help match duplicate flight numbers. API calls are cached for five minutes, and landed flights stop polling.",
+      "description": "Flightradar24 live and summary tracking",
       "author": "bptworld",
-      "version": "1.4",
+      "version": "1.0",
       "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/flight_track.py"
+    },
+    {
+      "id": "flights_overhead",
+      "name": "Flights Overhead",
+      "category": "Travel",
+      "detail": "Live flights above you",
+      "description": "Live flights above you",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/flights_overhead.py"
+    },
+    {
+      "id": "gas_price_local",
+      "name": "Gas Price Local",
+      "category": "Travel",
+      "detail": "AAA local gas average",
+      "description": "AAA local gas average",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/gas_price_local.py"
+    },
+    {
+      "id": "heartbeat",
+      "name": "8-Bit Heartbeat",
+      "category": "Fun",
+      "detail": "Pulsing pixel heart",
+      "description": "Pulsing pixel heart",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/heartbeat.py"
+    },
+    {
+      "id": "alien_march",
+      "name": "Alien March",
+      "category": "Fun",
+      "detail": "Retro invader parade",
+      "description": "Retro invader parade",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/alien_march.py"
+    },
+    {
+      "id": "fireplace",
+      "name": "Fireplace",
+      "category": "Fun",
+      "detail": "Pixel flames",
+      "description": "Pixel flames",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/fireplace.py"
+    },
+    {
+      "id": "fortune_cookie",
+      "name": "Fortune Cookie",
+      "category": "Fun",
+      "detail": "Tiny daily fortune",
+      "description": "Tiny daily fortune",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/fortune_cookie.py"
+    },
+    {
+      "id": "lava_lamp",
+      "name": "Lava Lamp",
+      "category": "Fun",
+      "detail": "Drifting pixel blobs",
+      "description": "Drifting pixel blobs",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/lava_lamp.py"
+    },
+    {
+      "id": "matrix_rain",
+      "name": "Matrix Rain",
+      "category": "Fun",
+      "detail": "Falling green code",
+      "description": "Falling green code",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/matrix_rain.py"
+    },
+    {
+      "id": "pacman",
+      "name": "Pac-Man Chase",
+      "category": "Fun",
+      "detail": "Pac-Man chasing ghosts",
+      "description": "Pac-Man chasing ghosts",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/pacman.py"
+    },
+    {
+      "id": "aquarium",
+      "name": "Pixel Aquarium",
+      "category": "Fun",
+      "detail": "Fish and bubbles",
+      "description": "Fish and bubbles",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/aquarium.py"
+    },
+    {
+      "id": "pixel_globe",
+      "name": "Pixel Globe",
+      "category": "Fun",
+      "detail": "Tiny rotating world",
+      "description": "Tiny rotating world",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/pixel_globe.py"
+    },
+    {
+      "id": "pong_loop",
+      "name": "Pong Loop",
+      "category": "Fun",
+      "detail": "Tiny paddles and ball",
+      "description": "Tiny paddles and ball",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/pong_loop.py"
+    },
+    {
+      "id": "snake",
+      "name": "Snake",
+      "category": "Fun",
+      "detail": "Snake eats dots",
+      "description": "Snake eats dots",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/snake.py"
+    },
+    {
+      "id": "tiny_traffic",
+      "name": "Tiny Traffic",
+      "category": "Fun",
+      "detail": "Cars and signal lights",
+      "description": "Cars and signal lights",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/tiny_traffic.py"
     }
   ]
 }

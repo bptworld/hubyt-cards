@@ -8,6 +8,13 @@ from card_utils import (
     render_text_webp,
 )
 
+try:
+    from PIL import ImageFont
+    FONT_7 = ImageFont.truetype("C:/Hubyt/Silkscreen-Regular.ttf", 8)
+except Exception:
+    from PIL import ImageFont
+    FONT_7 = ImageFont.load_default()
+
 CARD_ID = "flight_track"
 CARD_NAME = "Flight Tracker"
 CARD_DETAIL = "Flightradar24 live and summary tracking"
@@ -125,8 +132,20 @@ def _truthy(value):
     return str(value).strip().lower() in ("1", "true", "yes", "on")
 
 
+def _service_day_start_local(now_local=None):
+    now_local = now_local or datetime.now().astimezone()
+    six = now_local.replace(hour=6, minute=0, second=0, microsecond=0)
+    if now_local < six:
+        six = six - timedelta(days=1)
+    return six
+
+
+def _service_day_id(now_local=None):
+    return _service_day_start_local(now_local).strftime("%Y-%m-%d")
+
+
 def _terminal_key(iata_ident, icao_ident, route, repeat_daily=False):
-    service_day = datetime.now().astimezone().strftime("%Y-%m-%d") if repeat_daily else ""
+    service_day = _service_day_id() if repeat_daily else ""
     return "|".join([iata_ident or "", icao_ident or "", route or "", service_day])
 
 
@@ -730,9 +749,22 @@ def _pick_flight(flights):
     return sorted(flights, key=score)[0]
 
 
-def _pick_summary(rows):
+def _pick_summary(rows, service_start=None):
     if not rows:
         return None
+    if service_start:
+        filtered = []
+        for row in rows:
+            dt = (
+                _flight_departure_dt(row)
+                or _parse_time(row.get("first_seen"))
+                or _parse_time(row.get("datetime_takeoff"))
+                or _parse_time(row.get("datetime_landed"))
+            )
+            if dt and dt >= service_start:
+                filtered.append(row)
+        if filtered:
+            rows = filtered
     now = datetime.now(timezone.utc)
 
     def score(row):
@@ -753,10 +785,17 @@ def _flight_departure_dt(flight):
     return _parse_time(_departure_time(flight or {}))
 
 
-def _summary_params(now, iata_ident, icao_ident, route):
+def _summary_params(now, iata_ident, icao_ident, route, repeat_daily=False):
+    if repeat_daily:
+        service_start = _utc(_service_day_start_local(now.astimezone()))
+        date_from = service_start
+        date_to = service_start + timedelta(hours=36)
+    else:
+        date_from = now - timedelta(hours=18)
+        date_to = now + timedelta(hours=36)
     params = {
-        "flight_datetime_from": (now - timedelta(hours=18)).strftime("%Y-%m-%dT%H:%M:%SZ"),
-        "flight_datetime_to": (now + timedelta(hours=36)).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "flight_datetime_from": date_from.strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "flight_datetime_to": date_to.strftime("%Y-%m-%dT%H:%M:%SZ"),
         "limit": "10",
     }
     if iata_ident:
@@ -779,7 +818,7 @@ def _live_params(iata_ident, icao_ident, airline_icao, route):
 
 
 def _poll_state_key(terminal_key):
-    local_day = datetime.now().astimezone().strftime("%Y-%m-%d")
+    local_day = _service_day_id()
     return f"{terminal_key}|{local_day}"
 
 
@@ -792,6 +831,7 @@ def _get_poll_state(key):
     state = {
         "flight": None,
         "next_poll": _utc(six if now_local < six else now_local),
+        "last_error": None,
         "landed_seen": False,
         "landed_confirmed": False,
         "cancelled": False,
@@ -831,9 +871,10 @@ def _schedule_next_poll(state, flight, now):
         state["next_poll"] = now + timedelta(minutes=15)
 
 
-def _load_summary(now, iata_ident, icao_ident, route, api_key):
-    data = _fetch_uncached("/flight-summary/full", _summary_params(now, iata_ident, icao_ident, route), api_key)
-    return _pick_summary(_data_rows(data))
+def _load_summary(now, iata_ident, icao_ident, route, api_key, repeat_daily=False):
+    service_start = _utc(_service_day_start_local(now.astimezone())) if repeat_daily else None
+    data = _fetch_uncached("/flight-summary/full", _summary_params(now, iata_ident, icao_ident, route, repeat_daily), api_key)
+    return _pick_summary(_data_rows(data), service_start)
 
 
 def _load_live(iata_ident, icao_ident, airline_icao, route, api_key):
@@ -875,33 +916,43 @@ def _load_flight(opts):
     route = _route_from_options(opts)
     iata_ident = ident
     icao_ident = _ident_from_options(opts, use_icao=True)
-    terminal_key = _terminal_key(iata_ident, icao_ident, route, _truthy(opts.get("repeatDaily")))
+    repeat_daily = _truthy(opts.get("repeatDaily"))
+    terminal_key = _terminal_key(iata_ident, icao_ident, route, repeat_daily)
+    force_refresh = _truthy(opts.get("_forceRefresh"))
+    if force_refresh:
+        _TERMINAL_CACHE.pop(terminal_key, None)
+        _FLIGHT_POLL_STATE.pop(_poll_state_key(terminal_key), None)
     terminal_flight = _terminal_cached(terminal_key)
-    if terminal_flight:
+    if terminal_flight and not force_refresh:
         return terminal_flight, None
     now = datetime.now(timezone.utc)
     poll_key = _poll_state_key(terminal_key)
     poll_state = _get_poll_state(poll_key)
     cached_flight = poll_state.get("flight")
     next_poll = poll_state.get("next_poll")
-    if poll_state.get("cancelled") and cached_flight:
+    cached_error = poll_state.get("last_error")
+    if poll_state.get("cancelled") and cached_flight and not force_refresh:
         return cached_flight, None
-    if next_poll and now < next_poll:
+    if next_poll and now < next_poll and not force_refresh:
         if cached_flight:
             return cached_flight, None
+        if cached_error:
+            return None, cached_error
         return None, "WAIT 6A"
 
     try:
         if cached_flight and _airborne(cached_flight) and not _is_landed(cached_flight):
             flight = _load_live(iata_ident, icao_ident, airline_icao, route, api_key)
         else:
-            flight = _load_summary(now, iata_ident, icao_ident, route, api_key)
+            flight = _load_summary(now, iata_ident, icao_ident, route, api_key, repeat_daily)
         if flight:
             poll_state["flight"] = flight
+            poll_state["last_error"] = None
             _schedule_next_poll(poll_state, flight, now)
             _cache_terminal(terminal_key, flight)
             return flight, None
         last_error = "NO LIVE"
+        poll_state["last_error"] = last_error
         _schedule_next_poll(poll_state, cached_flight, now)
         if cached_flight:
             return cached_flight, None
@@ -912,12 +963,52 @@ def _load_flight(opts):
         if cached_flight:
             return cached_flight, None
         last_error = "NO LIVE"
+        poll_state["last_error"] = last_error
     except Exception:
         _schedule_next_poll(poll_state, cached_flight, now)
         if cached_flight:
             return cached_flight, None
         last_error = "API ERR"
+        poll_state["last_error"] = last_error
     return None, last_error or "NO LIVE"
+
+
+def _display_error(error, options):
+    if error == "NO LIVE":
+        ident = _ident_from_options(options or {}, use_icao=False) or _flight_number_from_options(options or {}) or "flight"
+        return f"No live tracking data for {ident}"
+    return error
+
+
+def _render_error_image(message, color):
+    from PIL import Image, ImageDraw
+
+    image = Image.new("RGB", (64, 32), (0, 0, 0))
+    draw = ImageDraw.Draw(image)
+    words = str(message or "").split()
+    lines = []
+    current = ""
+    for word in words:
+        candidate = (current + " " + word).strip()
+        bbox = draw.textbbox((0, 0), candidate, font=FONT_7)
+        if current and bbox[2] - bbox[0] > 62:
+            lines.append(current)
+            current = word
+        else:
+            current = candidate
+    if current:
+        lines.append(current)
+    if not lines:
+        lines = [str(message or "")]
+    if len(lines) > 4:
+        lines = lines[:3] + [" ".join(lines[3:])]
+    line_h = 8
+    start_y = (32 - len(lines) * line_h) // 2 - 3
+    for index, line in enumerate(lines):
+        bbox = draw.textbbox((0, 0), line, font=FONT_7)
+        x = max(0, (64 - (bbox[2] - bbox[0])) // 2)
+        draw_sharp_text(image, (x, start_y + index * line_h), line, color, FONT_7)
+    return image
 
 
 def _draw_airline_mark(image, draw, flight, logo_left, logo_top, fallback_y=0):
@@ -1061,17 +1152,40 @@ def _two_page_response(opts, flight, first, second, locked=True):
     }
 
 
-def render(options=None):
-    flight, error = _load_flight(options or {})
+def render(options=None, dwell_ms=None):
+    options = options or {}
+    dwell = max(4, int(options.get("_dwell", 30) or 30))
+    result = render_webp(options, dwell * 1000)
+    return {
+        "body": result["body"],
+        # The animated WebP already contains the full page1 -> slide -> page2 timing.
+        # A long Hubyt-Dwell-Secs header makes the firmware replay it before moving on.
+        "dwell_secs": result.get("dwell_secs", 1),
+        "_stay": False,
+    }
+
+
+def render_webp(options=None, dwell_ms=30000):
+    options = options or {}
+    flight, error = _load_flight(options)
     if error:
         color = (100, 190, 255) if error.startswith("SET") else (238, 80, 80)
-        return render_text_webp(error, color)
+        dwell = max(4, int(dwell_ms / 1000))
+        error_dwell = max(2, dwell // 2)
+        return {
+            "body": _save_static_webp(_render_error_image(_display_error(error, options), color)),
+            "durationMs": error_dwell * 1000,
+            "dwell_secs": error_dwell,
+        }
 
-    opts = options or {}
+    opts = options
+    dwell = max(4, int(dwell_ms / 1000))
+    half_dwell = max(2, dwell // 2)
+    second_dwell = max(2, dwell - half_dwell)
     first = _render_flight_panel(flight)
     second = _render_status_panel(flight)
-    target = str(opts.get("_target") or "").lower()
-    firmware_version = _version_tuple(opts.get("_firmware_version"))
-    if ("matrixportal-s3" in target and firmware_version < (1, 3, 13)) or firmware_version < (1, 3, 9):
-        return _two_page_response(opts, flight, first, second, locked=False)
-    return _two_page_response(opts, flight, first, second, locked=True)
+    return {
+        "body": _save_locked_two_page_animation(first, second, half_dwell, second_dwell),
+        "durationMs": max(1000, int(dwell_ms)),
+        "dwell_secs": 1,
+    }

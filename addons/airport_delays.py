@@ -87,6 +87,27 @@ def _short_delay(delay):
     return (delay or "")[:9]
 
 
+def _render_ok_image(code):
+    from PIL import Image, ImageDraw, ImageFont
+
+    image = Image.new("RGB", (64, 32), (0, 5, 12))
+    draw = ImageDraw.Draw(image)
+    try:
+        font = ImageFont.truetype("Silkscreen-Regular.ttf", 8)
+        bold = ImageFont.truetype("Silkscreen-Bold.ttf", 8)
+    except Exception:
+        font = bold = ImageFont.load_default()
+
+    draw.rectangle((0, 0, 63, 8), fill=(12, 24, 24))
+    draw_sharp_text(image, (1, -4), "AIRPORT", (100, 190, 255), bold)
+    draw_sharp_text(image, (1, 6), (code or "FAA")[:4], (255, 255, 255), bold)
+    draw_sharp_text(image, (1, 15), "NO DELAYS", (100, 220, 140), font)
+    draw_sharp_text(image, (1, 23), "FAA STATUS", (150, 170, 185), font)
+    out = BytesIO()
+    image.save(out, "WEBP", lossless=True, quality=100)
+    return out.getvalue()
+
+
 def render(options=None):
     from PIL import Image, ImageDraw, ImageFont
 
@@ -100,11 +121,11 @@ def render(options=None):
     if codes:
         matches = [e for e in events if e["airport"] in codes]
         if not matches:
-            return render_text_webp(f"{codes[0]} OK", (100, 220, 140))
+            return _render_ok_image(codes[0])
     else:
         matches = events[:3]
         if not matches:
-            return render_text_webp("FAA OK", (100, 220, 140))
+            return _render_ok_image("FAA")
 
     image = Image.new("RGB", (64, 32), (2, 8, 16))
     draw = ImageDraw.Draw(image)

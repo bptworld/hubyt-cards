@@ -12,7 +12,7 @@ WEATHER_CACHE = {}
 
 def fetch_json_url(url, cache, seconds=45):
     now = datetime.now(timezone.utc)
-    if cache is not None and cache["body"] and cache["expires"] > now:
+    if cache is not None and cache.get("body") and cache.get("expires", now) > now and cache.get("url", url) == url:
         return json.loads(cache["body"].decode("utf-8"))
     request = urllib.request.Request(url, headers={"User-Agent": "Hubyt/0.1"})
     with urllib.request.urlopen(request, timeout=10) as response:
@@ -20,6 +20,7 @@ def fetch_json_url(url, cache, seconds=45):
     if cache is not None:
         cache["body"] = body
         cache["expires"] = now + timedelta(seconds=seconds)
+        cache["url"] = url
     return json.loads(body.decode("utf-8"))
 
 
@@ -267,10 +268,16 @@ def pick_sport_event(events, favorite):
     return None
 
 
+def dated_scoreboard_url(url):
+    today = datetime.now().strftime("%Y%m%d")
+    sep = "&" if "?" in url else "?"
+    return f"{url}{sep}dates={today}"
+
+
 def render_sport_card(options, url, cache, status_color, fallback_text):
     from PIL import Image, ImageDraw, ImageFont
     favorite = (options or {}).get("favoriteTeam", "")
-    data = fetch_json_url(url, cache, seconds=15)
+    data = fetch_json_url(dated_scoreboard_url(url), cache, seconds=15)
     event = pick_sport_event(data.get("events", []), favorite)
     if not event:
         cache["expires"] = datetime.now(timezone.utc) + timedelta(seconds=900)
