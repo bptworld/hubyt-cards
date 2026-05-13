@@ -663,6 +663,17 @@
       "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/gas_price_local.webp"
     },
     {
+      "id": "battery_reminder",
+      "name": "Battery Reminder",
+      "category": "Utility",
+      "detail": "Rotating battery checklist",
+      "description": "Rotating battery checklist",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/battery_reminder.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/battery_reminder.webp"
+    },
+    {
       "id": "clock",
       "name": "Clock",
       "category": "Utility",
@@ -751,6 +762,17 @@
       "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/hubyt_update_watch.webp"
     },
     {
+      "id": "joke_of_day",
+      "name": "Joke of the Day",
+      "category": "Utility",
+      "detail": "Tiny clean joke",
+      "description": "Tiny clean joke",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/joke_of_day.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/joke_of_day.webp"
+    },
+    {
       "id": "moon_phase",
       "name": "Moon Phase",
       "category": "Utility",
@@ -760,6 +782,17 @@
       "version": "1.0",
       "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/moon_phase.py",
       "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/moon_phase.webp"
+    },
+    {
+      "id": "package_watch",
+      "name": "Package Watch",
+      "category": "Utility",
+      "detail": "Manual package status",
+      "description": "Manual package status",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/package_watch.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/package_watch.webp"
     },
     {
       "id": "ping_monitor",
@@ -773,6 +806,17 @@
       "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/ping_monitor.webp"
     },
     {
+      "id": "quote_of_day",
+      "name": "Quote of the Day",
+      "category": "Utility",
+      "detail": "Short daily quote",
+      "description": "Short daily quote",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/quote_of_day.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/quote_of_day.webp"
+    },
+    {
       "id": "rss_headlines",
       "name": "RSS Headlines",
       "category": "Utility",
@@ -782,6 +826,17 @@
       "version": "1.0",
       "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/rss_headlines.py",
       "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/rss_headlines.webp"
+    },
+    {
+      "id": "sunrise_sunset",
+      "name": "Sunrise / Sunset",
+      "category": "Utility",
+      "detail": "Sun and daylight times by ZIP",
+      "description": "Sun and daylight times by ZIP",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/sunrise_sunset.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/sunrise_sunset.webp"
     },
     {
       "id": "trash_recycling",
@@ -804,6 +859,17 @@
       "version": "1.0",
       "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/website_uptime.py",
       "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/website_uptime.webp"
+    },
+    {
+      "id": "word_of_day",
+      "name": "Word of the Day",
+      "category": "Utility",
+      "detail": "Daily word with short meaning",
+      "description": "Daily word with short meaning",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/word_of_day.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/word_of_day.webp"
     },
     {
       "id": "air_quality",

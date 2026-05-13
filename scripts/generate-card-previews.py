@@ -362,6 +362,67 @@ def _trash():
     return _webp(image)
 
 
+def _sunrise():
+    image = Image.new("RGB", (64, 32), (0, 5, 12))
+    draw = ImageDraw.Draw(image)
+    draw.ellipse((5, 7, 19, 21), fill=(255, 196, 58))
+    draw.line((2, 25, 24, 25), fill=(60, 180, 225))
+    draw.line((12, 3, 12, 5), fill=(255, 226, 110))
+    draw.line((1, 14, 4, 14), fill=(255, 226, 110))
+    draw.line((20, 14, 23, 14), fill=(255, 226, 110))
+    draw_sharp_text(image, (27, 5), "RISE", (255, 210, 80), FONT)
+    draw_sharp_text(image, (27, 13), "5:22", (235, 245, 255), BOLD)
+    draw_sharp_text(image, (27, 21), "SET 8:04", (255, 125, 80), FONT)
+    return _webp(image)
+
+
+def _word_day():
+    image, draw = _simple_header("GLIMMER", (100, 200, 255))
+    _center(image, "FAINT", 12, (220, 235, 245), FONT)
+    _center(image, "SHINE", 21, (220, 235, 245), FONT)
+    return _webp(image)
+
+
+def _quote_day():
+    image = Image.new("RGB", (64, 32), (0, 0, 0))
+    draw_sharp_text(image, (2, 2), "SMALL STEPS", (245, 250, 255), FONT)
+    draw_sharp_text(image, (8, 12), "STILL", (245, 250, 255), FONT)
+    draw_sharp_text(image, (6, 22), "MOVE.", (245, 250, 255), FONT)
+    return _webp(image)
+
+
+def _joke_day():
+    image = Image.new("RGB", (64, 32), (0, 0, 0))
+    draw_sharp_text(image, (4, 2), "LED JOKE:", (255, 220, 80), FONT)
+    draw_sharp_text(image, (1, 12), "IT LIT UP.", (245, 250, 255), FONT)
+    draw_sharp_text(image, (22, 22), "HA!", (255, 220, 80), BOLD)
+    return _webp(image)
+
+
+def _battery():
+    image = Image.new("RGB", (64, 32), (0, 5, 9))
+    draw = ImageDraw.Draw(image)
+    draw.rectangle((3, 9, 18, 22), outline=(90, 220, 120))
+    draw.rectangle((19, 13, 21, 18), fill=(90, 220, 120))
+    draw.rectangle((5, 11, 14, 20), fill=(90, 220, 120))
+    draw_sharp_text(image, (25, -3), "BATTERY", (90, 220, 120), BOLD)
+    draw_sharp_text(image, (25, 10), "SMOKE", (235, 245, 255), FONT)
+    draw_sharp_text(image, (25, 19), "SENSORS", (235, 245, 255), FONT)
+    return _webp(image)
+
+
+def _package():
+    image = Image.new("RGB", (64, 32), (0, 4, 9))
+    draw = ImageDraw.Draw(image)
+    draw.rectangle((3, 8, 18, 22), outline=(190, 150, 80))
+    draw.line((3, 8, 10, 3, 18, 8), fill=(220, 175, 90))
+    draw.line((10, 3, 10, 17), fill=(120, 90, 50))
+    draw_sharp_text(image, (24, -3), "UPS", (255, 210, 110), BOLD)
+    draw_sharp_text(image, (24, 10), "OUT FOR", (235, 245, 255), FONT)
+    draw_sharp_text(image, (24, 19), "DELIVERY", (235, 245, 255), FONT)
+    return _webp(image)
+
+
 def _message(title, l1, l2="", color=(24, 210, 190)):
     image, draw = _simple_header(title, color)
     _center(image, l1, 10, (245, 250, 255), BOLD)
@@ -425,6 +486,12 @@ CUSTOM = {
     "music_assistant_now_playing": _music_assistant,
     "home_assistant_entity": _home_assistant,
     "trash_recycling": _trash,
+    "sunrise_sunset": _sunrise,
+    "word_of_day": _word_day,
+    "quote_of_day": _quote_day,
+    "joke_of_day": _joke_day,
+    "battery_reminder": _battery,
+    "package_watch": _package,
     "youtube_followers": lambda: render_counter_card("YOUTUBE", "Hubyt", 123456, (255, 0, 0), "SUBS", "youtube"),
     "facebook_followers": lambda: render_counter_card("FACEBOOK", "Hubyt", 123456, (24, 119, 242), "FOLLOW", "facebook"),
     "twitter_followers": lambda: render_counter_card("X", "@hubyt", 123456, (245, 250, 255), "FOLLOW", "x"),

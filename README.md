@@ -2,7 +2,7 @@
 
 Add-on cards for the [Hubyt](https://github.com/bptworld/hubyt) display system.
 
-## Available Cards - 77
+## Available Cards - 83
 
 ### Finance
 
@@ -98,6 +98,7 @@ Add-on cards for the [Hubyt](https://github.com/bptworld/hubyt) display system.
 
 | Card | Description |
 |------|-------------|
+| Battery Reminder | Rotating battery checklist |
 | Clock | Time plus local weather |
 | Countdown | Days until any event |
 | Countdown Confetti | Event countdown with confetti |
@@ -106,11 +107,16 @@ Add-on cards for the [Hubyt](https://github.com/bptworld/hubyt) display system.
 | GitHub Release Watch | Latest release for a repo |
 | Google Calendar | Next upcoming event |
 | Hubyt Update Watch | Hubyt release and card updates |
+| Joke of the Day | Tiny clean joke |
 | Moon Phase | Current moon phase |
+| Package Watch | Manual package status |
 | Ping Monitor | TCP latency monitor |
+| Quote of the Day | Short daily quote |
 | RSS Headlines | Scrolling RSS headline |
+| Sunrise / Sunset | Sun and daylight times by ZIP |
 | Trash + Recycling | Weekly and bi-weekly pickup reminder |
 | Website Uptime | URL up/down monitor |
+| Word of the Day | Daily word with short meaning |
 
 ### Weather
 
