@@ -773,6 +773,28 @@
       "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/joke_of_day.webp"
     },
     {
+      "id": "mega_millions",
+      "name": "Mega Millions",
+      "category": "Utility",
+      "detail": "Latest Mega Millions draw",
+      "description": "Latest Mega Millions draw",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/mega_millions.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/mega_millions.webp"
+    },
+    {
+      "id": "megabucks",
+      "name": "Megabucks",
+      "category": "Utility",
+      "detail": "Latest MA Megabucks draw",
+      "description": "Latest MA Megabucks draw",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/megabucks.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/megabucks.webp"
+    },
+    {
       "id": "moon_phase",
       "name": "Moon Phase",
       "category": "Utility",

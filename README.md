@@ -2,7 +2,7 @@
 
 Add-on cards for the [Hubyt](https://github.com/bptworld/hubyt) display system.
 
-## Available Cards - 83
+## Available Cards - 85
 
 ### Finance
 
@@ -108,6 +108,8 @@ Add-on cards for the [Hubyt](https://github.com/bptworld/hubyt) display system.
 | Google Calendar | Next upcoming event |
 | Hubyt Update Watch | Hubyt release and card updates |
 | Joke of the Day | Tiny clean joke |
+| Mega Millions | Latest Mega Millions draw |
+| Megabucks | Latest MA Megabucks draw |
 | Moon Phase | Current moon phase |
 | Package Watch | Manual package status |
 | Ping Monitor | TCP latency monitor |

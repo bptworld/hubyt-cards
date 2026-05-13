@@ -423,6 +423,22 @@ def _package():
     return _webp(image)
 
 
+def _mega_millions():
+    image, draw = _simple_header("MEGA MILL", (255, 215, 70))
+    _center(image, "37 47 49", 8, (245, 250, 255), BOLD)
+    _center(image, "51 58 +16", 17, (255, 220, 80), BOLD)
+    _center(image, "$215 MILLION", 25, (175, 150, 205), FONT)
+    return _webp(image)
+
+
+def _megabucks():
+    image, draw = _simple_header("MEGABUCKS", (70, 230, 170))
+    _center(image, "4 7 15", 8, (245, 250, 255), BOLD)
+    _center(image, "20 24 25", 17, (245, 250, 255), BOLD)
+    _center(image, "MAY 11 2026", 25, (120, 190, 170), FONT)
+    return _webp(image)
+
+
 def _message(title, l1, l2="", color=(24, 210, 190)):
     image, draw = _simple_header(title, color)
     _center(image, l1, 10, (245, 250, 255), BOLD)
@@ -492,6 +508,8 @@ CUSTOM = {
     "joke_of_day": _joke_day,
     "battery_reminder": _battery,
     "package_watch": _package,
+    "mega_millions": _mega_millions,
+    "megabucks": _megabucks,
     "youtube_followers": lambda: render_counter_card("YOUTUBE", "Hubyt", 123456, (255, 0, 0), "SUBS", "youtube"),
     "facebook_followers": lambda: render_counter_card("FACEBOOK", "Hubyt", 123456, (24, 119, 242), "FOLLOW", "facebook"),
     "twitter_followers": lambda: render_counter_card("X", "@hubyt", 123456, (245, 250, 255), "FOLLOW", "x"),
