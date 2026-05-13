@@ -3,386 +3,6 @@
   "version": "1",
   "cards": [
     {
-      "id": "clock",
-      "name": "Clock",
-      "category": "Utility",
-      "detail": "Time plus local weather",
-      "description": "Time plus local weather",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/clock.py"
-    },
-    {
-      "id": "countdown",
-      "name": "Countdown",
-      "category": "Utility",
-      "detail": "Days until any event",
-      "description": "Days until any event",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/countdown.py"
-    },
-    {
-      "id": "countdown_confetti",
-      "name": "Countdown Confetti",
-      "category": "Utility",
-      "detail": "Event countdown with confetti",
-      "description": "Event countdown with confetti",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/countdown_confetti.py"
-    },
-    {
-      "id": "disney",
-      "name": "Disney Countdown",
-      "category": "Utility",
-      "detail": "Days until your trip",
-      "description": "Days until your trip",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/disney.py"
-    },
-    {
-      "id": "gcal",
-      "name": "Google Calendar",
-      "category": "Utility",
-      "detail": "Next upcoming event",
-      "description": "Next upcoming event",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/gcal.py"
-    },
-    {
-      "id": "moon_phase",
-      "name": "Moon Phase",
-      "category": "Utility",
-      "detail": "Current moon phase",
-      "description": "Current moon phase",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/moon_phase.py"
-    },
-    {
-      "id": "trash_recycling",
-      "name": "Trash + Recycling",
-      "category": "Utility",
-      "detail": "Weekly and bi-weekly pickup reminder",
-      "description": "Weekly and bi-weekly pickup reminder",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/trash_recycling.py"
-    },
-    {
-      "id": "air_quality",
-      "name": "Air Quality",
-      "category": "Weather",
-      "detail": "AQI, pollen, and UV by ZIP",
-      "description": "AQI, pollen, and UV by ZIP",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/air_quality.py"
-    },
-    {
-      "id": "weather_alert",
-      "name": "Weather Alert",
-      "category": "Weather",
-      "detail": "Skips when clear",
-      "description": "Skips when clear",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/weather_alert.py"
-    },
-    {
-      "id": "weather_forecast",
-      "name": "Weather Forecast",
-      "category": "Weather",
-      "detail": "5-day forecast with icons",
-      "description": "5-day forecast with icons",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/weather_forecast.py"
-    },
-    {
-      "id": "weather_mood",
-      "name": "Weather Mood",
-      "category": "Weather",
-      "detail": "Animated weather vibe",
-      "description": "Animated weather vibe",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/weather_mood.py"
-    },
-    {
-      "id": "cfl",
-      "name": "CFL Scores",
-      "category": "Sports",
-      "detail": "Live ESPN CFL scoreboard",
-      "description": "Live ESPN CFL scoreboard",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/cfl.py"
-    },
-    {
-      "id": "college_baseball",
-      "name": "College Baseball",
-      "category": "Sports",
-      "detail": "Live ESPN college baseball scoreboard",
-      "description": "Live ESPN college baseball scoreboard",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/college_baseball.py"
-    },
-    {
-      "id": "college_football",
-      "name": "College Football",
-      "category": "Sports",
-      "detail": "Live ESPN scoreboard",
-      "description": "Live ESPN scoreboard",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/college_football.py"
-    },
-    {
-      "id": "college_softball",
-      "name": "College Softball",
-      "category": "Sports",
-      "detail": "Live ESPN college softball scoreboard",
-      "description": "Live ESPN college softball scoreboard",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/college_softball.py"
-    },
-    {
-      "id": "f1",
-      "name": "F1 Racing",
-      "category": "Sports",
-      "detail": "ESPN Formula 1 status",
-      "description": "ESPN Formula 1 status",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/f1.py"
-    },
-    {
-      "id": "lpga",
-      "name": "LPGA Golf",
-      "category": "Sports",
-      "detail": "ESPN LPGA leaderboard",
-      "description": "ESPN LPGA leaderboard",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/lpga.py"
-    },
-    {
-      "id": "mens_college_basketball",
-      "name": "Men's College Basketball",
-      "category": "Sports",
-      "detail": "Live ESPN scoreboard",
-      "description": "Live ESPN scoreboard",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/mens_college_basketball.py"
-    },
-    {
-      "id": "mens_college_lacrosse",
-      "name": "Men's College Lacrosse",
-      "category": "Sports",
-      "detail": "Live ESPN men's college lacrosse scoreboard",
-      "description": "Live ESPN men's college lacrosse scoreboard",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/mens_college_lacrosse.py"
-    },
-    {
-      "id": "mlb",
-      "name": "MLB Scores",
-      "category": "Sports",
-      "detail": "Live ESPN scoreboard",
-      "description": "Live ESPN scoreboard",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/mlb.py"
-    },
-    {
-      "id": "nascar",
-      "name": "NASCAR",
-      "category": "Sports",
-      "detail": "ESPN NASCAR Cup status",
-      "description": "ESPN NASCAR Cup status",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/nascar.py"
-    },
-    {
-      "id": "nba_g_league",
-      "name": "NBA G League",
-      "category": "Sports",
-      "detail": "Live ESPN NBA G League scoreboard",
-      "description": "Live ESPN NBA G League scoreboard",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/nba_g_league.py"
-    },
-    {
-      "id": "nba",
-      "name": "NBA Scores",
-      "category": "Sports",
-      "detail": "Live ESPN scoreboard",
-      "description": "Live ESPN scoreboard",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/nba.py"
-    },
-    {
-      "id": "mens_college_hockey",
-      "name": "NCAA Hockey",
-      "category": "Sports",
-      "detail": "Live ESPN men's college hockey scoreboard",
-      "description": "Live ESPN men's college hockey scoreboard",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/mens_college_hockey.py"
-    },
-    {
-      "id": "nfl",
-      "name": "NFL Scores",
-      "category": "Sports",
-      "detail": "Live ESPN scoreboard",
-      "description": "Live ESPN scoreboard",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/nfl.py"
-    },
-    {
-      "id": "nhl",
-      "name": "NHL Scores",
-      "category": "Sports",
-      "detail": "Live ESPN scoreboard",
-      "description": "Live ESPN scoreboard",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/nhl.py"
-    },
-    {
-      "id": "nll_lacrosse",
-      "name": "NLL Lacrosse",
-      "category": "Sports",
-      "detail": "Live ESPN NLL scoreboard",
-      "description": "Live ESPN NLL scoreboard",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/nll_lacrosse.py"
-    },
-    {
-      "id": "pga",
-      "name": "PGA Golf",
-      "category": "Sports",
-      "detail": "ESPN PGA leaderboard",
-      "description": "ESPN PGA leaderboard",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/pga.py"
-    },
-    {
-      "id": "pll_lacrosse",
-      "name": "PLL Lacrosse",
-      "category": "Sports",
-      "detail": "Live ESPN PLL scoreboard",
-      "description": "Live ESPN PLL scoreboard",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/pll_lacrosse.py"
-    },
-    {
-      "id": "soccer",
-      "name": "Soccer Scores",
-      "category": "Sports",
-      "detail": "Live ESPN soccer scoreboard",
-      "description": "Live ESPN soccer scoreboard",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/soccer.py"
-    },
-    {
-      "id": "tennis_atp",
-      "name": "Tennis ATP",
-      "category": "Sports",
-      "detail": "ESPN ATP tournament status",
-      "description": "ESPN ATP tournament status",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/tennis_atp.py"
-    },
-    {
-      "id": "tennis_wta",
-      "name": "Tennis WTA",
-      "category": "Sports",
-      "detail": "ESPN WTA tournament status",
-      "description": "ESPN WTA tournament status",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/tennis_wta.py"
-    },
-    {
-      "id": "ufc",
-      "name": "UFC",
-      "category": "Sports",
-      "detail": "ESPN UFC event status",
-      "description": "ESPN UFC event status",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/ufc.py"
-    },
-    {
-      "id": "ufl",
-      "name": "UFL Scores",
-      "category": "Sports",
-      "detail": "Live ESPN UFL scoreboard",
-      "description": "Live ESPN UFL scoreboard",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/ufl.py"
-    },
-    {
-      "id": "wnba",
-      "name": "WNBA Scores",
-      "category": "Sports",
-      "detail": "Live ESPN scoreboard",
-      "description": "Live ESPN scoreboard",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/wnba.py"
-    },
-    {
-      "id": "womens_college_basketball",
-      "name": "Women's College Basketball",
-      "category": "Sports",
-      "detail": "Live ESPN scoreboard",
-      "description": "Live ESPN scoreboard",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/womens_college_basketball.py"
-    },
-    {
-      "id": "womens_college_lacrosse",
-      "name": "Women's College Lacrosse",
-      "category": "Sports",
-      "detail": "Live ESPN women's college lacrosse scoreboard",
-      "description": "Live ESPN women's college lacrosse scoreboard",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/womens_college_lacrosse.py"
-    },
-    {
-      "id": "womens_college_volleyball",
-      "name": "Women's College Volleyball",
-      "category": "Sports",
-      "detail": "Live ESPN women's college volleyball scoreboard",
-      "description": "Live ESPN women's college volleyball scoreboard",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/womens_college_volleyball.py"
-    },
-    {
       "id": "crypto_watch",
       "name": "Crypto Watch",
       "category": "Finance",
@@ -390,7 +10,8 @@
       "description": "BTC, ETH, and more",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/crypto_watch.py"
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/crypto_watch.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/crypto_watch.webp"
     },
     {
       "id": "market_indexes",
@@ -400,7 +21,8 @@
       "description": "Dow, S&P, Nasdaq",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/market_indexes.py"
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/market_indexes.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/market_indexes.webp"
     },
     {
       "id": "portfolio_pulse",
@@ -410,7 +32,8 @@
       "description": "Value and daily gain",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/portfolio_pulse.py"
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/portfolio_pulse.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/portfolio_pulse.webp"
     },
     {
       "id": "stocks",
@@ -420,97 +43,8 @@
       "description": "Scrolling stocks and crypto",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/stocks.py"
-    },
-    {
-      "id": "hubitat",
-      "name": "Hubitat Device",
-      "category": "Smart Home",
-      "detail": "Live device attribute",
-      "description": "Live device attribute",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/hubitat.py"
-    },
-    {
-      "id": "hubitat_multi",
-      "name": "Hubitat Multi",
-      "category": "Smart Home",
-      "detail": "Several Hubitat devices",
-      "description": "Several Hubitat devices",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/hubitat_multi.py"
-    },
-    {
-      "id": "hubitat_safety",
-      "name": "Hubitat Safety",
-      "category": "Smart Home",
-      "detail": "All secure or open list",
-      "description": "All secure or open list",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/hubitat_safety.py"
-    },
-    {
-      "id": "water_leak_alert",
-      "name": "Water Leak Alert",
-      "category": "Smart Home",
-      "detail": "Skips when all dry",
-      "description": "Skips when all dry",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/water_leak_alert.py"
-    },
-    {
-      "id": "airport_delays",
-      "name": "Airport Delays",
-      "category": "Travel",
-      "detail": "FAA delay status",
-      "description": "FAA delay status",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/airport_delays.py"
-    },
-    {
-      "id": "commute_time",
-      "name": "Commute Time",
-      "category": "Travel",
-      "detail": "Drive time estimate",
-      "description": "Drive time estimate",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/commute_time.py"
-    },
-    {
-      "id": "flight_track",
-      "name": "Flight Tracker",
-      "category": "Travel",
-      "detail": "Flightradar24 live and summary tracking",
-      "description": "Flightradar24 live and summary tracking",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/flight_track.py"
-    },
-    {
-      "id": "flights_overhead",
-      "name": "Flights Overhead",
-      "category": "Travel",
-      "detail": "Live flights above you",
-      "description": "Live flights above you",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/flights_overhead.py"
-    },
-    {
-      "id": "gas_price_local",
-      "name": "Gas Price Local",
-      "category": "Travel",
-      "detail": "AAA local gas average",
-      "description": "AAA local gas average",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/gas_price_local.py"
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/stocks.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/stocks.webp"
     },
     {
       "id": "heartbeat",
@@ -520,7 +54,8 @@
       "description": "Pulsing pixel heart",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/heartbeat.py"
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/heartbeat.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/heartbeat.webp"
     },
     {
       "id": "alien_march",
@@ -530,7 +65,8 @@
       "description": "Retro invader parade",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/alien_march.py"
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/alien_march.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/alien_march.webp"
     },
     {
       "id": "fireplace",
@@ -540,7 +76,8 @@
       "description": "Pixel flames",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/fireplace.py"
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/fireplace.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/fireplace.webp"
     },
     {
       "id": "fortune_cookie",
@@ -550,7 +87,8 @@
       "description": "Tiny daily fortune",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/fortune_cookie.py"
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/fortune_cookie.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/fortune_cookie.webp"
     },
     {
       "id": "lava_lamp",
@@ -560,7 +98,8 @@
       "description": "Drifting pixel blobs",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/lava_lamp.py"
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/lava_lamp.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/lava_lamp.webp"
     },
     {
       "id": "matrix_rain",
@@ -570,7 +109,8 @@
       "description": "Falling green code",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/matrix_rain.py"
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/matrix_rain.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/matrix_rain.webp"
     },
     {
       "id": "pacman",
@@ -580,7 +120,8 @@
       "description": "Pac-Man chasing ghosts",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/pacman.py"
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/pacman.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/pacman.webp"
     },
     {
       "id": "aquarium",
@@ -590,7 +131,8 @@
       "description": "Fish and bubbles",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/aquarium.py"
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/aquarium.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/aquarium.webp"
     },
     {
       "id": "pixel_globe",
@@ -600,7 +142,8 @@
       "description": "Tiny rotating world",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/pixel_globe.py"
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/pixel_globe.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/pixel_globe.webp"
     },
     {
       "id": "pong_loop",
@@ -610,7 +153,8 @@
       "description": "Tiny paddles and ball",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/pong_loop.py"
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/pong_loop.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/pong_loop.webp"
     },
     {
       "id": "snake",
@@ -620,7 +164,8 @@
       "description": "Snake eats dots",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/snake.py"
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/snake.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/snake.webp"
     },
     {
       "id": "tiny_traffic",
@@ -630,7 +175,679 @@
       "description": "Cars and signal lights",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/tiny_traffic.py"
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/tiny_traffic.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/tiny_traffic.webp"
+    },
+    {
+      "id": "dns_stats",
+      "name": "DNS Stats",
+      "category": "Smart Home",
+      "detail": "Pi-hole or AdGuard stats",
+      "description": "Pi-hole or AdGuard stats",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/dns_stats.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/dns_stats.webp"
+    },
+    {
+      "id": "home_assistant_entity",
+      "name": "Home Assistant Entity",
+      "category": "Smart Home",
+      "detail": "Live Home Assistant state",
+      "description": "Live Home Assistant state",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/home_assistant_entity.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/home_assistant_entity.webp"
+    },
+    {
+      "id": "hubitat",
+      "name": "Hubitat Device",
+      "category": "Smart Home",
+      "detail": "Live device attribute",
+      "description": "Live device attribute",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/hubitat.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/hubitat.webp"
+    },
+    {
+      "id": "hubitat_multi",
+      "name": "Hubitat Multi",
+      "category": "Smart Home",
+      "detail": "Several Hubitat devices",
+      "description": "Several Hubitat devices",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/hubitat_multi.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/hubitat_multi.webp"
+    },
+    {
+      "id": "hubitat_safety",
+      "name": "Hubitat Safety",
+      "category": "Smart Home",
+      "detail": "All secure or open list",
+      "description": "All secure or open list",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/hubitat_safety.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/hubitat_safety.webp"
+    },
+    {
+      "id": "water_leak_alert",
+      "name": "Water Leak Alert",
+      "category": "Smart Home",
+      "detail": "Skips when all dry",
+      "description": "Skips when all dry",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/water_leak_alert.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/water_leak_alert.webp"
+    },
+    {
+      "id": "facebook_followers",
+      "name": "Facebook Followers",
+      "category": "Social",
+      "detail": "Page followers via Graph API",
+      "description": "Page followers via Graph API",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/facebook_followers.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/facebook_followers.webp"
+    },
+    {
+      "id": "instagram_followers",
+      "name": "Instagram Followers",
+      "category": "Social",
+      "detail": "Follower count via Instagram Graph",
+      "description": "Follower count via Instagram Graph",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/instagram_followers.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/instagram_followers.webp"
+    },
+    {
+      "id": "lastfm_now_playing",
+      "name": "Last.fm Now Playing",
+      "category": "Social",
+      "detail": "Current or recent track",
+      "description": "Current or recent track",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/lastfm_now_playing.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/lastfm_now_playing.webp"
+    },
+    {
+      "id": "music_assistant_now_playing",
+      "name": "Music Assistant Now Playing",
+      "category": "Social",
+      "detail": "Direct Music Assistant player",
+      "description": "Direct Music Assistant player",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/music_assistant_now_playing.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/music_assistant_now_playing.webp"
+    },
+    {
+      "id": "twitter_followers",
+      "name": "X / Twitter Followers",
+      "category": "Social",
+      "detail": "Follower count via X API",
+      "description": "Follower count via X API",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/twitter_followers.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/twitter_followers.webp"
+    },
+    {
+      "id": "youtube_followers",
+      "name": "YouTube Subscribers",
+      "category": "Social",
+      "detail": "Channel subscriber count",
+      "description": "Channel subscriber count",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/youtube_followers.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/youtube_followers.webp"
+    },
+    {
+      "id": "cfl",
+      "name": "CFL Scores",
+      "category": "Sports",
+      "detail": "Live ESPN CFL scoreboard",
+      "description": "Live ESPN CFL scoreboard",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/cfl.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/cfl.webp"
+    },
+    {
+      "id": "college_baseball",
+      "name": "College Baseball",
+      "category": "Sports",
+      "detail": "Live ESPN college baseball scoreboard",
+      "description": "Live ESPN college baseball scoreboard",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/college_baseball.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/college_baseball.webp"
+    },
+    {
+      "id": "college_football",
+      "name": "College Football",
+      "category": "Sports",
+      "detail": "Live ESPN scoreboard",
+      "description": "Live ESPN scoreboard",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/college_football.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/college_football.webp"
+    },
+    {
+      "id": "college_softball",
+      "name": "College Softball",
+      "category": "Sports",
+      "detail": "Live ESPN college softball scoreboard",
+      "description": "Live ESPN college softball scoreboard",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/college_softball.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/college_softball.webp"
+    },
+    {
+      "id": "f1",
+      "name": "F1 Racing",
+      "category": "Sports",
+      "detail": "ESPN Formula 1 status",
+      "description": "ESPN Formula 1 status",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/f1.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/f1.webp"
+    },
+    {
+      "id": "lpga",
+      "name": "LPGA Golf",
+      "category": "Sports",
+      "detail": "ESPN LPGA leaderboard",
+      "description": "ESPN LPGA leaderboard",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/lpga.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/lpga.webp"
+    },
+    {
+      "id": "mens_college_basketball",
+      "name": "Men's College Basketball",
+      "category": "Sports",
+      "detail": "Live ESPN scoreboard",
+      "description": "Live ESPN scoreboard",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/mens_college_basketball.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/mens_college_basketball.webp"
+    },
+    {
+      "id": "mens_college_lacrosse",
+      "name": "Men's College Lacrosse",
+      "category": "Sports",
+      "detail": "Live ESPN men's college lacrosse scoreboard",
+      "description": "Live ESPN men's college lacrosse scoreboard",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/mens_college_lacrosse.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/mens_college_lacrosse.webp"
+    },
+    {
+      "id": "mlb",
+      "name": "MLB Scores",
+      "category": "Sports",
+      "detail": "Live ESPN scoreboard",
+      "description": "Live ESPN scoreboard",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/mlb.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/mlb.webp"
+    },
+    {
+      "id": "nascar",
+      "name": "NASCAR",
+      "category": "Sports",
+      "detail": "ESPN NASCAR Cup status",
+      "description": "ESPN NASCAR Cup status",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/nascar.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/nascar.webp"
+    },
+    {
+      "id": "nba_g_league",
+      "name": "NBA G League",
+      "category": "Sports",
+      "detail": "Live ESPN NBA G League scoreboard",
+      "description": "Live ESPN NBA G League scoreboard",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/nba_g_league.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/nba_g_league.webp"
+    },
+    {
+      "id": "nba",
+      "name": "NBA Scores",
+      "category": "Sports",
+      "detail": "Live ESPN scoreboard",
+      "description": "Live ESPN scoreboard",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/nba.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/nba.webp"
+    },
+    {
+      "id": "mens_college_hockey",
+      "name": "NCAA Hockey",
+      "category": "Sports",
+      "detail": "Live ESPN men's college hockey scoreboard",
+      "description": "Live ESPN men's college hockey scoreboard",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/mens_college_hockey.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/mens_college_hockey.webp"
+    },
+    {
+      "id": "nfl",
+      "name": "NFL Scores",
+      "category": "Sports",
+      "detail": "Live ESPN scoreboard",
+      "description": "Live ESPN scoreboard",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/nfl.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/nfl.webp"
+    },
+    {
+      "id": "nhl",
+      "name": "NHL Scores",
+      "category": "Sports",
+      "detail": "Live ESPN scoreboard",
+      "description": "Live ESPN scoreboard",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/nhl.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/nhl.webp"
+    },
+    {
+      "id": "nll_lacrosse",
+      "name": "NLL Lacrosse",
+      "category": "Sports",
+      "detail": "Live ESPN NLL scoreboard",
+      "description": "Live ESPN NLL scoreboard",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/nll_lacrosse.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/nll_lacrosse.webp"
+    },
+    {
+      "id": "pga",
+      "name": "PGA Golf",
+      "category": "Sports",
+      "detail": "ESPN PGA leaderboard",
+      "description": "ESPN PGA leaderboard",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/pga.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/pga.webp"
+    },
+    {
+      "id": "pll_lacrosse",
+      "name": "PLL Lacrosse",
+      "category": "Sports",
+      "detail": "Live ESPN PLL scoreboard",
+      "description": "Live ESPN PLL scoreboard",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/pll_lacrosse.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/pll_lacrosse.webp"
+    },
+    {
+      "id": "soccer",
+      "name": "Soccer Scores",
+      "category": "Sports",
+      "detail": "Live ESPN soccer scoreboard",
+      "description": "Live ESPN soccer scoreboard",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/soccer.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/soccer.webp"
+    },
+    {
+      "id": "tennis_atp",
+      "name": "Tennis ATP",
+      "category": "Sports",
+      "detail": "ESPN ATP tournament status",
+      "description": "ESPN ATP tournament status",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/tennis_atp.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/tennis_atp.webp"
+    },
+    {
+      "id": "tennis_wta",
+      "name": "Tennis WTA",
+      "category": "Sports",
+      "detail": "ESPN WTA tournament status",
+      "description": "ESPN WTA tournament status",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/tennis_wta.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/tennis_wta.webp"
+    },
+    {
+      "id": "ufc",
+      "name": "UFC",
+      "category": "Sports",
+      "detail": "ESPN UFC event status",
+      "description": "ESPN UFC event status",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/ufc.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/ufc.webp"
+    },
+    {
+      "id": "ufl",
+      "name": "UFL Scores",
+      "category": "Sports",
+      "detail": "Live ESPN UFL scoreboard",
+      "description": "Live ESPN UFL scoreboard",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/ufl.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/ufl.webp"
+    },
+    {
+      "id": "wnba",
+      "name": "WNBA Scores",
+      "category": "Sports",
+      "detail": "Live ESPN scoreboard",
+      "description": "Live ESPN scoreboard",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/wnba.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/wnba.webp"
+    },
+    {
+      "id": "womens_college_basketball",
+      "name": "Women's College Basketball",
+      "category": "Sports",
+      "detail": "Live ESPN scoreboard",
+      "description": "Live ESPN scoreboard",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/womens_college_basketball.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/womens_college_basketball.webp"
+    },
+    {
+      "id": "womens_college_lacrosse",
+      "name": "Women's College Lacrosse",
+      "category": "Sports",
+      "detail": "Live ESPN women's college lacrosse scoreboard",
+      "description": "Live ESPN women's college lacrosse scoreboard",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/womens_college_lacrosse.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/womens_college_lacrosse.webp"
+    },
+    {
+      "id": "womens_college_volleyball",
+      "name": "Women's College Volleyball",
+      "category": "Sports",
+      "detail": "Live ESPN women's college volleyball scoreboard",
+      "description": "Live ESPN women's college volleyball scoreboard",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/womens_college_volleyball.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/womens_college_volleyball.webp"
+    },
+    {
+      "id": "airport_delays",
+      "name": "Airport Delays",
+      "category": "Travel",
+      "detail": "FAA delay status",
+      "description": "FAA delay status",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/airport_delays.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/airport_delays.webp"
+    },
+    {
+      "id": "commute_time",
+      "name": "Commute Time",
+      "category": "Travel",
+      "detail": "Drive time estimate",
+      "description": "Drive time estimate",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/commute_time.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/commute_time.webp"
+    },
+    {
+      "id": "flight_track",
+      "name": "Flight Tracker",
+      "category": "Travel",
+      "detail": "Flightradar24 live and summary tracking",
+      "description": "Flightradar24 live and summary tracking",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/flight_track.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/flight_track.webp"
+    },
+    {
+      "id": "flights_overhead",
+      "name": "Flights Overhead",
+      "category": "Travel",
+      "detail": "Live flights above you",
+      "description": "Live flights above you",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/flights_overhead.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/flights_overhead.webp"
+    },
+    {
+      "id": "gas_price_local",
+      "name": "Gas Price Local",
+      "category": "Travel",
+      "detail": "AAA local gas average",
+      "description": "AAA local gas average",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/gas_price_local.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/gas_price_local.webp"
+    },
+    {
+      "id": "clock",
+      "name": "Clock",
+      "category": "Utility",
+      "detail": "Time plus local weather",
+      "description": "Time plus local weather",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/clock.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/clock.webp"
+    },
+    {
+      "id": "countdown",
+      "name": "Countdown",
+      "category": "Utility",
+      "detail": "Days until any event",
+      "description": "Days until any event",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/countdown.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/countdown.webp"
+    },
+    {
+      "id": "countdown_confetti",
+      "name": "Countdown Confetti",
+      "category": "Utility",
+      "detail": "Event countdown with confetti",
+      "description": "Event countdown with confetti",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/countdown_confetti.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/countdown_confetti.webp"
+    },
+    {
+      "id": "disney",
+      "name": "Disney Countdown",
+      "category": "Utility",
+      "detail": "Days until your trip",
+      "description": "Days until your trip",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/disney.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/disney.webp"
+    },
+    {
+      "id": "github_issues_watch",
+      "name": "GitHub Issues Watch",
+      "category": "Utility",
+      "detail": "Open issue count",
+      "description": "Open issue count",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/github_issues_watch.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/github_issues_watch.webp"
+    },
+    {
+      "id": "github_release_watch",
+      "name": "GitHub Release Watch",
+      "category": "Utility",
+      "detail": "Latest release for a repo",
+      "description": "Latest release for a repo",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/github_release_watch.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/github_release_watch.webp"
+    },
+    {
+      "id": "gcal",
+      "name": "Google Calendar",
+      "category": "Utility",
+      "detail": "Next upcoming event",
+      "description": "Next upcoming event",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/gcal.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/gcal.webp"
+    },
+    {
+      "id": "hubyt_update_watch",
+      "name": "Hubyt Update Watch",
+      "category": "Utility",
+      "detail": "Hubyt release and card updates",
+      "description": "Hubyt release and card updates",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/hubyt_update_watch.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/hubyt_update_watch.webp"
+    },
+    {
+      "id": "moon_phase",
+      "name": "Moon Phase",
+      "category": "Utility",
+      "detail": "Current moon phase",
+      "description": "Current moon phase",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/moon_phase.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/moon_phase.webp"
+    },
+    {
+      "id": "ping_monitor",
+      "name": "Ping Monitor",
+      "category": "Utility",
+      "detail": "TCP latency monitor",
+      "description": "TCP latency monitor",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/ping_monitor.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/ping_monitor.webp"
+    },
+    {
+      "id": "rss_headlines",
+      "name": "RSS Headlines",
+      "category": "Utility",
+      "detail": "Scrolling RSS headline",
+      "description": "Scrolling RSS headline",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/rss_headlines.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/rss_headlines.webp"
+    },
+    {
+      "id": "trash_recycling",
+      "name": "Trash + Recycling",
+      "category": "Utility",
+      "detail": "Weekly and bi-weekly pickup reminder",
+      "description": "Weekly and bi-weekly pickup reminder",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/trash_recycling.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/trash_recycling.webp"
+    },
+    {
+      "id": "website_uptime",
+      "name": "Website Uptime",
+      "category": "Utility",
+      "detail": "URL up/down monitor",
+      "description": "URL up/down monitor",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/website_uptime.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/website_uptime.webp"
+    },
+    {
+      "id": "air_quality",
+      "name": "Air Quality",
+      "category": "Weather",
+      "detail": "AQI, pollen, and UV by ZIP",
+      "description": "AQI, pollen, and UV by ZIP",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/air_quality.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/air_quality.webp"
+    },
+    {
+      "id": "weather_alert",
+      "name": "Weather Alert",
+      "category": "Weather",
+      "detail": "Skips when clear",
+      "description": "Skips when clear",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/weather_alert.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/weather_alert.webp"
+    },
+    {
+      "id": "weather_forecast",
+      "name": "Weather Forecast",
+      "category": "Weather",
+      "detail": "5-day forecast with icons",
+      "description": "5-day forecast with icons",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/weather_forecast.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/weather_forecast.webp"
+    },
+    {
+      "id": "weather_mood",
+      "name": "Weather Mood",
+      "category": "Weather",
+      "detail": "Animated weather vibe",
+      "description": "Animated weather vibe",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/weather_mood.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/weather_mood.webp"
     }
   ]
 }

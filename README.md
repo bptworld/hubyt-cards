@@ -2,28 +2,55 @@
 
 Add-on cards for the [Hubyt](https://github.com/bptworld/hubyt) display system.
 
-## Available Cards - 63
+## Available Cards - 77
 
-### Utility
-
-| Card | Description |
-|------|-------------|
-| Clock | Time plus local weather |
-| Countdown | Days until any event |
-| Countdown Confetti | Event countdown with confetti |
-| Disney Countdown | Days until your trip |
-| Google Calendar | Next upcoming event |
-| Moon Phase | Current moon phase |
-| Trash + Recycling | Weekly and bi-weekly pickup reminder |
-
-### Weather
+### Finance
 
 | Card | Description |
 |------|-------------|
-| Air Quality | AQI, pollen, and UV by ZIP |
-| Weather Alert | Skips when clear |
-| Weather Forecast | 5-day forecast with icons |
-| Weather Mood | Animated weather vibe |
+| Crypto Watch | BTC, ETH, and more |
+| Market Indexes | Dow, S&P, Nasdaq |
+| Portfolio Pulse | Value and daily gain |
+| Stock Ticker | Scrolling stocks and crypto |
+
+### Fun
+
+| Card | Description |
+|------|-------------|
+| 8-Bit Heartbeat | Pulsing pixel heart |
+| Alien March | Retro invader parade |
+| Fireplace | Pixel flames |
+| Fortune Cookie | Tiny daily fortune |
+| Lava Lamp | Drifting pixel blobs |
+| Matrix Rain | Falling green code |
+| Pac-Man Chase | Pac-Man chasing ghosts |
+| Pixel Aquarium | Fish and bubbles |
+| Pixel Globe | Tiny rotating world |
+| Pong Loop | Tiny paddles and ball |
+| Snake | Snake eats dots |
+| Tiny Traffic | Cars and signal lights |
+
+### Smart Home
+
+| Card | Description |
+|------|-------------|
+| DNS Stats | Pi-hole or AdGuard stats |
+| Home Assistant Entity | Live Home Assistant state |
+| Hubitat Device | Live device attribute |
+| Hubitat Multi | Several Hubitat devices |
+| Hubitat Safety | All secure or open list |
+| Water Leak Alert | Skips when all dry |
+
+### Social
+
+| Card | Description |
+|------|-------------|
+| Facebook Followers | Page followers via Graph API |
+| Instagram Followers | Follower count via Instagram Graph |
+| Last.fm Now Playing | Current or recent track |
+| Music Assistant Now Playing | Direct Music Assistant player |
+| X / Twitter Followers | Follower count via X API |
+| YouTube Subscribers | Channel subscriber count |
 
 ### Sports
 
@@ -57,24 +84,6 @@ Add-on cards for the [Hubyt](https://github.com/bptworld/hubyt) display system.
 | Women's College Lacrosse | Live ESPN women's college lacrosse scoreboard |
 | Women's College Volleyball | Live ESPN women's college volleyball scoreboard |
 
-### Finance
-
-| Card | Description |
-|------|-------------|
-| Crypto Watch | BTC, ETH, and more |
-| Market Indexes | Dow, S&P, Nasdaq |
-| Portfolio Pulse | Value and daily gain |
-| Stock Ticker | Scrolling stocks and crypto |
-
-### Smart Home
-
-| Card | Description |
-|------|-------------|
-| Hubitat Device | Live device attribute |
-| Hubitat Multi | Several Hubitat devices |
-| Hubitat Safety | All secure or open list |
-| Water Leak Alert | Skips when all dry |
-
 ### Travel
 
 | Card | Description |
@@ -85,22 +94,32 @@ Add-on cards for the [Hubyt](https://github.com/bptworld/hubyt) display system.
 | Flights Overhead | Live flights above you |
 | Gas Price Local | AAA local gas average |
 
-### Fun
+### Utility
 
 | Card | Description |
 |------|-------------|
-| 8-Bit Heartbeat | Pulsing pixel heart |
-| Alien March | Retro invader parade |
-| Fireplace | Pixel flames |
-| Fortune Cookie | Tiny daily fortune |
-| Lava Lamp | Drifting pixel blobs |
-| Matrix Rain | Falling green code |
-| Pac-Man Chase | Pac-Man chasing ghosts |
-| Pixel Aquarium | Fish and bubbles |
-| Pixel Globe | Tiny rotating world |
-| Pong Loop | Tiny paddles and ball |
-| Snake | Snake eats dots |
-| Tiny Traffic | Cars and signal lights |
+| Clock | Time plus local weather |
+| Countdown | Days until any event |
+| Countdown Confetti | Event countdown with confetti |
+| Disney Countdown | Days until your trip |
+| GitHub Issues Watch | Open issue count |
+| GitHub Release Watch | Latest release for a repo |
+| Google Calendar | Next upcoming event |
+| Hubyt Update Watch | Hubyt release and card updates |
+| Moon Phase | Current moon phase |
+| Ping Monitor | TCP latency monitor |
+| RSS Headlines | Scrolling RSS headline |
+| Trash + Recycling | Weekly and bi-weekly pickup reminder |
+| Website Uptime | URL up/down monitor |
+
+### Weather
+
+| Card | Description |
+|------|-------------|
+| Air Quality | AQI, pollen, and UV by ZIP |
+| Weather Alert | Skips when clear |
+| Weather Forecast | 5-day forecast with icons |
+| Weather Mood | Animated weather vibe |
 
 ## Installing a Card
 
@@ -119,14 +138,8 @@ CARD_OPTIONS = [             # configurable options (can be empty list)
 ]
 
 def render(options=None):
-    # return WebP image bytes (64x32 pixels)
+    # Return WebP bytes for a 64x32 card frame.
     ...
 ```
 
-Import shared utilities from `card_utils`:
-
-```python
-from card_utils import draw_sharp_text, render_text_webp, fetch_json_url
-```
-
-To submit a card, open a pull request adding your `.py` file to `addons/` and an entry to `registry.json`.
+See [`docs/card-creation/STEP_BY_STEP.md`](docs/card-creation/STEP_BY_STEP.md) for the card framework walkthrough.

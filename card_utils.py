@@ -39,6 +39,105 @@ def fetch_json_request(url, seconds=600):
     return data
 
 
+def fetch_json_with_headers(url, headers=None, seconds=600, cache_key=None):
+    now = datetime.now(timezone.utc)
+    key = cache_key or url + "|" + json.dumps(headers or {}, sort_keys=True)
+    cached = WEATHER_CACHE.get(key)
+    if cached and cached["expires"] > now:
+        return cached["data"]
+    request_headers = {"User-Agent": "Hubyt/0.1", "Accept": "application/json"}
+    request_headers.update(headers or {})
+    request = urllib.request.Request(url, headers=request_headers)
+    with urllib.request.urlopen(request, timeout=10) as response:
+        data = json.loads(response.read().decode("utf-8"))
+    WEATHER_CACHE[key] = {"expires": now + timedelta(seconds=seconds), "data": data}
+    return data
+
+
+def format_compact_number(value):
+    try:
+        n = float(value)
+    except Exception:
+        return "--"
+    sign = "-" if n < 0 else ""
+    n = abs(n)
+    if n >= 1000000000:
+        return f"{sign}{n/1000000000:.1f}B"
+    if n >= 1000000:
+        return f"{sign}{n/1000000:.1f}M"
+    if n >= 10000:
+        return f"{sign}{n/1000:.0f}K"
+    if n >= 1000:
+        return f"{sign}{n/1000:.1f}K"
+    return f"{sign}{int(round(n))}"
+
+
+def _draw_counter_logo(draw, logo, x, y, color):
+    logo = (logo or "").lower()
+    if logo == "youtube":
+        draw.rounded_rectangle((x, y + 3, x + 17, y + 15), radius=3, fill=(255, 0, 0))
+        draw.polygon([(x + 7, y + 6), (x + 7, y + 12), (x + 13, y + 9)], fill=(255, 255, 255))
+    elif logo == "facebook":
+        draw.rounded_rectangle((x + 2, y + 1, x + 16, y + 15), radius=3, fill=(24, 119, 242))
+        draw.rectangle((x + 9, y + 5, x + 12, y + 15), fill=(255, 255, 255))
+        draw.rectangle((x + 7, y + 8, x + 14, y + 10), fill=(255, 255, 255))
+        draw.rectangle((x + 10, y + 3, x + 15, y + 5), fill=(255, 255, 255))
+        draw.point((x + 15, y + 5), fill=(24, 119, 242))
+    elif logo == "x":
+        draw.line((x + 3, y + 2, x + 15, y + 15), fill=(245, 250, 255), width=2)
+        draw.line((x + 15, y + 2, x + 3, y + 15), fill=(245, 250, 255), width=2)
+    elif logo == "instagram":
+        draw.point((x + 3, y + 2), fill=(255, 220, 80))
+        draw.line((x + 4, y + 1, x + 14, y + 1), fill=(245, 80, 170), width=2)
+        draw.line((x + 15, y + 3, x + 15, y + 13), fill=(180, 80, 255), width=2)
+        draw.line((x + 4, y + 15, x + 14, y + 15), fill=(255, 120, 60), width=2)
+        draw.line((x + 2, y + 4, x + 2, y + 12), fill=(255, 200, 80), width=2)
+        draw.ellipse((x + 6, y + 5, x + 12, y + 11), outline=(245, 250, 255))
+        draw.point((x + 13, y + 4), fill=(255, 210, 80))
+    else:
+        draw.ellipse((x + 3, y + 2, x + 15, y + 14), outline=color)
+
+
+def render_counter_card(title, label, value, color=(80, 180, 255), sublabel="FOLLOWERS", logo=None):
+    from PIL import Image, ImageDraw, ImageFont
+    image = Image.new("RGB", (64, 32), (0, 5, 12))
+    draw = ImageDraw.Draw(image)
+    try:
+        font = ImageFont.truetype("Silkscreen-Regular.ttf", 8)
+        bold = ImageFont.truetype("Silkscreen-Bold.ttf", 8)
+        big = ImageFont.truetype("Silkscreen-Bold.ttf", 16)
+    except Exception:
+        font = bold = big = ImageFont.load_default()
+
+    draw.rectangle((0, 0, 63, 8), fill=(5, 18, 28))
+    title = str(title or "")[:12].upper()
+    tw = draw.textbbox((0, 0), title, font=bold)[2]
+    draw_sharp_text(image, ((64 - tw) // 2, -3), title, color, bold)
+
+    if logo:
+        _draw_counter_logo(draw, logo, 1, 10, color)
+        value_left = 20
+        value_width = 44
+    else:
+        value_left = 0
+        value_width = 64
+
+    val = format_compact_number(value)
+    vw = draw.textbbox((0, 0), val, font=big)[2]
+    if vw <= value_width - 2:
+        draw_sharp_text(image, (value_left + (value_width - vw) // 2, 6), val, (245, 250, 255), big)
+    else:
+        vw = draw.textbbox((0, 0), val, font=bold)[2]
+        draw_sharp_text(image, (value_left + (value_width - vw) // 2, 9), val, (245, 250, 255), bold)
+
+    bottom = (str(label or sublabel or "")[:9] or sublabel).upper()
+    bw = draw.textbbox((0, 0), bottom, font=font)[2]
+    draw_sharp_text(image, ((64 - bw) // 2, 22), bottom, (145, 165, 182), font)
+    out = BytesIO()
+    image.save(out, "WEBP", lossless=True, quality=100)
+    return out.getvalue()
+
+
 def weather_for_zip(zip_code):
     zip_code = re.sub(r"\D", "", zip_code or "")[:5]
     if len(zip_code) != 5:
