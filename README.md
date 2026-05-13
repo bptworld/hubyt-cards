@@ -2,7 +2,7 @@
 
 Add-on cards for the [Hubyt](https://github.com/bptworld/hubyt) display system.
 
-## Available Cards - 85
+## Available Cards - 87
 
 ### Finance
 
@@ -10,6 +10,7 @@ Add-on cards for the [Hubyt](https://github.com/bptworld/hubyt) display system.
 |------|-------------|
 | Crypto Watch | BTC, ETH, and more |
 | Market Indexes | Dow, S&P, Nasdaq |
+| Market Open / Closed | NYSE/Nasdaq open status |
 | Portfolio Pulse | Value and daily gain |
 | Stock Ticker | Scrolling stocks and crypto |
 
@@ -75,6 +76,7 @@ Add-on cards for the [Hubyt](https://github.com/bptworld/hubyt) display system.
 | PGA Golf | ESPN PGA leaderboard |
 | PLL Lacrosse | Live ESPN PLL scoreboard |
 | Soccer Scores | Live ESPN soccer scoreboard |
+| Sports Standings | Top teams from ESPN standings |
 | Tennis ATP | ESPN ATP tournament status |
 | Tennis WTA | ESPN WTA tournament status |
 | UFC | ESPN UFC event status |

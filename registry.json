@@ -25,6 +25,17 @@
       "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/market_indexes.webp"
     },
     {
+      "id": "market_status",
+      "name": "Market Open / Closed",
+      "category": "Finance",
+      "detail": "NYSE/Nasdaq open status",
+      "description": "NYSE/Nasdaq open status",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/market_status.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/market_status.webp"
+    },
+    {
       "id": "portfolio_pulse",
       "name": "Portfolio Pulse",
       "category": "Finance",
@@ -518,6 +529,17 @@
       "version": "1.0",
       "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/soccer.py",
       "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/soccer.webp"
+    },
+    {
+      "id": "sports_standings",
+      "name": "Sports Standings",
+      "category": "Sports",
+      "detail": "Top teams from ESPN standings",
+      "description": "Top teams from ESPN standings",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/sports_standings.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/sports_standings.webp"
     },
     {
       "id": "tennis_atp",

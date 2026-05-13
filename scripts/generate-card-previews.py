@@ -195,6 +195,13 @@ def _market():
     return _webp(image)
 
 
+def _market_status():
+    image, draw = _simple_header("MARKET", (100, 190, 255))
+    _center(image, "OPEN", 5, (80, 220, 120), BIG)
+    _center(image, "CLOSES 2H", 23, (160, 180, 195), FONT)
+    return _webp(image)
+
+
 def _portfolio():
     image = Image.new("RGB", (64, 32), (0, 5, 15))
     draw = ImageDraw.Draw(image)
@@ -439,6 +446,18 @@ def _megabucks():
     return _webp(image)
 
 
+def _standings():
+    image, draw = _simple_header("MLB STAND", (117, 231, 214))
+    rows = [("1", "BOS", "28-13"), ("2", "NYY", "25-16"), ("3", "TB", "24-17")]
+    y = 7
+    for rank, team, rec in rows:
+        draw_sharp_text(image, (1, y), rank, (117, 231, 214), FONT)
+        draw_sharp_text(image, (8, y), team, (245, 250, 255), BOLD)
+        draw_sharp_text(image, (31, y), rec, (190, 205, 218), FONT)
+        y += 8
+    return _webp(image)
+
+
 def _message(title, l1, l2="", color=(24, 210, 190)):
     image, draw = _simple_header(title, color)
     _center(image, l1, 10, (245, 250, 255), BOLD)
@@ -481,6 +500,7 @@ CUSTOM = {
     "tennis_wta": lambda: _event_sport("WTA", "tennis"),
     "stocks": _stock,
     "market_indexes": _market,
+    "market_status": _market_status,
     "portfolio_pulse": _portfolio,
     "crypto_watch": lambda: _stock(),
     "hubitat": _hubitat,
@@ -510,6 +530,7 @@ CUSTOM = {
     "package_watch": _package,
     "mega_millions": _mega_millions,
     "megabucks": _megabucks,
+    "sports_standings": _standings,
     "youtube_followers": lambda: render_counter_card("YOUTUBE", "Hubyt", 123456, (255, 0, 0), "SUBS", "youtube"),
     "facebook_followers": lambda: render_counter_card("FACEBOOK", "Hubyt", 123456, (24, 119, 242), "FOLLOW", "facebook"),
     "twitter_followers": lambda: render_counter_card("X", "@hubyt", 123456, (245, 250, 255), "FOLLOW", "x"),
