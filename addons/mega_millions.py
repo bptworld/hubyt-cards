@@ -9,11 +9,7 @@ from card_utils import draw_sharp_text, render_text_webp
 CARD_ID = "mega_millions"
 CARD_NAME = "Mega Millions"
 CARD_DETAIL = "Latest Mega Millions draw"
-CARD_OPTIONS = [
-    {"key": "manualNumbers", "label": "Manual Numbers", "type": "text", "default": "", "maxlength": 32},
-    {"key": "manualDate", "label": "Manual Draw Date", "type": "text", "default": "", "maxlength": 18},
-    {"key": "manualJackpot", "label": "Manual Jackpot", "type": "text", "default": "", "maxlength": 14},
-]
+CARD_OPTIONS = []
 
 URL = "https://www.lottery.net/mega-millions/numbers"
 CACHE = {}
@@ -35,19 +31,6 @@ def _clean_html(text):
     text = re.sub(r"<sup>.*?</sup>", "", text, flags=re.I | re.S)
     text = re.sub(r"<.*?>", " ", text, flags=re.S)
     return re.sub(r"\s+", " ", unescape(text)).strip()
-
-
-def _parse_manual(opts):
-    raw = (opts.get("manualNumbers") or "").strip()
-    nums = re.findall(r"\d+", raw)
-    if len(nums) >= 6:
-        return {
-            "date": (opts.get("manualDate") or "MANUAL").strip()[:18],
-            "numbers": nums[:5],
-            "special": nums[5],
-            "jackpot": (opts.get("manualJackpot") or "").strip(),
-        }
-    return None
 
 
 def _latest():
@@ -102,12 +85,7 @@ def _draw(data):
 
 
 def render(options=None):
-    opts = options or {}
     try:
-        data = _parse_manual(opts) or _latest()
-        return _draw(data)
+        return _draw(_latest())
     except Exception:
-        manual = _parse_manual(opts)
-        if manual:
-            return _draw(manual)
         return render_text_webp("MEGA ERR", (255, 210, 80))

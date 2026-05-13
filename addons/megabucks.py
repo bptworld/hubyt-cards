@@ -9,10 +9,7 @@ from card_utils import draw_sharp_text, render_text_webp
 CARD_ID = "megabucks"
 CARD_NAME = "Megabucks"
 CARD_DETAIL = "Latest MA Megabucks draw"
-CARD_OPTIONS = [
-    {"key": "manualNumbers", "label": "Manual Numbers", "type": "text", "default": "", "maxlength": 32},
-    {"key": "manualDate", "label": "Manual Draw Date", "type": "text", "default": "", "maxlength": 18},
-]
+CARD_OPTIONS = []
 
 URL = "https://www.lottery.net/massachusetts/megabucks/numbers"
 CACHE = {}
@@ -34,17 +31,6 @@ def _clean_html(text):
     text = re.sub(r"<sup>.*?</sup>", "", text, flags=re.I | re.S)
     text = re.sub(r"<.*?>", " ", text, flags=re.S)
     return re.sub(r"\s+", " ", unescape(text)).strip()
-
-
-def _parse_manual(opts):
-    raw = (opts.get("manualNumbers") or "").strip()
-    nums = re.findall(r"\d+", raw)
-    if len(nums) >= 6:
-        return {
-            "date": (opts.get("manualDate") or "MANUAL").strip()[:18],
-            "numbers": nums[:6],
-        }
-    return None
 
 
 def _latest():
@@ -93,11 +79,7 @@ def _draw(data):
 
 
 def render(options=None):
-    opts = options or {}
     try:
-        return _draw(_parse_manual(opts) or _latest())
+        return _draw(_latest())
     except Exception:
-        manual = _parse_manual(opts)
-        if manual:
-            return _draw(manual)
         return render_text_webp("BUCKS ERR", (70, 230, 170))
