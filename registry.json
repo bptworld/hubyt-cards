@@ -542,39 +542,6 @@
       "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/sports_standings.webp"
     },
     {
-      "id": "tennis_atp",
-      "name": "Tennis ATP",
-      "category": "Sports",
-      "detail": "ESPN ATP tournament status",
-      "description": "ESPN ATP tournament status",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/tennis_atp.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/tennis_atp.webp"
-    },
-    {
-      "id": "tennis_wta",
-      "name": "Tennis WTA",
-      "category": "Sports",
-      "detail": "ESPN WTA tournament status",
-      "description": "ESPN WTA tournament status",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/tennis_wta.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/tennis_wta.webp"
-    },
-    {
-      "id": "ufc",
-      "name": "UFC",
-      "category": "Sports",
-      "detail": "ESPN UFC event status",
-      "description": "ESPN UFC event status",
-      "author": "bptworld",
-      "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/ufc.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/ufc.webp"
-    },
-    {
       "id": "ufl",
       "name": "UFL Scores",
       "category": "Sports",

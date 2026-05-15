@@ -2,7 +2,7 @@
 
 Add-on cards for the [Hubyt](https://github.com/bptworld/hubyt) display system.
 
-## Available Cards - 87
+## Available Cards - 84
 
 ### Finance
 
@@ -77,9 +77,6 @@ Add-on cards for the [Hubyt](https://github.com/bptworld/hubyt) display system.
 | PLL Lacrosse | Live ESPN PLL scoreboard |
 | Soccer Scores | Live ESPN soccer scoreboard |
 | Sports Standings | Top teams from ESPN standings |
-| Tennis ATP | ESPN ATP tournament status |
-| Tennis WTA | ESPN WTA tournament status |
-| UFC | ESPN UFC event status |
 | UFL Scores | Live ESPN UFL scoreboard |
 | WNBA Scores | Live ESPN scoreboard |
 | Women's College Basketball | Live ESPN scoreboard |
