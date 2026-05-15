@@ -87,22 +87,61 @@ def _short_delay(delay):
     return (delay or "")[:9]
 
 
-def _render_ok_image(code):
+def _is_wide(options):
+    return (options or {}).get("_target") == "matrixportal-s3-128x32"
+
+
+def _render_text_image(text, color, width=64):
     from PIL import Image, ImageDraw, ImageFont
 
-    image = Image.new("RGB", (64, 32), (0, 5, 12))
+    image = Image.new("RGB", (width, 32), (0, 0, 0))
     draw = ImageDraw.Draw(image)
     try:
         font = ImageFont.truetype("Silkscreen-Regular.ttf", 8)
-        bold = ImageFont.truetype("Silkscreen-Bold.ttf", 8)
+    except Exception:
+        font = ImageFont.load_default()
+    bbox = draw.textbbox((0, 0), text, font=font)
+    draw_sharp_text(
+        image,
+        ((width - (bbox[2] - bbox[0])) // 2, (32 - (bbox[3] - bbox[1])) // 2),
+        text, color, font,
+    )
+    out = BytesIO()
+    image.save(out, "WEBP", lossless=True, quality=100)
+    return out.getvalue()
+
+
+def _render_ok_image(code, width=64):
+    from PIL import Image, ImageDraw, ImageFont
+
+    image = Image.new("RGB", (width, 32), (0, 5, 12))
+    draw = ImageDraw.Draw(image)
+    try:
+        font = ImageFont.truetype("Silkscreen-Regular.ttf", 8)
+        bold = ImageFont.truetype("PixelifySans-Bold.ttf", 8)
     except Exception:
         font = bold = ImageFont.load_default()
 
-    draw.rectangle((0, 0, 63, 8), fill=(12, 24, 24))
-    draw_sharp_text(image, (1, -4), "AIRPORT", (100, 190, 255), bold)
-    draw_sharp_text(image, (1, 6), (code or "FAA")[:4], (255, 255, 255), bold)
-    draw_sharp_text(image, (1, 15), "NO DELAYS", (100, 220, 140), font)
-    draw_sharp_text(image, (1, 23), "FAA STATUS", (150, 170, 185), font)
+    draw.rectangle((0, 0, width - 1, 8), fill=(12, 24, 24))
+    if width == 128:
+        title = "AIRPORT STATUS"
+        tw = draw.textbbox((0, 0), title, font=bold)[2]
+        draw_sharp_text(image, ((width - tw) // 2, -4), title, (100, 190, 255), bold)
+        code_text = (code or "FAA")[:4]
+        ok = "NO DELAYS"
+        status = "FAA STATUS"
+        cw = draw.textbbox((0, 0), code_text, font=bold)[2]
+        ow = draw.textbbox((0, 0), ok, font=bold)[2]
+        sw = draw.textbbox((0, 0), status, font=font)[2]
+        draw_sharp_text(image, (8, 10), code_text, (255, 255, 255), bold)
+        draw_sharp_text(image, ((width - ow) // 2, 10), ok, (100, 220, 140), bold)
+        draw_sharp_text(image, (width - sw - 8, 22), status, (150, 170, 185), font)
+        draw.line((8 + cw + 4, 17, (width - ow) // 2 - 4, 17), fill=(35, 70, 82))
+    else:
+        draw_sharp_text(image, (1, -4), "AIRPORT", (100, 190, 255), bold)
+        draw_sharp_text(image, (1, 6), (code or "FAA")[:4], (255, 255, 255), bold)
+        draw_sharp_text(image, (1, 15), "NO DELAYS", (100, 220, 140), font)
+        draw_sharp_text(image, (1, 23), "FAA STATUS", (150, 170, 185), font)
     out = BytesIO()
     image.save(out, "WEBP", lossless=True, quality=100)
     return out.getvalue()
@@ -112,38 +151,50 @@ def render(options=None):
     from PIL import Image, ImageDraw, ImageFont
 
     opts = options or {}
+    width = 128 if _is_wide(opts) else 64
     codes = _airport_codes(opts.get("airports"))
     try:
         events = _delay_events()
     except Exception:
-        return render_text_webp("FAA ERR", (238, 80, 80))
+        return _render_text_image("FAA ERR", (238, 80, 80), width)
 
     if codes:
         matches = [e for e in events if e["airport"] in codes]
         if not matches:
-            return _render_ok_image(codes[0])
+            return _render_ok_image(codes[0], width)
     else:
         matches = events[:3]
         if not matches:
-            return _render_ok_image("FAA")
+            return _render_ok_image("FAA", width)
 
-    image = Image.new("RGB", (64, 32), (2, 8, 16))
+    image = Image.new("RGB", (width, 32), (2, 8, 16))
     draw = ImageDraw.Draw(image)
     try:
         font = ImageFont.truetype("Silkscreen-Regular.ttf", 8)
-        bold = ImageFont.truetype("Silkscreen-Bold.ttf", 8)
+        bold = ImageFont.truetype("PixelifySans-Bold.ttf", 8)
     except Exception:
         font = bold = ImageFont.load_default()
 
-    draw.rectangle((0, 0, 63, 8), fill=(24, 30, 42))
-    draw_sharp_text(image, (1, -3), "AIR DELAY", (255, 190, 80), bold)
-    y = 8
-    for event in matches[:3]:
-        draw_sharp_text(image, (1, y), event["airport"][:4], (100, 190, 255), bold)
-        draw_sharp_text(image, (24, y), _short_delay(event["delay"])[:8], (255, 235, 145), font)
-        y += 8
-    if matches:
-        draw_sharp_text(image, (1, 24), matches[0]["reason"][:12].upper(), (180, 195, 210), font)
+    draw.rectangle((0, 0, width - 1, 8), fill=(24, 30, 42))
+    title = "AIRPORT DELAYS" if width == 128 else "AIR DELAY"
+    tw = draw.textbbox((0, 0), title, font=bold)[2]
+    draw_sharp_text(image, (((width - tw) // 2) if width == 128 else 1, -3), title, (255, 190, 80), bold)
+    if width == 128:
+        event = matches[0]
+        delay = _short_delay(event["delay"])[:10]
+        reason = event["reason"][:26].upper()
+        draw_sharp_text(image, (4, 9), event["airport"][:4], (100, 190, 255), bold)
+        draw_sharp_text(image, (31, 9), event["kind"][:6], (255, 235, 145), font)
+        draw_sharp_text(image, (62, 9), delay, (255, 235, 145), font)
+        draw_sharp_text(image, (4, 21), reason, (180, 195, 210), font)
+    else:
+        y = 8
+        for event in matches[:3]:
+            draw_sharp_text(image, (1, y), event["airport"][:4], (100, 190, 255), bold)
+            draw_sharp_text(image, (24, y), _short_delay(event["delay"])[:8], (255, 235, 145), font)
+            y += 7
+        if matches and len(matches) < 3:
+            draw_sharp_text(image, (1, 22), matches[0]["reason"][:12].upper(), (180, 195, 210), font)
 
     out = BytesIO()
     image.save(out, "WEBP", lossless=True, quality=100)

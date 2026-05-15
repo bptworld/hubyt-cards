@@ -158,36 +158,67 @@ def _fetch(state, zip_code=""):
     return data
 
 
+def _is_wide(options):
+    return (options or {}).get("_target") == "matrixportal-s3-128x32"
+
+
+def _render_text_image(text, color, width=64):
+    from PIL import Image, ImageDraw, ImageFont
+
+    image = Image.new("RGB", (width, 32), (0, 0, 0))
+    draw = ImageDraw.Draw(image)
+    try:
+        font = ImageFont.truetype("Silkscreen-Regular.ttf", 8)
+    except Exception:
+        font = ImageFont.load_default()
+    bbox = draw.textbbox((0, 0), text, font=font)
+    draw_sharp_text(image, ((width - (bbox[2] - bbox[0])) // 2, (32 - (bbox[3] - bbox[1])) // 2), text, color, font)
+    out = BytesIO()
+    image.save(out, "WEBP", lossless=True, quality=100)
+    return out.getvalue()
+
+
 def render(options=None):
     from PIL import Image, ImageDraw, ImageFont
 
     opts = options or {}
+    width = 128 if _is_wide(opts) else 64
     try:
         data = _fetch(opts.get("state") or "MA", opts.get("zipCode") or "")
     except Exception:
-        return render_text_webp("GAS ERR", (238, 80, 80))
+        return _render_text_image("GAS ERR", (238, 80, 80), width)
     if data["price"] is None:
-        return render_text_webp("NO GAS", (160, 160, 160))
+        return _render_text_image("NO GAS", (160, 160, 160), width)
 
     diff = data["price"] - (data["national"] or data["price"])
     color = (238, 80, 80) if diff > 0 else (80, 220, 120)
-    image = Image.new("RGB", (64, 32), (0, 5, 12))
+    image = Image.new("RGB", (width, 32), (0, 5, 12))
     draw = ImageDraw.Draw(image)
     try:
         font = ImageFont.truetype("Silkscreen-Regular.ttf", 8)
-        bold = ImageFont.truetype("Silkscreen-Bold.ttf", 8)
+        bold = ImageFont.truetype("PixelifySans-Bold.ttf", 8)
     except Exception:
         font = bold = ImageFont.load_default()
 
-    draw.rectangle((2, 9, 12, 25), outline=(90, 170, 255), fill=(8, 18, 30))
-    draw.rectangle((5, 12, 9, 15), fill=(90, 170, 255))
-    draw.line((12, 12, 17, 16, 17, 23), fill=(90, 170, 255))
     header = data["location"][:9].upper() if data.get("local") else f"GAS {data['state']}"
-    draw_sharp_text(image, (20, -3), header, (255, 220, 80), bold)
     price = f"${data['price']:.2f}"
-    draw_sharp_text(image, (20, 8), price, (235, 245, 255), bold)
     tag = f"{diff:+.2f} vs US"
-    draw_sharp_text(image, (20, 20), tag[:10], color, font)
+    if width == 128:
+        draw.rectangle((4, 8, 18, 27), outline=(90, 170, 255), fill=(8, 18, 30))
+        draw.rectangle((8, 11, 14, 15), fill=(90, 170, 255))
+        draw.line((18, 12, 25, 17, 25, 25), fill=(90, 170, 255))
+        header = (data["location"][:18].upper() if data.get("local") else f"GAS {data['state']}")
+        draw_sharp_text(image, (31, -3), header, (255, 220, 80), bold)
+        draw_sharp_text(image, (31, 8), price, (235, 245, 255), bold)
+        tw = draw.textbbox((0, 0), tag, font=font)[2]
+        draw_sharp_text(image, (width - tw - 3, 20), tag, color, font)
+    else:
+        draw.rectangle((2, 9, 12, 25), outline=(90, 170, 255), fill=(8, 18, 30))
+        draw.rectangle((5, 12, 9, 15), fill=(90, 170, 255))
+        draw.line((12, 12, 17, 16, 17, 23), fill=(90, 170, 255))
+        draw_sharp_text(image, (20, -3), header, (255, 220, 80), bold)
+        draw_sharp_text(image, (20, 8), price, (235, 245, 255), bold)
+        draw_sharp_text(image, (20, 20), tag[:10], color, font)
 
     out = BytesIO()
     image.save(out, "WEBP", lossless=True, quality=100)

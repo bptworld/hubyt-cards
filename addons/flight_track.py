@@ -51,6 +51,7 @@ CARD_OPTIONS = [
 _CACHE = {}
 _CACHE_SECONDS = 300
 _GEO_CACHE = {}
+_GEO_DETAIL_CACHE = {}
 _GEO_CACHE_SECONDS = 30 * 60
 _TERMINAL_CACHE = {}
 _TERMINAL_CACHE_SECONDS = 18 * 60 * 60
@@ -268,7 +269,7 @@ def _status(flight):
     if flight.get("_summary"):
         if flight.get("datetime_landed"):
             return "LAND", (95, 230, 135)
-        if flight.get("datetime_takeoff"):
+        if _airborne(flight):
             return "ENRT", (100, 190, 255)
         return "SCHED", (255, 220, 90)
     try:
@@ -315,6 +316,13 @@ def _departure_time(flight):
     return None
 
 
+def _takeoff_time(flight):
+    for key in ("datetime_takeoff", "takeoff_time", "first_seen"):
+        if flight.get(key):
+            return flight.get(key)
+    return _departure_time(flight)
+
+
 def _event_time(flight):
     if _is_cancelled(flight):
         return "CANCELLED"
@@ -322,11 +330,13 @@ def _event_time(flight):
         return "LANDED " + _fmt_time(flight.get("datetime_landed"))
     if flight.get("_summary"):
         if _airborne(flight):
-            return "ETA " + _fmt_time(flight.get("eta")) if flight.get("eta") else "OFF " + _fmt_time(flight.get("datetime_takeoff"))
+            return "ETA " + _fmt_time(flight.get("eta")) if flight.get("eta") else "TAKEOFF: " + _fmt_time(_takeoff_time(flight))
         departure = _departure_time(flight)
         return "DEP " + _fmt_time(departure) if departure else "DEP --:--"
     if flight.get("eta") and _airborne(flight):
         return "ETA " + _fmt_time(flight.get("eta"))
+    if _airborne(flight):
+        return "TAKEOFF: " + _fmt_time(_takeoff_time(flight))
     departure = _departure_time(flight)
     if departure:
         return "DEP " + _fmt_time(departure)
@@ -405,11 +415,20 @@ def _flight_lat_lon(flight):
 
 
 def _reverse_geocode(lat, lon):
+    detail = _reverse_geocode_detail(lat, lon)
+    place = detail.get("place", "")
+    region = detail.get("region", "")
+    if place and region and place.upper() != region.upper():
+        return f"{place} {region}"
+    return place or region
+
+
+def _reverse_geocode_detail(lat, lon):
     now = datetime.now(timezone.utc)
     key = f"{lat:.2f},{lon:.2f}"
-    cached = _GEO_CACHE.get(key)
+    cached = _GEO_DETAIL_CACHE.get(key)
     if cached and cached["expires"] > now:
-        return cached["label"]
+        return cached["detail"]
     url = (
         "https://nominatim.openstreetmap.org/reverse?"
         + urllib.parse.urlencode({
@@ -420,7 +439,7 @@ def _reverse_geocode(lat, lon):
             "addressdetails": "1",
         })
     )
-    label = ""
+    detail = {"place": "", "region": ""}
     try:
         request = urllib.request.Request(url, headers={"User-Agent": "Hubyt/0.1"})
         with urllib.request.urlopen(request, timeout=5) as response:
@@ -432,17 +451,43 @@ def _reverse_geocode(lat, lon):
             or address.get("country")
         )
         region = address.get("state_code") or address.get("state")
-        if place and region and place.upper() != region.upper():
-            label = f"{place} {region}"
-        elif place:
-            label = place
+        detail = {"place": place or "", "region": region or ""}
     except Exception:
-        label = ""
+        detail = {"place": "", "region": ""}
+    _GEO_DETAIL_CACHE[key] = {
+        "expires": now + timedelta(seconds=_GEO_CACHE_SECONDS),
+        "detail": detail,
+    }
     _GEO_CACHE[key] = {
         "expires": now + timedelta(seconds=_GEO_CACHE_SECONDS),
-        "label": label,
+        "label": (
+            f"{detail['place']} {detail['region']}".strip()
+            if detail.get("place") and detail.get("region") and detail["place"].upper() != detail["region"].upper()
+            else (detail.get("place") or detail.get("region") or "")
+        ),
     }
-    return label
+    return detail
+
+
+def _over_detail(flight):
+    if _is_landed(flight):
+        dest = _airport_code(flight.get("dest_iata") or flight.get("dest_icao"))
+        label = _AIRPORT_CITY.get(dest, dest)
+        parts = label.rsplit(" ", 1)
+        return {"region": parts[1] if len(parts) == 2 else "", "place": parts[0] if parts else label}
+    preset = str(flight.get("_over") or "").strip()
+    if preset:
+        parts = preset.rsplit(" ", 1)
+        return {"region": parts[1] if len(parts) == 2 and len(parts[1]) <= 3 else "", "place": preset}
+    lat, lon = _flight_lat_lon(flight)
+    if lat is not None:
+        detail = _reverse_geocode_detail(lat, lon)
+        if detail.get("place") or detail.get("region"):
+            return detail
+    dest = _airport_code(flight.get("dest_iata") or flight.get("dest_icao"))
+    label = _AIRPORT_CITY.get(dest, dest) if dest != "---" else "IN FLIGHT"
+    parts = label.rsplit(" ", 1)
+    return {"region": parts[1] if len(parts) == 2 else "", "place": parts[0] if parts else label}
 
 
 def _over_line(flight):
@@ -456,7 +501,8 @@ def _over_line(flight):
         return preset.upper()
     lat, lon = _flight_lat_lon(flight)
     if lat is None:
-        return "IN FLIGHT"
+        dest = _airport_code(flight.get("dest_iata") or flight.get("dest_icao"))
+        return _AIRPORT_CITY.get(dest, dest) if dest != "---" else "IN FLIGHT"
     label = _reverse_geocode(lat, lon)
     return (label or f"{lat:.1f},{lon:.1f}").upper()
 
@@ -464,7 +510,10 @@ def _over_line(flight):
 def _position_heading(flight):
     if _is_cancelled(flight):
         return "CANCELLED"
-    return "LANDED AT" if _is_landed(flight) else "FLYING OVER"
+    if _is_landed(flight):
+        return "LANDED AT"
+    lat, lon = _flight_lat_lon(flight)
+    return "FLYING OVER" if lat is not None else "ENROUTE TO"
 
 
 def _airline_iata(flight):
@@ -868,7 +917,11 @@ def _schedule_next_poll(state, flight, now):
     elif not _airborne(flight):
         state["next_poll"] = now + timedelta(minutes=10)
     else:
-        state["next_poll"] = now + timedelta(minutes=15)
+        eta = _parse_time(flight.get("eta"))
+        if eta and eta > now and eta - now <= timedelta(minutes=10):
+            state["next_poll"] = now + timedelta(minutes=3)
+        else:
+            state["next_poll"] = now + timedelta(minutes=15)
 
 
 def _load_summary(now, iata_ident, icao_ident, route, api_key, repeat_daily=False):
@@ -883,6 +936,27 @@ def _load_live(iata_ident, icao_ident, airline_icao, route, api_key):
         return None
     data = _fetch_uncached("/live/flight-positions/full", params, api_key)
     return _pick_flight(_data_rows(data))
+
+
+def _merge_summary_and_live(summary, live):
+    if not summary:
+        return live
+    if not live:
+        return summary
+    merged = dict(summary)
+    for key, value in live.items():
+        if value not in (None, "", [], {}):
+            merged[key] = value
+    for key, value in summary.items():
+        if key.startswith("datetime_") or key in (
+            "orig_iata", "orig_icao", "dest_iata", "dest_icao", "eta",
+            "scheduled_departure", "datetime_scheduled_departure",
+            "flight", "ident_iata", "flight_number",
+        ):
+            if merged.get(key) in (None, "", [], {}):
+                merged[key] = value
+    merged["_summary"] = bool(summary.get("_summary"))
+    return merged
 
 
 def _load_flight(opts):
@@ -942,9 +1016,16 @@ def _load_flight(opts):
 
     try:
         if cached_flight and _airborne(cached_flight) and not _is_landed(cached_flight):
-            flight = _load_live(iata_ident, icao_ident, airline_icao, route, api_key)
+            live = _load_live(iata_ident, icao_ident, airline_icao, route, api_key)
+            flight = _merge_summary_and_live(cached_flight, live)
         else:
             flight = _load_summary(now, iata_ident, icao_ident, route, api_key, repeat_daily)
+            if flight and _airborne(flight) and not _is_landed(flight):
+                try:
+                    live = _load_live(iata_ident, icao_ident, airline_icao, route, api_key)
+                    flight = _merge_summary_and_live(flight, live)
+                except Exception:
+                    pass
         if flight:
             poll_state["flight"] = flight
             poll_state["last_error"] = None
@@ -983,7 +1064,10 @@ def _display_error(error, options):
 def _render_error_image(message, color):
     from PIL import Image, ImageDraw
 
-    image = Image.new("RGB", (64, 32), (0, 0, 0))
+    width = 128 if isinstance(message, dict) and message.get("_wide") else 64
+    if isinstance(message, dict):
+        message = message.get("text", "")
+    image = Image.new("RGB", (width, 32), (0, 0, 0))
     draw = ImageDraw.Draw(image)
     words = str(message or "").split()
     lines = []
@@ -991,7 +1075,7 @@ def _render_error_image(message, color):
     for word in words:
         candidate = (current + " " + word).strip()
         bbox = draw.textbbox((0, 0), candidate, font=FONT_7)
-        if current and bbox[2] - bbox[0] > 62:
+        if current and bbox[2] - bbox[0] > width - 2:
             lines.append(current)
             current = word
         else:
@@ -1006,7 +1090,7 @@ def _render_error_image(message, color):
     start_y = (32 - len(lines) * line_h) // 2 - 3
     for index, line in enumerate(lines):
         bbox = draw.textbbox((0, 0), line, font=FONT_7)
-        x = max(0, (64 - (bbox[2] - bbox[0])) // 2)
+        x = max(0, (width - (bbox[2] - bbox[0])) // 2)
         draw_sharp_text(image, (x, start_y + index * line_h), line, color, FONT_7)
     return image
 
@@ -1024,33 +1108,33 @@ def _draw_airline_mark(image, draw, flight, logo_left, logo_top, fallback_y=0):
         image.paste(logo, (logo_left, logo_top), logo)
     elif iata:
         airline = _fit_pixel_text(iata[:2], 12)
-        _draw_pixel_text(draw, 63 - _pixel_text_width(airline), fallback_y, airline, (100, 190, 255))
+        _draw_pixel_text(draw, image.width - 1 - _pixel_text_width(airline), fallback_y, airline, (100, 190, 255))
 
 
-def _layout_for_flight(flight):
-    if _airline_iata(flight) == "WN":
+def _layout_for_flight(flight, width=64):
+    if width == 128:
         return {
             "logo_left": 0,
             "logo_top": 0,
-            "text_left": 18,
-            "ident_max": 45,
-            "route_max": 45,
+            "text_left": 20,
+            "ident_max": 105,
+            "route_max": 105,
         }
     return {
-        "logo_left": 48,
-        "logo_top": 1,
-        "text_left": 1,
-        "ident_max": 39,
-        "route_max": 62,
+        "logo_left": 0,
+        "logo_top": 0,
+        "text_left": 18,
+        "ident_max": 45,
+        "route_max": 45,
     }
 
 
-def _render_flight_panel(flight):
+def _render_flight_panel(flight, width=64):
     from PIL import Image, ImageDraw
 
-    image = Image.new("RGB", (64, 32), (0, 5, 18))
+    image = Image.new("RGB", (width, 32), (0, 5, 18))
     draw = ImageDraw.Draw(image)
-    layout = _layout_for_flight(flight)
+    layout = _layout_for_flight(flight, width)
     ident = _fit_pixel_text(_flight_number(flight), layout["ident_max"])
     aircraft = _fit_pixel_text(_aircraft_type(flight), layout["ident_max"])
     route = f"{_airport_code(flight.get('orig_iata') or flight.get('orig_icao'))}>{_airport_code(flight.get('dest_iata') or flight.get('dest_icao'))}"
@@ -1058,35 +1142,52 @@ def _render_flight_panel(flight):
 
     _draw_airline_mark(image, draw, flight, layout["logo_left"], layout["logo_top"])
     _draw_pixel_text(draw, layout["text_left"], 0, ident, (235, 245, 255))
-    _draw_matrix_text(draw, layout["text_left"], 9, _fit_matrix_text(aircraft, layout["ident_max"], spacing=0), (100, 190, 255), spacing=0)
-    _draw_matrix_text(draw, layout["text_left"], 17, _fit_matrix_text(route, layout["route_max"], spacing=0), (100, 190, 255), spacing=0)
-    _draw_matrix_text(draw, 0, 25, _fit_matrix_text(bottom, 63, spacing=0), (255, 220, 90), spacing=0)
+    if width == 128:
+        bottom_w = _matrix_text_width(bottom, spacing=0)
+        _draw_matrix_text(draw, layout["text_left"], 9, _fit_matrix_text(aircraft, 46, spacing=0), (100, 190, 255), spacing=0)
+        _draw_matrix_text(draw, 74, 9, _fit_matrix_text(route, 52, spacing=0), (100, 190, 255), spacing=0)
+        _draw_matrix_text(draw, max(0, (width - min(bottom_w, width - 2)) // 2), 25, _fit_matrix_text(bottom, width - 2, spacing=0), (255, 220, 90), spacing=0)
+    else:
+        _draw_matrix_text(draw, layout["text_left"], 9, _fit_matrix_text(aircraft, layout["ident_max"], spacing=0), (100, 190, 255), spacing=0)
+        _draw_matrix_text(draw, layout["text_left"], 17, _fit_matrix_text(route, layout["route_max"], spacing=0), (100, 190, 255), spacing=0)
+        _draw_matrix_text(draw, 0, 25, _fit_matrix_text(bottom, 63, spacing=0), (255, 220, 90), spacing=0)
     return image
 
 
-def _render_status_panel(flight):
+def _render_status_panel(flight, width=64, compact=False):
     from PIL import Image, ImageDraw
 
-    image = Image.new("RGB", (64, 32), (0, 5, 18))
+    image = Image.new("RGB", (width, 32), (0, 5, 18))
     draw = ImageDraw.Draw(image)
     status, status_color = _status(flight)
-    ident = _fit_pixel_text(_flight_number(flight), 63)
-    heading = _fit_matrix_text(_position_heading(flight), 63, spacing=0)
-    over = _fit_matrix_text(_over_line(flight), 63, spacing=0)
-    details = _fit_matrix_text(_alt_speed_line(flight) or status, 63, spacing=0)
-    _draw_pixel_text(draw, 0, 0, ident, (235, 245, 255))
-    _draw_matrix_text(draw, 0, 9, heading, status_color, spacing=0)
-    _draw_matrix_text(draw, 0, 17, over, (255, 220, 90), spacing=0)
-    _draw_matrix_text(draw, 0, 25, details, (100, 190, 255), spacing=0)
+    ident = _fit_pixel_text(_flight_number(flight), width - 1)
+    heading = _fit_matrix_text(_position_heading(flight), width - 1, spacing=0)
+    over = _fit_matrix_text(_over_line(flight), width - 1, spacing=0)
+    detail_text = "GROUND" if _is_landed(flight) else (_alt_speed_line(flight) or status)
+    details = _fit_matrix_text(detail_text, width - 1, spacing=0)
+    if compact:
+        _draw_matrix_text(draw, 0, 1, heading, status_color, spacing=0)
+        where = _over_detail(flight)
+        place = _fit_matrix_text(where.get("place") or over, width - 1, spacing=0)
+        region = _fit_matrix_text(where.get("region") or "", width - 1, spacing=0)
+        _draw_matrix_text(draw, 0, 9, place, (255, 220, 90), spacing=0)
+        _draw_matrix_text(draw, 0, 17, region, (255, 220, 90), spacing=0)
+        _draw_matrix_text(draw, 0, 25, details, (100, 190, 255), spacing=0)
+    else:
+        _draw_pixel_text(draw, 0, 0, ident, (235, 245, 255))
+        _draw_matrix_text(draw, 0, 9, heading, status_color, spacing=0)
+        _draw_matrix_text(draw, 0, 17, over, (255, 220, 90), spacing=0)
+        _draw_matrix_text(draw, 0, 25, details, (100, 190, 255), spacing=0)
     return image
 
 
 def _compose_slide(left, right, offset):
     from PIL import Image
 
-    frame = Image.new("RGB", (64, 32), (0, 5, 18))
+    width = left.width
+    frame = Image.new("RGB", (width, 32), (0, 5, 18))
     frame.paste(left, (-offset, 0))
-    frame.paste(right, (64 - offset, 0))
+    frame.paste(right, (width - offset, 0))
     return frame
 
 
@@ -1097,7 +1198,9 @@ def _save_static_webp(image):
 
 
 def _save_slide_animation(first, second):
-    slide_offsets = [8, 16, 24, 32, 40, 48, 56, 64]
+    width = first.width
+    step = 16 if width == 128 else 8
+    slide_offsets = list(range(step, width + 1, step))
     frames = [_compose_slide(first, second, offset) for offset in slide_offsets] + [second]
     frame_ms = 120
     out = BytesIO()
@@ -1111,7 +1214,9 @@ def _save_slide_animation(first, second):
 
 
 def _save_locked_two_page_animation(first, second, first_dwell, second_dwell):
-    slide_offsets = [8, 16, 24, 32, 40, 48, 56, 64]
+    width = first.width
+    step = 16 if width == 128 else 8
+    slide_offsets = list(range(step, width + 1, step))
     frames = [first] + [_compose_slide(first, second, offset) for offset in slide_offsets] + [second]
     durations = [max(1, int(first_dwell * 1000))]
     durations += [90 for _ in slide_offsets[:-1]]
@@ -1125,6 +1230,17 @@ def _save_locked_two_page_animation(first, second, first_dwell, second_dwell):
         lossless=True, quality=100,
     )
     return out.getvalue()
+
+
+def _combine_side_by_side(first, second):
+    from PIL import Image
+
+    frame = Image.new("RGB", (128, 32), (0, 5, 18))
+    left = first.crop((0, 0, 64, 32)) if first.width != 64 else first
+    right = second.crop((0, 0, 64, 32)) if second.width != 64 else second
+    frame.paste(left, (0, 0))
+    frame.paste(right, (64, 0))
+    return frame
 
 
 def _two_page_response(opts, flight, first, second, locked=True):
@@ -1167,13 +1283,14 @@ def render(options=None, dwell_ms=None):
 
 def render_webp(options=None, dwell_ms=30000):
     options = options or {}
+    width = 128 if options.get("_target") == "matrixportal-s3-128x32" else 64
     flight, error = _load_flight(options)
     if error:
         color = (100, 190, 255) if error.startswith("SET") else (238, 80, 80)
         dwell = max(4, int(dwell_ms / 1000))
         error_dwell = max(2, dwell // 2)
         return {
-            "body": _save_static_webp(_render_error_image(_display_error(error, options), color)),
+            "body": _save_static_webp(_render_error_image({"text": _display_error(error, options), "_wide": width == 128}, color)),
             "durationMs": error_dwell * 1000,
             "dwell_secs": error_dwell,
         }
@@ -1182,8 +1299,17 @@ def render_webp(options=None, dwell_ms=30000):
     dwell = max(4, int(dwell_ms / 1000))
     half_dwell = max(2, dwell // 2)
     second_dwell = max(2, dwell - half_dwell)
-    first = _render_flight_panel(flight)
-    second = _render_status_panel(flight)
+    if width == 128:
+        first = _render_flight_panel(flight, 64)
+        second = _render_status_panel(flight, 64, compact=True)
+        return {
+            "body": _save_static_webp(_combine_side_by_side(first, second)),
+            "durationMs": max(1000, int(dwell_ms)),
+            "dwell_secs": dwell,
+        }
+
+    first = _render_flight_panel(flight, width)
+    second = _render_status_panel(flight, width, compact=True)
     return {
         "body": _save_locked_two_page_animation(first, second, half_dwell, second_dwell),
         "durationMs": max(1000, int(dwell_ms)),
