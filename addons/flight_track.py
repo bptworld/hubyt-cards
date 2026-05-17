@@ -4,13 +4,13 @@ import json
 import urllib.parse
 import urllib.request
 from card_utils import (
-    draw_sharp_text, fetch_airline_logo, iata_to_icao_prefix, lookup_airline,
+    draw_sharp_text, fetch_airline_logo, format_speed_knots, format_time, iata_to_icao_prefix, lookup_airline,
     render_text_webp,
 )
 
 try:
     from PIL import ImageFont
-    FONT_7 = ImageFont.truetype("C:/Hubyt/Silkscreen-Regular.ttf", 8)
+    FONT_7 = ImageFont.truetype("C:/Pixora/Silkscreen-Regular.ttf", 8)
 except Exception:
     from PIL import ImageFont
     FONT_7 = ImageFont.load_default()
@@ -222,7 +222,7 @@ def _fmt_time(value):
     dt = _parse_time(value)
     if not dt:
         return "--:--"
-    return dt.astimezone().strftime("%I:%M").lstrip("0")
+    return format_time(dt.astimezone())
 
 
 def _airport_code(value):
@@ -344,7 +344,7 @@ def _event_time(flight):
         speed = int(float(flight.get("gspeed") or 0))
     except Exception:
         speed = 0
-    return f"{speed}KT" if speed else "LIVE"
+    return format_speed_knots(speed) if speed else "LIVE"
 
 
 def _gate_line(flight):
@@ -377,7 +377,7 @@ def _alt_speed_line(flight):
     elif alt > 0:
         parts.append(f"{alt}FT")
     if speed > 0:
-        parts.append(f"{speed}KT")
+        parts.append(format_speed_knots(speed))
     return " ".join(parts)
 
 
@@ -398,7 +398,7 @@ def _speed_line(flight):
         speed = int(float(flight.get("gspeed") or 0))
     except Exception:
         speed = 0
-    return f"SPD {speed}KT" if speed > 0 else "SPD ---"
+    return f"SPD {format_speed_knots(speed)}" if speed > 0 else "SPD ---"
 
 
 def _flight_lat_lon(flight):
@@ -441,7 +441,7 @@ def _reverse_geocode_detail(lat, lon):
     )
     detail = {"place": "", "region": ""}
     try:
-        request = urllib.request.Request(url, headers={"User-Agent": "Hubyt/0.1"})
+        request = urllib.request.Request(url, headers={"User-Agent": "Pixora/0.1"})
         with urllib.request.urlopen(request, timeout=5) as response:
             data = json.loads(response.read().decode("utf-8"))
         address = data.get("address") or {}
@@ -747,7 +747,7 @@ def _fetch(endpoint, params, api_key):
         return cached["data"]
     url = f"{_API_ROOT}{endpoint}?{urllib.parse.urlencode(params)}"
     req = urllib.request.Request(url, headers={
-        "User-Agent": "Hubyt/0.1",
+        "User-Agent": "Pixora/0.1",
         "Authorization": "Bearer " + api_key,
         "Accept": "application/json",
         "Accept-Version": "v1",
@@ -761,7 +761,7 @@ def _fetch(endpoint, params, api_key):
 def _fetch_uncached(endpoint, params, api_key):
     url = f"{_API_ROOT}{endpoint}?{urllib.parse.urlencode(params)}"
     req = urllib.request.Request(url, headers={
-        "User-Agent": "Hubyt/0.1",
+        "User-Agent": "Pixora/0.1",
         "Authorization": "Bearer " + api_key,
         "Accept": "application/json",
         "Accept-Version": "v1",
@@ -976,7 +976,7 @@ def _load_flight(opts):
             "lat": 38.9072,
             "lon": -77.0369,
             "_over": "Washington DC",
-            "_hubyt_test": True,
+            "_pixora_test": True,
         }, None
     api_key = str(opts.get("apiKey") or "").strip()
     if not api_key:
@@ -1275,7 +1275,7 @@ def render(options=None, dwell_ms=None):
     return {
         "body": result["body"],
         # The animated WebP already contains the full page1 -> slide -> page2 timing.
-        # A long Hubyt-Dwell-Secs header makes the firmware replay it before moving on.
+        # A long Pixora-Dwell-Secs header makes the firmware replay it before moving on.
         "dwell_secs": result.get("dwell_secs", 1),
         "_stay": False,
     }

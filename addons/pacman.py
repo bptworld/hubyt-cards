@@ -22,26 +22,27 @@ def _speed_ms(value):
     return 95
 
 
-def _draw_maze(draw, show_dots):
+def _draw_maze(draw, show_dots, width=64):
     blue = (20, 64, 190)
     dot = (255, 214, 150)
 
-    draw.rectangle((0, 0, 63, 31), outline=blue)
+    draw.rectangle((0, 0, width - 1, 31), outline=blue)
     draw.line((0, 8, 18, 8), fill=blue)
-    draw.line((46, 8, 63, 8), fill=blue)
+    draw.line((width - 18, 8, width - 1, 8), fill=blue)
     draw.line((0, 23, 18, 23), fill=blue)
-    draw.line((46, 23, 63, 23), fill=blue)
-    draw.line((24, 4, 39, 4), fill=blue)
-    draw.line((24, 27, 39, 27), fill=blue)
-    draw.line((31, 9, 31, 22), fill=blue)
+    draw.line((width - 18, 23, width - 1, 23), fill=blue)
+    cx = width // 2
+    draw.line((cx - 8, 4, cx + 7, 4), fill=blue)
+    draw.line((cx - 8, 27, cx + 7, 27), fill=blue)
+    draw.line((cx - 1, 9, cx - 1, 22), fill=blue)
 
     if not show_dots:
         return
 
-    for x in range(6, 62, 6):
-        if x not in (30, 36):
+    for x in range(6, width - 2, 6):
+        if not (cx - 4 <= x <= cx + 4):
             draw.point((x, 15), fill=dot)
-    for x in range(7, 60, 8):
+    for x in range(7, width - 4, 8):
         draw.point((x, 4), fill=dot)
         draw.point((x, 27), fill=dot)
 
@@ -79,8 +80,10 @@ def render(options=None):
     from PIL import Image, ImageDraw
 
     opts = options or {}
+    width = 128 if opts.get("_target") == "matrixportal-s3-128x32" else 64
     show_dots = _on(opts.get("dots", "on"))
-    duration = _speed_ms(opts.get("speed", "normal"))
+    base_duration = _speed_ms(opts.get("speed", "normal"))
+    dwell_ms = max(3000, min(60000, int(opts.get("_dwell", 10) or 10) * 1000))
     frames = []
 
     ghost_colors = [
@@ -89,16 +92,18 @@ def render(options=None):
         (75, 220, 255),
     ]
 
-    frame_count = 26
-    step = 3
-    wrap = 78
+    step = 2
+    wrap = width + 14
+    cycle_count = (wrap + step - 1) // step
+    frame_count = max(cycle_count, min(96, int(round(dwell_ms / base_duration))))
+    duration = max(40, int(round(dwell_ms / frame_count)))
     start_x = -6
     gap = 15
 
     for frame in range(frame_count):
-        image = Image.new("RGB", (64, 32), (0, 0, 0))
+        image = Image.new("RGB", (width, 32), (0, 0, 0))
         draw = ImageDraw.Draw(image)
-        _draw_maze(draw, show_dots)
+        _draw_maze(draw, show_dots, width)
 
         pac_x = start_x + ((frame * step) % wrap)
         _draw_pacman(draw, pac_x, 16, frame % 3)
@@ -107,7 +112,7 @@ def render(options=None):
             gx = pac_x + 13 + index * gap
             while gx < -12:
                 gx += wrap
-            while gx > 65:
+            while gx > width + 1:
                 gx -= wrap
             _draw_ghost(draw, gx, 10, color, frame + index)
 
@@ -120,7 +125,7 @@ def render(options=None):
         save_all=True,
         append_images=frames[1:],
         duration=duration,
-        loop=0,
+        loop=1,
         lossless=True,
         quality=100,
     )

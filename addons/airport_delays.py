@@ -32,7 +32,7 @@ def _delay_events():
     if _CACHE["expires"] > now:
         return _CACHE["events"]
 
-    req = urllib.request.Request(_FAA_URL, headers={"User-Agent": "Hubyt/0.1"})
+    req = urllib.request.Request(_FAA_URL, headers={"User-Agent": "Pixora/0.1"})
     with urllib.request.urlopen(req, timeout=10) as resp:
         root = ET.fromstring(resp.read())
 

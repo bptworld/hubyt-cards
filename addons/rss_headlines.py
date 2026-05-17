@@ -40,7 +40,7 @@ def _fetch(feed_url):
     cached = _CACHE.get(feed_url)
     if cached and cached["expires"] > now:
         return cached["items"]
-    req = urllib.request.Request(feed_url, headers={"User-Agent": "Hubyt/0.1"})
+    req = urllib.request.Request(feed_url, headers={"User-Agent": "Pixora/0.1"})
     with urllib.request.urlopen(req, timeout=10) as resp:
         root = ET.fromstring(resp.read())
     items = []

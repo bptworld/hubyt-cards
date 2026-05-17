@@ -35,20 +35,27 @@ def render(options=None):
     from PIL import Image, ImageDraw
 
     opts = options or {}
+    width = 128 if opts.get("_target") == "matrixportal-s3-128x32" else 64
+    dwell_ms = max(3000, min(60000, int(opts.get("_dwell", 10) or 10) * 1000))
+    base_duration = _duration(opts.get("speed"))
+    frame_count = max(16, min(72, int(round(dwell_ms / base_duration))))
+    frame_duration = max(45, int(round(dwell_ms / frame_count)))
     frames = []
-    for frame in range(16):
-        image = Image.new("RGB", (64, 32), (0, 0, 8))
+    for frame in range(frame_count):
+        image = Image.new("RGB", (width, 32), (0, 0, 8))
         draw = ImageDraw.Draw(image)
         offset = (frame % 8) - 4
+        cols = 12 if width == 128 else 6
+        start_x = (width - ((cols - 1) * 10 + 8)) // 2
         for row, color in enumerate([(125, 255, 90), (80, 220, 255), (255, 120, 220)]):
-            for col in range(6):
-                _alien(draw, 5 + col * 10 + offset, 4 + row * 7, color, frame + row)
-        ship_x = 28 + ((frame % 8) - 4)
+            for col in range(cols):
+                _alien(draw, start_x + col * 10 + offset, 4 + row * 7, color, frame + row)
+        ship_x = (width - 8) // 2 + ((frame % 8) - 4)
         draw.rectangle((ship_x, 27, ship_x + 8, 29), fill=(230, 230, 255))
         draw.point((ship_x + 4, 25), fill=(255, 240, 120))
         frames.append(image)
 
     out = BytesIO()
     frames[0].save(out, "WEBP", save_all=True, append_images=frames[1:],
-                   duration=_duration(opts.get("speed")), loop=0, lossless=True, quality=100)
+                   duration=frame_duration, loop=1, lossless=True, quality=100)
     return out.getvalue()

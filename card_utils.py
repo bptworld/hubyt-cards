@@ -14,7 +14,7 @@ def fetch_json_url(url, cache, seconds=45):
     now = datetime.now(timezone.utc)
     if cache is not None and cache.get("body") and cache.get("expires", now) > now and cache.get("url", url) == url:
         return json.loads(cache["body"].decode("utf-8"))
-    request = urllib.request.Request(url, headers={"User-Agent": "Hubyt/0.1"})
+    request = urllib.request.Request(url, headers={"User-Agent": "Pixora/0.1"})
     with urllib.request.urlopen(request, timeout=10) as response:
         body = response.read()
     if cache is not None:
@@ -31,7 +31,7 @@ def fetch_json_request(url, seconds=600):
         return cached["data"]
     request = urllib.request.Request(
         url,
-        headers={"User-Agent": "Hubyt/0.1", "Accept": "application/geo+json, application/json"},
+        headers={"User-Agent": "Pixora/0.1", "Accept": "application/geo+json, application/json"},
     )
     with urllib.request.urlopen(request, timeout=10) as response:
         data = json.loads(response.read().decode("utf-8"))
@@ -45,7 +45,7 @@ def fetch_json_with_headers(url, headers=None, seconds=600, cache_key=None):
     cached = WEATHER_CACHE.get(key)
     if cached and cached["expires"] > now:
         return cached["data"]
-    request_headers = {"User-Agent": "Hubyt/0.1", "Accept": "application/json"}
+    request_headers = {"User-Agent": "Pixora/0.1", "Accept": "application/json"}
     request_headers.update(headers or {})
     request = urllib.request.Request(url, headers=request_headers)
     with urllib.request.urlopen(request, timeout=10) as response:
@@ -204,7 +204,7 @@ def fetch_logo(url):
     try:
         from PIL import Image
         with urllib.request.urlopen(
-            urllib.request.Request(url, headers={"User-Agent": "Hubyt/0.1"}), timeout=5
+            urllib.request.Request(url, headers={"User-Agent": "Pixora/0.1"}), timeout=5
         ) as response:
             data = response.read()
         img = Image.open(BytesIO(data)).convert("RGBA").resize((11, 11), Image.NEAREST)
@@ -479,7 +479,7 @@ _AIRLINES = {
 
 _IATA_TO_ICAO = {iata: icao for icao, (_, iata) in _AIRLINES.items()}
 _AIRLINE_LOGO_CACHE = {}
-_AIRLINE_LOGO_BASE = "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/airlines"
+_AIRLINE_LOGO_BASE = "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/airlines"
 _OPENSKY_TOKEN = {"token": None, "expires": datetime.min.replace(tzinfo=timezone.utc)}
 
 
@@ -532,7 +532,7 @@ def _opensky_token(client_id, client_secret):
     req = urllib.request.Request(
         "https://auth.opensky-network.org/auth/realms/opensky-network/protocol/openid-connect/token",
         data=data,
-        headers={"Content-Type": "application/x-www-form-urlencoded", "User-Agent": "Hubyt/0.1"},
+        headers={"Content-Type": "application/x-www-form-urlencoded", "User-Agent": "Pixora/0.1"},
     )
     with urllib.request.urlopen(req, timeout=10) as resp:
         result = json.loads(resp.read().decode("utf-8"))
@@ -548,7 +548,7 @@ def fetch_opensky(cache, client_id="", client_secret="", lamin=None, lamax=None,
     url = "https://opensky-network.org/api/states/all"
     if lamin is not None:
         url += f"?lamin={lamin:.4f}&lamax={lamax:.4f}&lomin={lomin:.4f}&lomax={lomax:.4f}"
-    req = urllib.request.Request(url, headers={"User-Agent": "Hubyt/0.1"})
+    req = urllib.request.Request(url, headers={"User-Agent": "Pixora/0.1"})
     if client_id and client_secret:
         try:
             req.add_header("Authorization", f"Bearer {_opensky_token(client_id, client_secret)}")

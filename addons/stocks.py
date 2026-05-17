@@ -232,7 +232,7 @@ def _fetch_company_logo(symbol):
             "https://www.google.com/s2/favicons?" + urllib.parse.urlencode({"domain": domain, "sz": "64"}),
         ):
             try:
-                req = urllib.request.Request(url, headers={"User-Agent": "Hubyt/0.1"})
+                req = urllib.request.Request(url, headers={"User-Agent": "Pixora/0.1"})
                 with urllib.request.urlopen(req, timeout=5) as resp:
                     raw = resp.read()
                 if raw:

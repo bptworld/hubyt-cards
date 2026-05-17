@@ -6,12 +6,12 @@ import urllib.request
 
 from card_utils import draw_sharp_text, format_short_date, render_text_webp
 
-CARD_ID = "mega_millions"
-CARD_NAME = "Mega Millions"
-CARD_DETAIL = "Latest Mega Millions draw"
+CARD_ID = "powerball"
+CARD_NAME = "Powerball"
+CARD_DETAIL = "Latest Powerball draw"
 CARD_OPTIONS = []
 
-URL = "https://www.lottery.net/mega-millions/numbers"
+URL = "https://www.lottery.net/powerball/numbers"
 CACHE = {}
 MONTHS = {
     "jan": 1,
@@ -65,7 +65,7 @@ def _next_draw_text(date_text):
     if not draw_date:
         return ""
     next_date = draw_date + timedelta(days=1)
-    while next_date.weekday() not in (1, 4):
+    while next_date.weekday() not in (0, 2, 5):
         next_date += timedelta(days=1)
     return f"Next Draw: {format_short_date(next_date)}"
 
@@ -77,10 +77,10 @@ def _latest():
     date_match = re.search(r'<div class="latest"[^>]*>(.*?)</div>', block, re.I | re.S)
     date_text = _clean_html(date_match.group(1)) if date_match else "LATEST"
     numbers = re.findall(r'<li class="ball">(\d+)</li>', block, re.I)
-    special_match = re.search(r'<li class="mega-ball">(\d+)</li>', block, re.I)
+    special_match = re.search(r'<li class="powerball">(\d+)</li>', block, re.I)
     jackpot_match = re.search(r'Jackpot for this draw:\s*<br>\s*<span>(.*?)</span>', block, re.I | re.S)
     if len(numbers) < 5 or not special_match:
-        raise ValueError("Mega Millions numbers not found")
+        raise ValueError("Powerball numbers not found")
     return {
         "date": date_text,
         "numbers": numbers[:5],
@@ -109,19 +109,19 @@ def _draw(data, width=64):
     except Exception:
         font = bold = ImageFont.load_default()
 
-    draw.rectangle((0, 0, width - 1, 8), fill=(23, 9, 38))
-    _center(image, "MEGA MILLIONS" if width == 128 else "MEGA MILL", -3, (255, 215, 70), bold, x2=width - 1)
+    draw.rectangle((0, 0, width - 1, 8), fill=(24, 8, 18))
+    _center(image, "POWERBALL", -3, (255, 80, 90), bold, x2=width - 1)
     nums = data["numbers"]
     if width == 128:
-        _center(image, " ".join(nums[:5]) + f"  MB {data['special']}", 8, (245, 250, 255), bold, x2=width - 1)
+        _center(image, " ".join(nums[:5]) + f"  PB {data['special']}", 8, (245, 250, 255), bold, x2=width - 1)
         _center(image, data.get("next") or "", 15, (120, 230, 255), font, x2=width - 1)
         bottom = (data.get("jackpot") or data.get("date") or "")[:26].upper()
-        _center(image, bottom, 23, (175, 150, 205), font, x2=width - 1)
+        _center(image, bottom, 23, (200, 150, 170), font, x2=width - 1)
     else:
         _center(image, " ".join(nums[:3]), 7, (245, 250, 255), bold)
-        _center(image, f"{nums[3]} {nums[4]} +{data['special']}", 15, (255, 220, 80), bold)
+        _center(image, f"{nums[3]} {nums[4]} +{data['special']}", 15, (255, 95, 105), bold)
         bottom = (data.get("jackpot") or data.get("date") or "")[:12].upper()
-        _center(image, bottom, 23, (175, 150, 205), font)
+        _center(image, bottom, 23, (200, 150, 170), font)
 
     out = BytesIO()
     image.save(out, "WEBP", lossless=True, quality=100)
@@ -134,5 +134,5 @@ def render(options=None):
         width = 128 if opts.get("_target") == "matrixportal-s3-128x32" else 64
         return _draw(_latest(), width)
     except Exception:
-        return render_text_webp("MEGA ERR", (255, 210, 80))
+        return render_text_webp("POWER ERR", (255, 80, 90))
 

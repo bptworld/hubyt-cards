@@ -42,7 +42,7 @@ def _fetch_device(hub_ip, app_id, token, device_id):
     if cached and cached["expires"] > now:
         return cached["data"]
     url = f"http://{hub_ip}/apps/api/{app_id}/devices/{device_id}?access_token={token}"
-    req = urllib.request.Request(url, headers={"User-Agent": "Hubyt/0.1", "Accept": "application/json"})
+    req = urllib.request.Request(url, headers={"User-Agent": "Pixora/0.1", "Accept": "application/json"})
     with urllib.request.urlopen(req, timeout=8) as resp:
         data = json.loads(resp.read().decode("utf-8"))
     _CACHE[key] = {"data": data, "expires": now + timedelta(seconds=30)}

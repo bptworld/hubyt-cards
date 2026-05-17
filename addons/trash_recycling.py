@@ -1,7 +1,7 @@
 from datetime import date, datetime, timedelta
 from io import BytesIO
 
-from card_utils import draw_sharp_text, render_text_webp
+from card_utils import draw_sharp_text, format_short_date, render_text_webp
 
 CARD_ID = "trash_recycling"
 CARD_NAME = "Trash + Recycling"
@@ -128,7 +128,7 @@ def _center_text(image, text, y, color, font):
 
     draw = ImageDraw.Draw(image)
     w = draw.textbbox((0, 0), text, font=font)[2]
-    draw_sharp_text(image, ((64 - w) // 2, y), text, color, font)
+    draw_sharp_text(image, ((image.width - w) // 2, y), text, color, font)
 
 
 def _center_text_in(image, text, x1, x2, y, color, font):
@@ -160,15 +160,16 @@ def render(options=None):
     from PIL import Image, ImageDraw, ImageFont
 
     opts = options or {}
+    width = 128 if opts.get("_target") == "matrixportal-s3-128x32" else 64
     pickups = _next_pickups(opts)
     if not pickups:
         return None
 
-    image = Image.new("RGB", (64, 32), (0, 4, 7))
+    image = Image.new("RGB", (width, 32), (0, 4, 7))
     draw = ImageDraw.Draw(image)
     try:
         font = ImageFont.truetype("Silkscreen-Regular.ttf", 8)
-        bold = ImageFont.truetype("Silkscreen-Bold.ttf", 8)
+        bold = ImageFont.truetype("PixelifySans-Bold.ttf", 8)
     except Exception:
         font = bold = ImageFont.load_default()
 
@@ -176,16 +177,16 @@ def render(options=None):
         title = "TRASH+REC"
         color = (90, 225, 205)
         days = pickups[0][2]
-        draw.rectangle((0, 0, 63, 8), fill=(4, 18, 20))
+        draw.rectangle((0, 0, width - 1, 8), fill=(4, 18, 20))
         _center_text(image, title, -3, color, bold)
-        _center_tight_text_in(image, _when_text(days), 15, 63, 9, (245, 250, 255), bold)
-        _center_text_in(image, pickups[0][1].strftime("%a %m/%d").upper(), 15, 63, 18, (160, 190, 210), font)
+        _center_tight_text_in(image, _when_text(days), 15, width - 1, 9, (245, 250, 255), bold)
+        _center_text_in(image, format_short_date(pickups[0][1]).upper(), 15, width - 1, 18, (160, 190, 210), font)
     else:
         name, pickup, days, color = pickups[0]
-        draw.rectangle((0, 0, 63, 8), fill=(5, 18, 15))
+        draw.rectangle((0, 0, width - 1, 8), fill=(5, 18, 15))
         _center_text(image, name, -3, color, bold)
-        _center_tight_text_in(image, _when_text(days), 15, 63, 9, (245, 250, 255), bold)
-        _center_text_in(image, pickup.strftime("%a %m/%d").upper(), 15, 63, 18, (160, 190, 210), font)
+        _center_tight_text_in(image, _when_text(days), 15, width - 1, 9, (245, 250, 255), bold)
+        _center_text_in(image, format_short_date(pickup).upper(), 15, width - 1, 18, (160, 190, 210), font)
 
     # Simple bin marker.
     draw.rectangle((3, 13, 12, 27), outline=color)
@@ -196,3 +197,4 @@ def render(options=None):
     out = BytesIO()
     image.save(out, "WEBP", lossless=True, quality=100)
     return out.getvalue()
+

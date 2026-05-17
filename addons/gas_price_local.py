@@ -44,7 +44,7 @@ def _zip_location(zip_code):
         return cached["data"]
     req = urllib.request.Request(
         f"https://api.zippopotam.us/us/{zip_code}",
-        headers={"User-Agent": "Hubyt/0.1", "Accept": "application/json"},
+        headers={"User-Agent": "Pixora/0.1", "Accept": "application/json"},
     )
     with urllib.request.urlopen(req, timeout=10) as resp:
         data = json.loads(resp.read().decode("utf-8"))
@@ -61,7 +61,7 @@ def _zip_location(zip_code):
         query = urllib.parse.urlencode({"lat": lat, "lon": lon, "format": "jsonv2", "zoom": "10"})
         rev_req = urllib.request.Request(
             f"https://nominatim.openstreetmap.org/reverse?{query}",
-            headers={"User-Agent": "Hubyt/0.1", "Accept": "application/json"},
+            headers={"User-Agent": "Pixora/0.1", "Accept": "application/json"},
         )
         with urllib.request.urlopen(rev_req, timeout=10) as resp:
             address = json.loads(resp.read().decode("utf-8")).get("address", {})

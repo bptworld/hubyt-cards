@@ -19,7 +19,7 @@ def _fetch_html(url, seconds=21600):
     now = datetime.now(timezone.utc)
     if CACHE.get("expires", now) > now and CACHE.get("html"):
         return CACHE["html"]
-    request = urllib.request.Request(url, headers={"User-Agent": "Hubyt/0.1"})
+    request = urllib.request.Request(url, headers={"User-Agent": "Pixora/0.1"})
     with urllib.request.urlopen(request, timeout=10) as response:
         html = response.read().decode("utf-8", errors="ignore")
     CACHE["html"] = html

@@ -288,7 +288,7 @@ def _dns():
 
 def _github():
     image, draw = _simple_header("GITHUB", (145, 180, 255))
-    draw_sharp_text(image, (1, 8), "HUBYT", (245, 250, 255), BOLD)
+    draw_sharp_text(image, (1, 8), "PIXORA", (245, 250, 255), BOLD)
     draw_sharp_text(image, (1, 16), "v1.3.18", (80, 220, 170), FONT)
     draw_sharp_text(image, (25, 24), "TODAY", (150, 170, 185), FONT)
     return _webp(image)
@@ -301,8 +301,8 @@ def _github_issues():
     return _webp(image)
 
 
-def _hubyt_update():
-    image, draw = _simple_header("HUBYT UPDATE", (80, 225, 205))
+def _pixora_update():
+    image, draw = _simple_header("PIXORA UPDATE", (80, 225, 205))
     draw_sharp_text(image, (1, 9), "APP", (145, 165, 182), FONT)
     draw_sharp_text(image, (35, 8), "v1.3.19", (245, 250, 255), BOLD)
     draw_sharp_text(image, (1, 18), "CARDS", (145, 165, 182), FONT)
@@ -313,7 +313,7 @@ def _hubyt_update():
 
 def _rss():
     image, draw = _simple_header("NEWS", (80, 220, 170))
-    draw_sharp_text(image, (1, 10), "HUBYT ADDS", (245, 250, 255), FONT)
+    draw_sharp_text(image, (1, 10), "PIXORA ADDS", (245, 250, 255), FONT)
     draw_sharp_text(image, (1, 20), "NEW CARDS", (245, 250, 255), FONT)
     return _webp(image)
 
@@ -511,7 +511,7 @@ CUSTOM = {
     "dns_stats": _dns,
     "github_release_watch": _github,
     "github_issues_watch": _github_issues,
-    "hubyt_update_watch": _hubyt_update,
+    "pixora_update_watch": _pixora_update,
     "rss_headlines": _rss,
     "website_uptime": _uptime,
     "ping_monitor": _ping,
@@ -528,10 +528,10 @@ CUSTOM = {
     "mega_millions": _mega_millions,
     "megabucks": _megabucks,
     "sports_standings": _standings,
-    "youtube_followers": lambda: render_counter_card("YOUTUBE", "Hubyt", 123456, (255, 0, 0), "SUBS", "youtube"),
-    "facebook_followers": lambda: render_counter_card("FACEBOOK", "Hubyt", 123456, (24, 119, 242), "FOLLOW", "facebook"),
-    "twitter_followers": lambda: render_counter_card("X", "@hubyt", 123456, (245, 250, 255), "FOLLOW", "x"),
-    "instagram_followers": lambda: render_counter_card("INSTAGRAM", "hubyt", 123456, (225, 48, 108), "FOLLOW", "instagram"),
+    "youtube_followers": lambda: render_counter_card("YOUTUBE", "Pixora", 123456, (255, 0, 0), "SUBS", "youtube"),
+    "facebook_followers": lambda: render_counter_card("FACEBOOK", "Pixora", 123456, (24, 119, 242), "FOLLOW", "facebook"),
+    "twitter_followers": lambda: render_counter_card("X", "@pixora", 123456, (245, 250, 255), "FOLLOW", "x"),
+    "instagram_followers": lambda: render_counter_card("INSTAGRAM", "pixora", 123456, (225, 48, 108), "FOLLOW", "instagram"),
     "countdown": lambda: _message("COUNTDOWN", "14 DAYS", "VACATION", (80, 180, 255)),
     "countdown_confetti": lambda: _message("COUNTDOWN", "14 DAYS", "CONFETTI", (255, 120, 190)),
     "disney": lambda: _message("DISNEY", "42 DAYS", "MAGIC", (255, 210, 80)),

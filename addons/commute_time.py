@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta, timezone
 from io import BytesIO
 import urllib.parse
-from card_utils import draw_sharp_text, fetch_json_request, render_text_webp
+from card_utils import draw_sharp_text, fetch_json_request, format_distance_miles, render_text_webp
 
 CARD_ID = "commute_time"
 CARD_NAME = "Commute Time"
@@ -102,7 +102,7 @@ def _draw_base_card(label, minutes, miles, color, font, bold, width=64):
     draw_sharp_text(image, (((width - tw) // 2) if width == 128 else 1, -3), title, (115, 205, 255), font)
     text = f"{minutes}min"
     draw_sharp_text(image, (1, 7), text, color, bold)
-    miles_text = f"{miles:.0f}mi"
+    miles_text = format_distance_miles(miles, 0)
     mw = draw.textbbox((0, 0), miles_text, font=font)[2]
     draw_sharp_text(image, (width - 1 - mw, 7), miles_text, (180, 200, 205), font)
     draw.line((0, 29, width - 1, 29), fill=(60, 80, 88))

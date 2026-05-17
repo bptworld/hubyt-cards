@@ -22,16 +22,21 @@ def render(options=None):
     from PIL import Image, ImageDraw
 
     opts = options or {}
+    width = 128 if opts.get("_target") == "matrixportal-s3-128x32" else 64
     frames = []
     land = [(-.7, -.2), (-.4, .25), (.15, -.35), (.45, .1), (.75, -.18)]
-    for frame in range(20):
-        image = Image.new("RGB", (64, 32), (0, 0, 10))
+    dwell_ms = max(3000, min(60000, int(opts.get("_dwell", 10) or 10) * 1000))
+    base_duration = _duration(opts.get("speed"))
+    frame_count = max(24, min(72, int(round(dwell_ms / base_duration))))
+    frame_duration = max(45, int(round(dwell_ms / frame_count)))
+    for frame in range(frame_count):
+        image = Image.new("RGB", (width, 32), (0, 0, 10))
         draw = ImageDraw.Draw(image)
-        for x, y in [(6, 5), (12, 24), (50, 4), (58, 17), (42, 27)]:
+        for x, y in [(6, 5), (12, 24), (width - 14, 4), (width - 6, 17), (width - 22, 27)]:
             draw.point((x, y), fill=(120, 150, 210))
-        cx, cy, r = 32, 16, 12
+        cx, cy, r = width // 2, 16, 12
         draw.ellipse((cx - r, cy - r, cx + r, cy + r), fill=(35, 105, 220), outline=(100, 190, 255))
-        rot = frame / 20 * math.tau
+        rot = frame / frame_count * math.tau
         for lon, lat in land:
             x = int(cx + math.sin(lon * math.pi + rot) * r * math.cos(lat))
             y = int(cy + lat * r)
@@ -42,5 +47,5 @@ def render(options=None):
 
     out = BytesIO()
     frames[0].save(out, "WEBP", save_all=True, append_images=frames[1:],
-                   duration=_duration(opts.get("speed")), loop=0, lossless=True, quality=100)
+                   duration=frame_duration, loop=1, lossless=True, quality=100)
     return out.getvalue()

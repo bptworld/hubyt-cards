@@ -1,5 +1,5 @@
 {
-  "registry": "hubyt-cards",
+  "registry": "pixora-cards",
   "version": "1",
   "cards": [
     {
@@ -10,8 +10,8 @@
       "description": "BTC, ETH, and more",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/crypto_watch.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/crypto_watch.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/crypto_watch.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/crypto_watch.webp"
     },
     {
       "id": "market_indexes",
@@ -21,8 +21,8 @@
       "description": "Dow, S&P, Nasdaq",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/market_indexes.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/market_indexes.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/market_indexes.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/market_indexes.webp"
     },
     {
       "id": "market_status",
@@ -32,8 +32,8 @@
       "description": "NYSE/Nasdaq open status",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/market_status.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/market_status.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/market_status.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/market_status.webp"
     },
     {
       "id": "portfolio_pulse",
@@ -43,8 +43,8 @@
       "description": "Value and daily gain",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/portfolio_pulse.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/portfolio_pulse.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/portfolio_pulse.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/portfolio_pulse.webp"
     },
     {
       "id": "stocks",
@@ -54,8 +54,8 @@
       "description": "Scrolling stocks and crypto",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/stocks.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/stocks.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/stocks.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/stocks.webp"
     },
     {
       "id": "heartbeat",
@@ -65,8 +65,8 @@
       "description": "Pulsing pixel heart",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/heartbeat.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/heartbeat.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/heartbeat.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/heartbeat.webp"
     },
     {
       "id": "alien_march",
@@ -76,8 +76,8 @@
       "description": "Retro invader parade",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/alien_march.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/alien_march.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/alien_march.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/alien_march.webp"
     },
     {
       "id": "fireplace",
@@ -87,8 +87,8 @@
       "description": "Pixel flames",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/fireplace.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/fireplace.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/fireplace.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/fireplace.webp"
     },
     {
       "id": "fortune_cookie",
@@ -98,8 +98,8 @@
       "description": "Tiny daily fortune",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/fortune_cookie.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/fortune_cookie.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/fortune_cookie.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/fortune_cookie.webp"
     },
     {
       "id": "lava_lamp",
@@ -109,8 +109,8 @@
       "description": "Drifting pixel blobs",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/lava_lamp.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/lava_lamp.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/lava_lamp.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/lava_lamp.webp"
     },
     {
       "id": "matrix_rain",
@@ -120,8 +120,8 @@
       "description": "Falling green code",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/matrix_rain.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/matrix_rain.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/matrix_rain.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/matrix_rain.webp"
     },
     {
       "id": "pacman",
@@ -131,8 +131,8 @@
       "description": "Pac-Man chasing ghosts",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/pacman.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/pacman.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/pacman.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/pacman.webp"
     },
     {
       "id": "aquarium",
@@ -142,8 +142,8 @@
       "description": "Fish and bubbles",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/aquarium.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/aquarium.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/aquarium.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/aquarium.webp"
     },
     {
       "id": "pixel_globe",
@@ -153,8 +153,8 @@
       "description": "Tiny rotating world",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/pixel_globe.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/pixel_globe.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/pixel_globe.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/pixel_globe.webp"
     },
     {
       "id": "pong_loop",
@@ -164,8 +164,8 @@
       "description": "Tiny paddles and ball",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/pong_loop.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/pong_loop.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/pong_loop.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/pong_loop.webp"
     },
     {
       "id": "snake",
@@ -175,8 +175,8 @@
       "description": "Snake eats dots",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/snake.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/snake.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/snake.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/snake.webp"
     },
     {
       "id": "tiny_traffic",
@@ -186,8 +186,8 @@
       "description": "Cars and signal lights",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/tiny_traffic.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/tiny_traffic.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/tiny_traffic.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/tiny_traffic.webp"
     },
     {
       "id": "dns_stats",
@@ -197,8 +197,8 @@
       "description": "Pi-hole or AdGuard stats",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/dns_stats.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/dns_stats.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/dns_stats.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/dns_stats.webp"
     },
     {
       "id": "home_assistant_entity",
@@ -208,8 +208,8 @@
       "description": "Live Home Assistant state",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/home_assistant_entity.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/home_assistant_entity.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/home_assistant_entity.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/home_assistant_entity.webp"
     },
     {
       "id": "hubitat",
@@ -219,8 +219,8 @@
       "description": "Live device attribute",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/hubitat.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/hubitat.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/hubitat.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/hubitat.webp"
     },
     {
       "id": "hubitat_multi",
@@ -230,8 +230,8 @@
       "description": "Several Hubitat devices",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/hubitat_multi.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/hubitat_multi.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/hubitat_multi.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/hubitat_multi.webp"
     },
     {
       "id": "hubitat_safety",
@@ -241,8 +241,8 @@
       "description": "All secure or open list",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/hubitat_safety.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/hubitat_safety.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/hubitat_safety.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/hubitat_safety.webp"
     },
     {
       "id": "water_leak_alert",
@@ -252,8 +252,8 @@
       "description": "Skips when all dry",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/water_leak_alert.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/water_leak_alert.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/water_leak_alert.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/water_leak_alert.webp"
     },
     {
       "id": "facebook_followers",
@@ -263,8 +263,8 @@
       "description": "Page followers via Graph API",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/facebook_followers.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/facebook_followers.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/facebook_followers.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/facebook_followers.webp"
     },
     {
       "id": "instagram_followers",
@@ -274,8 +274,8 @@
       "description": "Follower count via Instagram Graph",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/instagram_followers.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/instagram_followers.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/instagram_followers.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/instagram_followers.webp"
     },
     {
       "id": "lastfm_now_playing",
@@ -285,8 +285,8 @@
       "description": "Current or recent track",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/lastfm_now_playing.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/lastfm_now_playing.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/lastfm_now_playing.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/lastfm_now_playing.webp"
     },
     {
       "id": "music_assistant_now_playing",
@@ -296,8 +296,8 @@
       "description": "Direct Music Assistant player",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/music_assistant_now_playing.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/music_assistant_now_playing.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/music_assistant_now_playing.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/music_assistant_now_playing.webp"
     },
     {
       "id": "twitter_followers",
@@ -307,8 +307,8 @@
       "description": "Follower count via X API",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/twitter_followers.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/twitter_followers.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/twitter_followers.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/twitter_followers.webp"
     },
     {
       "id": "youtube_followers",
@@ -318,8 +318,8 @@
       "description": "Channel subscriber count",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/youtube_followers.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/youtube_followers.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/youtube_followers.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/youtube_followers.webp"
     },
     {
       "id": "cfl",
@@ -329,8 +329,8 @@
       "description": "Live ESPN CFL scoreboard",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/cfl.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/cfl.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/cfl.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/cfl.webp"
     },
     {
       "id": "college_baseball",
@@ -340,8 +340,8 @@
       "description": "Live ESPN college baseball scoreboard",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/college_baseball.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/college_baseball.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/college_baseball.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/college_baseball.webp"
     },
     {
       "id": "college_football",
@@ -351,8 +351,8 @@
       "description": "Live ESPN scoreboard",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/college_football.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/college_football.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/college_football.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/college_football.webp"
     },
     {
       "id": "college_softball",
@@ -362,8 +362,8 @@
       "description": "Live ESPN college softball scoreboard",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/college_softball.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/college_softball.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/college_softball.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/college_softball.webp"
     },
     {
       "id": "f1",
@@ -373,8 +373,8 @@
       "description": "ESPN Formula 1 status",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/f1.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/f1.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/f1.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/f1.webp"
     },
     {
       "id": "lpga",
@@ -384,8 +384,8 @@
       "description": "ESPN LPGA leaderboard",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/lpga.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/lpga.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/lpga.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/lpga.webp"
     },
     {
       "id": "mens_college_basketball",
@@ -395,8 +395,8 @@
       "description": "Live ESPN scoreboard",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/mens_college_basketball.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/mens_college_basketball.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/mens_college_basketball.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/mens_college_basketball.webp"
     },
     {
       "id": "mens_college_lacrosse",
@@ -406,8 +406,8 @@
       "description": "Live ESPN men's college lacrosse scoreboard",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/mens_college_lacrosse.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/mens_college_lacrosse.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/mens_college_lacrosse.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/mens_college_lacrosse.webp"
     },
     {
       "id": "mlb",
@@ -417,8 +417,8 @@
       "description": "Live ESPN scoreboard",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/mlb.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/mlb.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/mlb.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/mlb.webp"
     },
     {
       "id": "nascar",
@@ -428,8 +428,8 @@
       "description": "ESPN NASCAR Cup status",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/nascar.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/nascar.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/nascar.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/nascar.webp"
     },
     {
       "id": "nba_g_league",
@@ -439,8 +439,8 @@
       "description": "Live ESPN NBA G League scoreboard",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/nba_g_league.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/nba_g_league.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/nba_g_league.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/nba_g_league.webp"
     },
     {
       "id": "nba",
@@ -450,8 +450,8 @@
       "description": "Live ESPN scoreboard",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/nba.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/nba.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/nba.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/nba.webp"
     },
     {
       "id": "mens_college_hockey",
@@ -461,8 +461,8 @@
       "description": "Live ESPN men's college hockey scoreboard",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/mens_college_hockey.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/mens_college_hockey.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/mens_college_hockey.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/mens_college_hockey.webp"
     },
     {
       "id": "nfl",
@@ -472,8 +472,8 @@
       "description": "Live ESPN scoreboard",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/nfl.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/nfl.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/nfl.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/nfl.webp"
     },
     {
       "id": "nhl",
@@ -483,8 +483,8 @@
       "description": "Live ESPN scoreboard",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/nhl.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/nhl.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/nhl.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/nhl.webp"
     },
     {
       "id": "nll_lacrosse",
@@ -494,8 +494,8 @@
       "description": "Live ESPN NLL scoreboard",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/nll_lacrosse.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/nll_lacrosse.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/nll_lacrosse.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/nll_lacrosse.webp"
     },
     {
       "id": "pga",
@@ -505,8 +505,8 @@
       "description": "ESPN PGA leaderboard",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/pga.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/pga.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/pga.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/pga.webp"
     },
     {
       "id": "pll_lacrosse",
@@ -516,8 +516,8 @@
       "description": "Live ESPN PLL scoreboard",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/pll_lacrosse.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/pll_lacrosse.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/pll_lacrosse.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/pll_lacrosse.webp"
     },
     {
       "id": "soccer",
@@ -527,8 +527,8 @@
       "description": "Live ESPN soccer scoreboard",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/soccer.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/soccer.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/soccer.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/soccer.webp"
     },
     {
       "id": "sports_standings",
@@ -538,8 +538,8 @@
       "description": "Top teams from ESPN standings",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/sports_standings.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/sports_standings.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/sports_standings.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/sports_standings.webp"
     },
     {
       "id": "ufl",
@@ -549,8 +549,8 @@
       "description": "Live ESPN UFL scoreboard",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/ufl.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/ufl.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/ufl.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/ufl.webp"
     },
     {
       "id": "wnba",
@@ -560,8 +560,8 @@
       "description": "Live ESPN scoreboard",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/wnba.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/wnba.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/wnba.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/wnba.webp"
     },
     {
       "id": "womens_college_basketball",
@@ -571,8 +571,8 @@
       "description": "Live ESPN scoreboard",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/womens_college_basketball.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/womens_college_basketball.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/womens_college_basketball.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/womens_college_basketball.webp"
     },
     {
       "id": "womens_college_lacrosse",
@@ -582,8 +582,8 @@
       "description": "Live ESPN women's college lacrosse scoreboard",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/womens_college_lacrosse.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/womens_college_lacrosse.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/womens_college_lacrosse.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/womens_college_lacrosse.webp"
     },
     {
       "id": "womens_college_volleyball",
@@ -593,8 +593,8 @@
       "description": "Live ESPN women's college volleyball scoreboard",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/womens_college_volleyball.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/womens_college_volleyball.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/womens_college_volleyball.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/womens_college_volleyball.webp"
     },
     {
       "id": "airport_delays",
@@ -604,8 +604,8 @@
       "description": "FAA delay status",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/airport_delays.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/airport_delays.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/airport_delays.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/airport_delays.webp"
     },
     {
       "id": "commute_time",
@@ -615,8 +615,8 @@
       "description": "Drive time estimate",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/commute_time.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/commute_time.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/commute_time.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/commute_time.webp"
     },
     {
       "id": "flight_track",
@@ -626,8 +626,8 @@
       "description": "Flightradar24 live and summary tracking",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/flight_track.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/flight_track.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/flight_track.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/flight_track.webp"
     },
     {
       "id": "flights_overhead",
@@ -637,8 +637,8 @@
       "description": "Live flights above you",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/flights_overhead.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/flights_overhead.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/flights_overhead.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/flights_overhead.webp"
     },
     {
       "id": "gas_price_local",
@@ -648,8 +648,8 @@
       "description": "AAA local gas average",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/gas_price_local.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/gas_price_local.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/gas_price_local.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/gas_price_local.webp"
     },
     {
       "id": "battery_reminder",
@@ -659,8 +659,8 @@
       "description": "Rotating battery checklist",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/battery_reminder.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/battery_reminder.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/battery_reminder.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/battery_reminder.webp"
     },
     {
       "id": "clock",
@@ -670,8 +670,8 @@
       "description": "Time plus local weather",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/clock.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/clock.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/clock.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/clock.webp"
     },
     {
       "id": "countdown",
@@ -681,8 +681,8 @@
       "description": "Days until any event",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/countdown.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/countdown.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/countdown.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/countdown.webp"
     },
     {
       "id": "countdown_confetti",
@@ -692,8 +692,19 @@
       "description": "Event countdown with confetti",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/countdown_confetti.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/countdown_confetti.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/countdown_confetti.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/countdown_confetti.webp"
+    },
+    {
+      "id": "custom_text",
+      "name": "Custom Text",
+      "category": "Utility",
+      "detail": "Two-line custom message",
+      "description": "Shows a small top line and larger bottom line using user-entered text.",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/custom_text.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/custom_text.webp"
     },
     {
       "id": "disney",
@@ -703,8 +714,8 @@
       "description": "Days until your trip",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/disney.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/disney.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/disney.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/disney.webp"
     },
     {
       "id": "github_issues_watch",
@@ -714,8 +725,8 @@
       "description": "Open issue count",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/github_issues_watch.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/github_issues_watch.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/github_issues_watch.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/github_issues_watch.webp"
     },
     {
       "id": "github_release_watch",
@@ -725,8 +736,8 @@
       "description": "Latest release for a repo",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/github_release_watch.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/github_release_watch.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/github_release_watch.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/github_release_watch.webp"
     },
     {
       "id": "gcal",
@@ -736,19 +747,19 @@
       "description": "Next upcoming event",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/gcal.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/gcal.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/gcal.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/gcal.webp"
     },
     {
-      "id": "hubyt_update_watch",
-      "name": "Hubyt Update Watch",
+      "id": "pixora_update_watch",
+      "name": "Pixora Update Watch",
       "category": "Utility",
-      "detail": "Hubyt release and card updates",
-      "description": "Hubyt release and card updates",
+      "detail": "Pixora release and card updates",
+      "description": "Pixora release and card updates",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/hubyt_update_watch.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/hubyt_update_watch.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/pixora_update_watch.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/pixora_update_watch.webp"
     },
     {
       "id": "joke_of_day",
@@ -758,8 +769,8 @@
       "description": "Tiny clean joke",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/joke_of_day.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/joke_of_day.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/joke_of_day.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/joke_of_day.webp"
     },
     {
       "id": "mega_millions",
@@ -769,8 +780,8 @@
       "description": "Latest Mega Millions draw",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/mega_millions.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/mega_millions.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/mega_millions.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/mega_millions.webp"
     },
     {
       "id": "megabucks",
@@ -780,8 +791,8 @@
       "description": "Latest MA Megabucks draw",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/megabucks.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/megabucks.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/megabucks.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/megabucks.webp"
     },
     {
       "id": "moon_phase",
@@ -791,8 +802,8 @@
       "description": "Current moon phase",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/moon_phase.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/moon_phase.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/moon_phase.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/moon_phase.webp"
     },
     {
       "id": "package_watch",
@@ -802,8 +813,8 @@
       "description": "Manual package status",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/package_watch.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/package_watch.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/package_watch.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/package_watch.webp"
     },
     {
       "id": "ping_monitor",
@@ -813,8 +824,8 @@
       "description": "TCP latency monitor",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/ping_monitor.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/ping_monitor.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/ping_monitor.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/ping_monitor.webp"
     },
     {
       "id": "quote_of_day",
@@ -824,8 +835,8 @@
       "description": "Short daily quote",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/quote_of_day.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/quote_of_day.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/quote_of_day.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/quote_of_day.webp"
     },
     {
       "id": "rss_headlines",
@@ -835,8 +846,8 @@
       "description": "Scrolling RSS headline",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/rss_headlines.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/rss_headlines.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/rss_headlines.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/rss_headlines.webp"
     },
     {
       "id": "sunrise_sunset",
@@ -846,8 +857,8 @@
       "description": "Sun and daylight times by ZIP",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/sunrise_sunset.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/sunrise_sunset.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/sunrise_sunset.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/sunrise_sunset.webp"
     },
     {
       "id": "trash_recycling",
@@ -857,8 +868,8 @@
       "description": "Weekly and bi-weekly pickup reminder",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/trash_recycling.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/trash_recycling.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/trash_recycling.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/trash_recycling.webp"
     },
     {
       "id": "website_uptime",
@@ -868,8 +879,8 @@
       "description": "URL up/down monitor",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/website_uptime.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/website_uptime.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/website_uptime.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/website_uptime.webp"
     },
     {
       "id": "word_of_day",
@@ -879,8 +890,8 @@
       "description": "Daily word with short meaning",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/word_of_day.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/word_of_day.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/word_of_day.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/word_of_day.webp"
     },
     {
       "id": "air_quality",
@@ -890,8 +901,8 @@
       "description": "AQI, pollen, and UV by ZIP",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/air_quality.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/air_quality.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/air_quality.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/air_quality.webp"
     },
     {
       "id": "weather_alert",
@@ -901,19 +912,19 @@
       "description": "Skips when clear",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/weather_alert.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/weather_alert.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/weather_alert.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/weather_alert.webp"
     },
     {
       "id": "weather_forecast",
       "name": "Weather Forecast",
       "category": "Weather",
-      "detail": "5-day forecast with icons",
-      "description": "5-day forecast with icons",
+      "detail": "4-day forecast with current weather",
+      "description": "4-day forecast with current weather",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/weather_forecast.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/weather_forecast.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/weather_forecast.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/weather_forecast.webp"
     },
     {
       "id": "weather_mood",
@@ -923,8 +934,8 @@
       "description": "Animated weather vibe",
       "author": "bptworld",
       "version": "1.0",
-      "url": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/addons/weather_mood.py",
-      "previewUrl": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/assets/previews/weather_mood.webp"
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/weather_mood.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/weather_mood.webp"
     }
   ]
 }

@@ -36,7 +36,7 @@ def _fetch(url, headers=None, seconds=60):
     cached = _CACHE.get(key)
     if cached and cached["expires"] > now:
         return cached["data"]
-    req = urllib.request.Request(url, headers={"User-Agent": "Hubyt/0.1", "Accept": "application/json", **(headers or {})})
+    req = urllib.request.Request(url, headers={"User-Agent": "Pixora/0.1", "Accept": "application/json", **(headers or {})})
     with urllib.request.urlopen(req, timeout=8) as resp:
         data = json.loads(resp.read().decode("utf-8"))
     _CACHE[key] = {"data": data, "expires": now + timedelta(seconds=seconds)}

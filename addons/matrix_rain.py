@@ -21,8 +21,9 @@ def render(options=None):
     from PIL import Image, ImageDraw, ImageFont
 
     opts = options or {}
+    width = 128 if opts.get("_target") == "matrixportal-s3-128x32" else 64
     frames = []
-    columns = list(range(1, 64, 5))
+    columns = list(range(1, width, 5))
     drops = [(i * 9) % 32 for i in range(len(columns))]
 
     try:
@@ -31,11 +32,15 @@ def render(options=None):
         font = ImageFont.load_default()
 
     glyphs = "101001110101"
-    for frame in range(16):
-        image = Image.new("RGB", (64, 32), (0, 0, 0))
+    dwell_ms = max(3000, min(60000, int(opts.get("_dwell", 10) or 10) * 1000))
+    base_duration = _duration(opts.get("speed"))
+    frame_count = max(24, min(72, int(round(dwell_ms / base_duration))))
+    frame_duration = max(45, int(round(dwell_ms / frame_count)))
+    for frame in range(frame_count):
+        image = Image.new("RGB", (width, 32), (0, 0, 0))
         draw = ImageDraw.Draw(image)
         for index, x in enumerate(columns):
-            head = (drops[index] + frame * 3) % 40 - 6
+            head = (drops[index] + frame) % 40 - 6
             for trail in range(5):
                 y = head - trail * 6
                 if -8 <= y <= 32:
@@ -46,5 +51,5 @@ def render(options=None):
 
     out = BytesIO()
     frames[0].save(out, "WEBP", save_all=True, append_images=frames[1:],
-                   duration=_duration(opts.get("speed")), loop=0, lossless=True, quality=100)
+                   duration=frame_duration, loop=1, lossless=True, quality=100)
     return out.getvalue()

@@ -3,7 +3,7 @@ import math
 from io import BytesIO
 from card_utils import (
     draw_sharp_text, fetch_airline_logo, fetch_json_request, fetch_opensky, lookup_airline,
-    haversine_miles, compass_dir, render_flight_image, render_text_webp,
+    haversine_miles, compass_dir, format_distance_miles, format_speed_knots, render_flight_image, render_text_webp,
 )
 
 CARD_ID = "flights_overhead"
@@ -62,11 +62,11 @@ def _draw_wide_flight(row):
     draw_sharp_text(image, (tx, 6), row["flight"][:12], (255, 255, 255), bold)
     draw_sharp_text(image, (tx, 13), row["airline"][:16], (100, 190, 255), font)
     alt_str = f"{row['alt_ft'] // 1000}K ft" if row["alt_ft"] >= 1000 else f"{row['alt_ft']}ft"
-    spd_str = f"{row['speed_kt']}kt"
+    spd_str = format_speed_knots(row["speed_kt"]).lower()
     stats = f"{alt_str}  {spd_str}"
     sw = draw.textbbox((0, 0), stats, font=font)[2]
     draw_sharp_text(image, (127 - sw, 6), stats, (200, 230, 255), font)
-    line4 = f"{row['distance']:.0f}mi {row['direction']}"
+    line4 = f"{format_distance_miles(row['distance'], 0)} {row['direction']}"
     lw = draw.textbbox((0, 0), line4[:22], font=font)[2]
     draw_sharp_text(image, (127 - lw, 20), line4[:22], (150, 200, 255), font)
     return image
@@ -119,11 +119,11 @@ def _draw_64_flight(row):
     draw_sharp_text(image, (tx, -3), row["flight"][:9], (255, 255, 255), bold)
     draw_sharp_text(image, (airline_x, 5), row["airline"][:10], (100, 190, 255), font)
     alt_str = f"{row['alt_ft'] // 1000}K ft" if row["alt_ft"] >= 1000 else f"{row['alt_ft']}ft"
-    spd_str = f"{row['speed_kt']}kt"
+    spd_str = format_speed_knots(row["speed_kt"]).lower()
     draw_sharp_text(image, (1, 13), alt_str, (200, 230, 255), font)
     sw = draw.textbbox((0, 0), spd_str, font=font)[2]
     draw_sharp_text(image, (63 - sw, 13), spd_str, (200, 230, 255), font)
-    line4 = f"{row['distance']:.0f}mi {row['direction']}"
+    line4 = f"{format_distance_miles(row['distance'], 0)} {row['direction']}"
     draw_sharp_text(image, (1, 21), line4[:14], (150, 200, 255), font)
     return image
 

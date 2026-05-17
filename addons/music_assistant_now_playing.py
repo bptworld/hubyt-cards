@@ -25,7 +25,7 @@ def _api(server_url, command, args=None, token=""):
     if not server.startswith(("http://", "https://")):
         server = "http://" + server
     body = json.dumps({"command": command, "args": args or {}}).encode("utf-8")
-    headers = {"User-Agent": "Hubyt/0.1", "Content-Type": "application/json", "Accept": "application/json"}
+    headers = {"User-Agent": "Pixora/0.1", "Content-Type": "application/json", "Accept": "application/json"}
     if token:
         headers["Authorization"] = f"Bearer {token}"
     req = urllib.request.Request(server + "/api", data=body, headers=headers, method="POST")

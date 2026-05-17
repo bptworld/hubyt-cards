@@ -1,7 +1,7 @@
 from datetime import datetime, date, timedelta
 from io import BytesIO
 import urllib.request
-from card_utils import draw_sharp_text, render_text_webp
+from card_utils import draw_sharp_text, format_time, render_text_webp
 
 CARD_ID = "gcal"
 CARD_NAME = "Google Calendar"
@@ -101,7 +101,7 @@ def _fetch_events(ics_url, days_ahead):
     if cached and cached["expires"] > now:
         return cached["data"]
 
-    req = urllib.request.Request(ics_url, headers={"User-Agent": "Hubyt/0.1"})
+    req = urllib.request.Request(ics_url, headers={"User-Agent": "Pixora/0.1"})
     with urllib.request.urlopen(req, timeout=15) as resp:
         raw = resp.read().decode("utf-8", errors="replace")
 
@@ -177,7 +177,7 @@ def _fmt_when(ev):
 
     if ev["allday"]:
         return day_str
-    return f"{day_str} {start.strftime('%-I:%M%p').lower()}"
+    return f"{day_str} {format_time(start, include_ampm=True)}"
 
 
 def _fmt_relative(ev):
@@ -206,6 +206,7 @@ def _fmt_relative(ev):
 def render(options=None):
     from PIL import Image, ImageDraw, ImageFont
     opts      = options or {}
+    width     = 128 if opts.get("_target") == "matrixportal-s3-128x32" else 64
     ics_url   = (opts.get("icsUrl") or "").strip()
     lookahead = max(1, min(365, int(opts.get("lookahead") or 14)))
 
@@ -217,21 +218,21 @@ def render(options=None):
     except Exception as e:
         return render_text_webp("CAL ERR", (238, 80, 80))
 
-    image = Image.new("RGB", (64, 32), (5, 8, 20))
+    image = Image.new("RGB", (width, 32), (5, 8, 20))
     draw  = ImageDraw.Draw(image)
     try:
         font = ImageFont.truetype("Silkscreen-Regular.ttf", 8)
-        bold = ImageFont.truetype("Silkscreen-Bold.ttf", 8)
+        bold = ImageFont.truetype("PixelifySans-Bold.ttf", 8)
     except Exception:
         font = bold = ImageFont.load_default()
 
     # Header bar: when (left) + relative countdown (right)
-    draw.rectangle((0, 0, 63, 8), fill=(15, 25, 55))
+    draw.rectangle((0, 0, width - 1, 8), fill=(15, 25, 55))
     if not events:
         draw_sharp_text(image, (1, -3), "CALENDAR", (100, 140, 255), bold)
         msg = "No events"
         mw = draw.textbbox((0, 0), msg, font=font)[2]
-        draw_sharp_text(image, ((64 - mw) // 2, 14), msg, (120, 130, 145), font)
+        draw_sharp_text(image, ((width - mw) // 2, 14), msg, (120, 130, 145), font)
     else:
         ev       = events[0]
         when_str = _fmt_when(ev)
@@ -239,15 +240,15 @@ def render(options=None):
         ww = draw.textbbox((0, 0), when_str, font=font)[2]
         rw = draw.textbbox((0, 0), rel_str, font=font)[2]
         draw_sharp_text(image, (1, -3), when_str, (160, 180, 220), font)
-        if ww + rw + 6 <= 62:
-            draw_sharp_text(image, (63 - rw, -3), rel_str, (80, 200, 140), font)
+        if ww + rw + 6 <= width - 2:
+            draw_sharp_text(image, (width - 1 - rw, -3), rel_str, (80, 200, 140), font)
 
         # Word-wrap title into remaining space (y=9 to y=31 = 23px = up to 3 lines)
         words = ev["summary"].split()
         lines, current = [], ""
         for word in words:
             test = (current + " " + word).strip() if current else word
-            if draw.textbbox((0, 0), test, font=font)[2] <= 62:
+            if draw.textbbox((0, 0), test, font=font)[2] <= width - 2:
                 current = test
             else:
                 if current:
@@ -261,9 +262,10 @@ def render(options=None):
         y = 9
         for line in lines:
             lw = draw.textbbox((0, 0), line, font=font)[2]
-            draw_sharp_text(image, ((64 - lw) // 2, y), line, (220, 230, 255), font)
+            draw_sharp_text(image, ((width - lw) // 2, y), line, (220, 230, 255), font)
             y += line_h
 
     out = BytesIO()
     image.save(out, "WEBP", lossless=True, quality=100)
     return out.getvalue()
+

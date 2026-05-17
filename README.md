@@ -1,6 +1,6 @@
-# Hubyt Cards
+# Pixora Cards
 
-Add-on cards for the [Hubyt](https://github.com/bptworld/hubyt) display system.
+Add-on cards for the [Pixora](https://github.com/bptworld/pixora) display system.
 
 ## Available Cards - 84
 
@@ -105,7 +105,7 @@ Add-on cards for the [Hubyt](https://github.com/bptworld/hubyt) display system.
 | GitHub Issues Watch | Open issue count |
 | GitHub Release Watch | Latest release for a repo |
 | Google Calendar | Next upcoming event |
-| Hubyt Update Watch | Hubyt release and card updates |
+| Pixora Update Watch | Pixora release and card updates |
 | Joke of the Day | Tiny clean joke |
 | Mega Millions | Latest Mega Millions draw |
 | Megabucks | Latest MA Megabucks draw |
@@ -130,7 +130,7 @@ Add-on cards for the [Hubyt](https://github.com/bptworld/hubyt) display system.
 
 ## Installing a Card
 
-Open Hubyt, click **Browse Cards**, and click **Install** next to any card.
+Open Pixora, click **Browse Cards**, and click **Install** next to any card.
 
 ## Writing Your Own Card
 

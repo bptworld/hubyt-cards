@@ -9,7 +9,7 @@ CARD_NAME = "GitHub Release Watch"
 CARD_DETAIL = "Latest release for a repo"
 CARD_OPTIONS = [
     {"key": "owner", "label": "Owner", "type": "text", "default": "bptworld", "maxlength": 40},
-    {"key": "repo", "label": "Repo", "type": "text", "default": "hubyt", "maxlength": 60},
+    {"key": "repo", "label": "Repo", "type": "text", "default": "pixora", "maxlength": 60},
     {"key": "onlyNew", "label": "Only show if new release", "type": "checkbox", "default": False},
     {"key": "currentTag", "label": "Current/Seen Tag", "type": "text", "default": "", "maxlength": 40},
     {"key": "token", "label": "GitHub Token (optional)", "type": "password", "default": ""},

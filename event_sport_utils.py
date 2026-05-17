@@ -22,7 +22,7 @@ def _fetch_events(sport, league):
     cached = _CACHE.get(key)
     if cached and cached["expires"] > now:
         return cached["events"]
-    req = urllib.request.Request(_dated_url(sport, league), headers={"User-Agent": "Hubyt/0.1"})
+    req = urllib.request.Request(_dated_url(sport, league), headers={"User-Agent": "Pixora/0.1"})
     with urllib.request.urlopen(req, timeout=12) as resp:
         data = json.loads(resp.read().decode("utf-8"))
     events = data.get("events") or []

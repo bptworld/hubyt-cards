@@ -3,12 +3,12 @@ import re
 
 from card_utils import draw_sharp_text, fetch_json_request, fetch_json_with_headers, render_text_webp
 
-CARD_ID = "hubyt_update_watch"
-CARD_NAME = "Hubyt Update Watch"
-CARD_DETAIL = "Hubyt release and card updates"
+CARD_ID = "pixora_update_watch"
+CARD_NAME = "Pixora Update Watch"
+CARD_DETAIL = "Pixora release and card updates"
 CARD_OPTIONS = [
-    {"key": "currentVersion", "label": "Current Hubyt Version", "type": "text", "default": "1.3.18", "maxlength": 20},
-    {"key": "cardRegistryUrl", "label": "Card Registry URL", "type": "text", "default": "https://raw.githubusercontent.com/bptworld/hubyt-cards/main/registry.json", "maxlength": 160},
+    {"key": "currentVersion", "label": "Current Pixora Version", "type": "text", "default": "1.3.18", "maxlength": 20},
+    {"key": "cardRegistryUrl", "label": "Card Registry URL", "type": "text", "default": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/registry.json", "maxlength": 160},
     {"key": "lastCardCount", "label": "Card Count At Last Check", "type": "number", "default": "0", "min": 0},
 ]
 
@@ -18,17 +18,17 @@ def _version_tuple(value):
     return tuple(int(n) for n in nums[:4]) or (0,)
 
 
-def _latest_hubyt_version():
+def _latest_pixora_version():
     data = fetch_json_with_headers(
-        "https://api.github.com/repos/bptworld/hubyt/contents",
+        "https://api.github.com/repos/bptworld/pixora/contents",
         {"Accept": "application/vnd.github+json"},
         seconds=900,
-        cache_key="hubyt:contents",
+        cache_key="pixora:contents",
     )
     versions = []
     for item in data:
         name = item.get("name", "")
-        match = re.match(r"Hubyt-windows-v([0-9][0-9A-Za-z._-]*)\.zip$", name)
+        match = re.match(r"Pixora-windows-v([0-9][0-9A-Za-z._-]*)\.zip$", name)
         if match:
             versions.append(match.group(1))
     if not versions:
@@ -62,7 +62,7 @@ def render(options=None):
         return render_text_webp("SET REG", (100, 180, 255))
 
     try:
-        latest = _latest_hubyt_version()
+        latest = _latest_pixora_version()
         remote_cards = _remote_card_count(registry_url)
     except Exception:
         return render_text_webp("UPD ERR", (238, 80, 80))
@@ -81,7 +81,7 @@ def render(options=None):
         font = bold = ImageFont.load_default()
 
     draw.rectangle((0, 0, 63, 8), fill=(5, 20, 24))
-    _draw_center(image, draw, "HUBYT UPDATE", 0, 63, -3, (80, 225, 205), bold)
+    _draw_center(image, draw, "PIXORA UPDATE", 0, 63, -3, (80, 225, 205), bold)
 
     y = 9
     if app_new:

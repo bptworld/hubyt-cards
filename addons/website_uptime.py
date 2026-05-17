@@ -25,13 +25,13 @@ def _check(url):
     ok = False
     status = 0
     try:
-        req = urllib.request.Request(url, method="HEAD", headers={"User-Agent": "Hubyt/0.1"})
+        req = urllib.request.Request(url, method="HEAD", headers={"User-Agent": "Pixora/0.1"})
         with urllib.request.urlopen(req, timeout=8) as resp:
             status = resp.status
             ok = 200 <= status < 500
     except Exception:
         try:
-            req = urllib.request.Request(url, headers={"User-Agent": "Hubyt/0.1"})
+            req = urllib.request.Request(url, headers={"User-Agent": "Pixora/0.1"})
             with urllib.request.urlopen(req, timeout=8) as resp:
                 status = resp.status
                 ok = 200 <= status < 500

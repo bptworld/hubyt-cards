@@ -9,7 +9,7 @@ CARD_NAME = "GitHub Issues Watch"
 CARD_DETAIL = "Open issue count"
 CARD_OPTIONS = [
     {"key": "owner", "label": "Owner", "type": "text", "default": "bptworld", "maxlength": 40},
-    {"key": "repo", "label": "Repo", "type": "text", "default": "hubyt", "maxlength": 60},
+    {"key": "repo", "label": "Repo", "type": "text", "default": "pixora", "maxlength": 60},
     {"key": "assignee", "label": "Assignee (optional)", "type": "text", "default": "", "maxlength": 40},
     {"key": "token", "label": "GitHub Token (optional)", "type": "password", "default": ""},
 ]
