@@ -2,7 +2,7 @@
 
 Add-on cards for the [Pixora](https://github.com/bptworld/pixora) display system.
 
-## Available Cards - 84
+## Available Cards - 85
 
 ### Finance
 
@@ -101,6 +101,7 @@ Add-on cards for the [Pixora](https://github.com/bptworld/pixora) display system
 | Clock | Time plus local weather |
 | Countdown | Days until any event |
 | Countdown Confetti | Event countdown with confetti |
+| Custom Text | Two-line custom message |
 | Disney Countdown | Days until your trip |
 | GitHub Issues Watch | Open issue count |
 | GitHub Release Watch | Latest release for a repo |
