@@ -212,6 +212,17 @@
       "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/home_assistant_entity.webp"
     },
     {
+      "id": "smartthings_entity",
+      "name": "SmartThings Entity",
+      "category": "Smart Home",
+      "detail": "Live SmartThings state",
+      "description": "Live SmartThings device state from the SmartThings cloud API.",
+      "author": "bptworld",
+      "version": "1.0",
+      "url": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/addons/smartthings_entity.py",
+      "previewUrl": "https://raw.githubusercontent.com/bptworld/pixora-cards/main/assets/previews/smartthings_entity.webp"
+    },
+    {
       "id": "hubitat",
       "name": "Hubitat Device",
       "category": "Smart Home",
